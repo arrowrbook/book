@@ -1,0 +1,21 @@
+Package: scaling_up_with_r_and_arrow
+Version: 0.0.0.9000
+Imports:
+  arrow,
+  dbplyr,
+  dplyr,
+  duckdb,
+  fs,
+  ggplot2,
+  ggrepel,
+  haven,
+  knitr,
+  maps,
+  patchwork,
+  purrr,
+  reticulate,
+  rmarkdown,
+  sf,
+  stringr,
+  tibble,
+  tidyr
