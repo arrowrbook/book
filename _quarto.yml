@@ -6,7 +6,7 @@ book:
   title: "Scaling Up With R and Arrow"
   subtitle: "Bigger Data, Easier Workflows"
   author: "Nic Crane, Jonathan Keane, and Neal Richardson"
-  reader-mode: true
+
   google-analytics: "G-4JT42QR6DV"
 
   page-footer:
@@ -43,6 +43,7 @@ format:
     df-print: paged
     fig-width: 8
     fig-height: 6
+    toc-expand: true
 
 editor: source
 
