@@ -143,6 +143,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
         <div class="sidebar-tools-main">
+    <a href="https://github.com/arrowrbook/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -269,7 +270,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
   <li><a href="#enabling-logging-in-s3" id="toc-enabling-logging-in-s3" class="nav-link" data-scroll-target="#enabling-logging-in-s3"><span class="header-section-number">7.6</span> Enabling Logging in S3</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.7</span> Summary</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/arrowrbook/book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -821,7 +822,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/arrowrbook\.com\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1169,7 +1170,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/arrowrbook/book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

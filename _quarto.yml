@@ -8,7 +8,6 @@ book:
   author: "Nic Crane, Jonathan Keane, and Neal Richardson"
   reader-mode: true
   google-analytics: "G-4JT42QR6DV"
-  
 
   page-footer:
     left: |
@@ -16,6 +15,10 @@ book:
       and Neal Richardson.
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
+  site-url: https://arrowrbook.com/
+  repo-url: https://github.com/arrowrbook/book/
+  repo-branch: main
+  repo-actions: [issue]
 
   chapters:
     - index.qmd
