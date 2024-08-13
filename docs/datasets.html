@@ -357,16 +357,16 @@ Use `schema()` to see entire schema</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pums_person<span class="sc">$</span>files[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=ak/part-0.parquet"
- [2] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=al/part-0.parquet"
- [3] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=ar/part-0.parquet"
- [4] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=az/part-0.parquet"
- [5] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=ca/part-0.parquet"
- [6] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=co/part-0.parquet"
- [7] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=ct/part-0.parquet"
- [8] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=dc/part-0.parquet"
- [9] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=de/part-0.parquet"
-[10] "/home/nic/scaling_up_with_r_and_arrow/data/person/year=2005/location=fl/part-0.parquet"</code></pre>
+<pre><code> [1] "/home/nic/scalinguplive/data/person/year=2005/location=ak/part-0.parquet"
+ [2] "/home/nic/scalinguplive/data/person/year=2005/location=al/part-0.parquet"
+ [3] "/home/nic/scalinguplive/data/person/year=2005/location=ar/part-0.parquet"
+ [4] "/home/nic/scalinguplive/data/person/year=2005/location=az/part-0.parquet"
+ [5] "/home/nic/scalinguplive/data/person/year=2005/location=ca/part-0.parquet"
+ [6] "/home/nic/scalinguplive/data/person/year=2005/location=co/part-0.parquet"
+ [7] "/home/nic/scalinguplive/data/person/year=2005/location=ct/part-0.parquet"
+ [8] "/home/nic/scalinguplive/data/person/year=2005/location=dc/part-0.parquet"
+ [9] "/home/nic/scalinguplive/data/person/year=2005/location=de/part-0.parquet"
+[10] "/home/nic/scalinguplive/data/person/year=2005/location=fl/part-0.parquet"</code></pre>
 </div>
 </div>
 <p>You may notice that the directories in which the files are stored related to variables in the dataset: <code>year</code> and <code>location</code>. This way of structuring data is known as partitioning, and we’ll be looking at this in more detail in a later section.</p>
@@ -1104,7 +1104,7 @@ AGEP: int8</code></pre>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"./data/transient_data/person_with_metadata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `open_dataset()`:
-! Invalid: Error creating dataset. Could not read schema from '/home/nic/scaling_up_with_r_and_arrow/data/transient_data/person_with_metadata/year=2019/data_info.txt'. Is this a 'parquet' file?: Could not open Parquet input source '/home/nic/scaling_up_with_r_and_arrow/data/transient_data/person_with_metadata/year=2019/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
+! Invalid: Error creating dataset. Could not read schema from '/home/nic/scalinguplive/data/transient_data/person_with_metadata/year=2019/data_info.txt'. Is this a 'parquet' file?: Could not open Parquet input source '/home/nic/scalinguplive/data/transient_data/person_with_metadata/year=2019/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
 ℹ Did you mean to specify a 'format' other than the default (parquet)?</code></pre>
 </div>
 </div>
