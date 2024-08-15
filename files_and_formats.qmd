@@ -598,6 +598,10 @@ read_parquet(tf)
 ```
 
 This preservation of custom attributes and classes is helpful because it means that we can use custom R packages and save to Parquet files, without having to implement every single specific custom class as a specific Parquet type in the code that reads and writes Parquet.
+One thing to note is that this preservation of custom attributes works automatically when you write a Parquet file from R and then read it in to R, but it won't work automatically when writing from R and then reading in another language like Python.
+The custom metadata for each language implementation is stored in a separate location for each language.
+So while reading data into Python which has a custom class that was created in R, Arrow won't automatically create that same class.
+However, you still do have access to that metadata under the `metadata` and then `r` attribute if there are details you need to access from Python. 
 
 ### File structure and parallelisation
 
@@ -624,7 +628,9 @@ We'll show some examples that illustrate this efficiency gain in [Chapter @sec-c
 ### Dictionary Encoding
 
 Parquet's columnar format allows it to take advantage of encoding strategies that can help reduce size on disk.
-One of these encoding strategies is dictionary encoding; instead of representing every single value in a column, if there are fewer than `<number>` values, Parquet will save the values as key-value pairs, similar to factors.
+One of these encoding strategies is dictionary encoding; instead of representing every single value in a column, generally Parquet will save the values as key-value pairs, similar to factors.
+This encoding usually makes the space needed to store string columns much smaller, but there are times when dictionary encoding does not help and in that case we fall back to plain encoding.
+This fallback happens if the size of the dictionary grows too large, which could happen if there are a large number of distinct values or if the length of each string is large.
 Note that this is different from Arrow's DictionaryType data type: Parquet's dictionary encoding can be applied to any column type.
 Parquet's dictionary encoding happens entirely under the hood with arrow so you don't have to decide what is the ideal encoding to store this as---it just happens, unless you actively disable it.
 We can see its effect by comparing the size of the same Parquet file with and without dictionary encoding.
