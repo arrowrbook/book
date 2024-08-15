@@ -600,7 +600,8 @@ read_parquet(tf)
 This preservation of custom attributes and classes is helpful because it means that we can use custom R packages and save to Parquet files, without having to implement every single specific custom class as a specific Parquet type in the code that reads and writes Parquet.
 One thing to note is that this preservation of custom attributes works automatically when you write a Parquet file from R and then read it in to R, but it won't work automatically when writing from R and then reading in another language like Python.
 The custom metadata for each language implementation is stored in a separate location for each language.
-So while reading a custom class into Python won't automatically create that same class, you still do have access to that metadata under the `metadata` and then `r` attribute if there are details you need to access from Python. 
+So while reading data into Python which has a custom class that was created in R, Arrow won't automatically create that same class.
+However, you still do have access to that metadata under the `metadata` and then `r` attribute if there are details you need to access from Python. 
 
 ### File structure and parallelisation
 
