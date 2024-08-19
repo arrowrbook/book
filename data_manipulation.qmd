@@ -167,6 +167,15 @@ head(higher_ed, 20) |>
   collect()
 ```
 
+Alternatively, if you want a preview of the dataset which contains the number of rows to be returned from your query, as well as preserving the original Arrow data types, you can call `glimpse()` to show this information.
+
+```{r}
+#| label: glimpse
+higher_ed |>
+  select(SCHL, higher_education) |>
+  glimpse()
+```
+
 ## Using functions inside dplyr pipelines {#sec-dplyr-use-funcs}
 
 A number of dplyr functions allow you to embed other functions in them.
