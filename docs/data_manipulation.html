@@ -306,7 +306,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2006","2":"36.68398"},{"1":"2008","2":"37.16492"},{"1":"2012","2":"37.79095"},{"1":"2019","2":"38.78444"},{"1":"2022","2":"39.31714"},{"1":"2005","2":"36.49880"},{"1":"2013","2":"37.91680"},{"1":"2014","2":"38.08983"},{"1":"2021","2":"39.00219"},{"1":"2017","2":"38.47804"},{"1":"2018","2":"38.57472"},{"1":"2007","2":"36.94034"},{"1":"2011","2":"37.57105"},{"1":"2009","2":"37.05157"},{"1":"2010","2":"37.35030"},{"1":"2016","2":"38.44202"},{"1":"2015","2":"38.22057"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2009","2":"37.05157"},{"1":"2012","2":"37.79095"},{"1":"2016","2":"38.44202"},{"1":"2022","2":"39.31714"},{"1":"2010","2":"37.35030"},{"1":"2014","2":"38.08983"},{"1":"2017","2":"38.47804"},{"1":"2021","2":"39.00219"},{"1":"2006","2":"36.68398"},{"1":"2019","2":"38.78444"},{"1":"2015","2":"38.22057"},{"1":"2018","2":"38.57472"},{"1":"2007","2":"36.94034"},{"1":"2008","2":"37.16492"},{"1":"2011","2":"37.57105"},{"1":"2013","2":"37.91680"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -433,28 +433,41 @@ See $.data for the source Arrow object</code></pre>
 </div>
 </div>
 </div>
+<p>Alternatively, if you want a preview of the dataset which contains the number of rows to be returned from your query, as well as preserving the original Arrow data types, you can call <code>glimpse()</code> to show this information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>higher_ed <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SCHL, higher_education) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset with 884 Parquet files (query)
+41,254,553 rows x 2 columns
+$ SCHL           &lt;string&gt; "Bachelor's degree", "Doctorate degree", "High school …
+$ higher_education &lt;bool&gt; TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE…
+Call `print()` for query details</code></pre>
+</div>
+</div>
 </section>
 <section id="sec-dplyr-use-funcs" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-dplyr-use-funcs"><span class="header-section-number">4.4</span> Using functions inside dplyr pipelines</h2>
 <p>A number of dplyr functions allow you to embed other functions in them. <code>mutate()</code> is a prime example of this, where we are changing some data in the data frame using other functions from base R or other packages. Many tidyverse functions will simply work out of the box with arrow queries. For example, as arrow has code that works just like the stringr function <code>str_detect()</code>—which works out if a string is present in a column or not—we can use it in an arrow dplyr pipeline just like we would a standard dplyr pipeline. For more details about how this works, see <a href="#sec-dplyr-generics" class="quarto-xref"><span>Section 4.6</span></a> below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>higher_ed <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AGEP <span class="sc">&gt;</span> <span class="dv">18</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">higher_education =</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(SCHL, <span class="st">"(Bach|Mast|Prof|Doct|college|degree)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>higher_ed <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AGEP <span class="sc">&gt;</span> <span class="dv">18</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">higher_education =</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(SCHL, <span class="st">"(Bach|Mast|Prof|Doct|college|degree)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can use these functions with or without namespacing, so either <code>stringr::str_detect()</code> or just <code>str_detect()</code> work.</p>
 <p>When we wrote this book, there were 37 dplyr functions and 211 other functions available in arrow—though this number may have increased since! We’ve demonstrated some string operations here; both the base R and stringr flavors are supported. There is also deep support for <strong>lubridate</strong> functions for working with date and time data.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> If you want to find out which functions are available in arrow, you can view the help page which lists all of the dplyr functions and other function mappings by calling <code>?acero</code>.</p>
 <p>While many functions are implemented in arrow, you aren’t limited by just what is included in the package. Sometimes it is convenient or necessary to write your own functions. For example, you might need to convert the <code>JWMNP</code> (commute time) columns from minutes to hours and have written a function which does this conversion for you. What happens if you then try to run this function in arrow?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>time_hours_rounded <span class="ot">&lt;-</span> <span class="cf">function</span>(mins){</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(mins<span class="sc">/</span><span class="dv">60</span>, <span class="dv">2</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(JWMNP) <span class="sc">|&gt;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_hours =</span> <span class="fu">time_hours_rounded</span>(JWMNP)) <span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>time_hours_rounded <span class="ot">&lt;-</span> <span class="cf">function</span>(mins){</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(mins<span class="sc">/</span><span class="dv">60</span>, <span class="dv">2</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(JWMNP) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_hours =</span> <span class="fu">time_hours_rounded</span>(JWMNP)) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -466,27 +479,27 @@ See $.data for the source Arrow object</code></pre>
 <p>Great, this has worked! Arrow is able to look at the body of the <code>time_hours_rounded()</code> function and map the code there to the equivalent code which can be run by Acero.</p>
 <p>Let’s now take a look at an example which doesn’t work as easily. The <code>SOCP</code> column in the dataset contains Standard Occupational Classification (SOC) codes, which are in capital letters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SOCP) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SOCP) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"PRD-SEWING MACHINE OPERATORS"},{"1":"NA"},{"1":"CLN-MAIDS AND HOUSEKEEPING CLEANERS"},{"1":"MGR-MARKETING AND SALES MANAGERS"},{"1":"EDU-ELEMENTARY AND MIDDLE SCHOOL TEACHERS"},{"1":"ENG-MISCELLANEOUS ENGINEERS, INCLUDING NUCLEAR ENGINEERS*"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS"},{"1":"EDU-POSTSECONDARY TEACHERS"},{"1":"NA"},{"1":"UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS**"},{"1":"EAT-DISHWASHERS"},{"1":"MED-REGISTERED NURSES"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>If we wanted to convert these into sentence case, with just the first letter of each sentence capitalized, we might look at using the helpful function <code>str_to_sentence()</code> from stringr. However, if we call this, we get an error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SOCP) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOCP =</span> stringr<span class="sc">::</span><span class="fu">str_to_sentence</span>(SOCP)) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SOCP) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOCP =</span> stringr<span class="sc">::</span><span class="fu">str_to_sentence</span>(SOCP)) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `stringr::str_to_sentence()`:
 ! Expression not supported in Arrow
@@ -502,16 +515,16 @@ See $.data for the source Arrow object</code></pre>
 <p>Let’s say for example, we want to compare the commute time of each person in the dataset to the mean commute time for their state.</p>
 <p>We start by creating a reference table of mean commute time by state and year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_commute_time =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)) <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mean_commute_time, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_commute_time =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)) <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mean_commute_time, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"in","2":"2005","3":"10.153617"},{"1":"mn","2":"2005","3":"10.976113"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"2005","3":"8.182648"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"fl","2":"2005","3":"11.051085"},{"1":"mn","2":"2005","3":"10.976113"},{"1":"mo","2":"2005","3":"10.426887"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -519,12 +532,12 @@ See $.data for the source Arrow object</code></pre>
 <p>We can then perform a left join to combine this information with the information in the original datasets.</p>
 <p><img src="images/excalidraw/data_manip_join.png" class="img-fluid" alt="Joining data"> The code to accomplish this looks something like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(commute_diff, <span class="at">commute_time =</span> JWMNP, mean_commute_time) <span class="sc">|&gt;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(commute_diff, <span class="at">commute_time =</span> JWMNP, mean_commute_time) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -537,11 +550,11 @@ See $.data for the source Arrow object</code></pre>
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="join-keys"><span class="header-section-number">4.5.1</span> Join keys</h3>
 <p>One important thing to know about doing joins in arrow is that the data types of the join key columns must match. Let’s say we decided that we want to change the data type of the <code>year</code> column from a 32-bit integer to an 16-bit integer. We can change the column type using <code>cast()</code>, but if we then try to join our reference table, we get an error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `compute.arrow_dplyr_query()`:
 ! Invalid: Incompatible data types for corresponding join field keys: FieldRef.Name(year) of type int16 and FieldRef.Name(year) of type int32</code></pre>
@@ -549,7 +562,7 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>The source of the error is in the difference in data types for the <code>year</code> column — we updated it in the main dataset to be an <code>int16()</code> but in the reference table, the <code>year</code> column is still an <code>int32()</code>. We can verify this by using the <code>schema()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Schema
 location: string
@@ -559,16 +572,16 @@ mean_commute_time: double</code></pre>
 </div>
 <p>To be able to perform the join, we must update one or both of the datasets so that the types match. The simplest thing to do in our case is update the data type of the lookup table. We can manually set the schema of the table by converting it to an Arrow Table and setting the schema at the same time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time_arrow <span class="ot">&lt;-</span> <span class="fu">arrow_table</span>(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  mean_commute_time,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="fu">schema</span>(</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">string</span>(),</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">int16</span>(),</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">double</span>()</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time_arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time_arrow <span class="ot">&lt;-</span> <span class="fu">arrow_table</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  mean_commute_time,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="fu">schema</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">string</span>(),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">int16</span>(),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">double</span>()</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time_arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Schema
 location: string
@@ -580,13 +593,13 @@ See $metadata for additional Schema metadata</code></pre>
 </div>
 <p>The data type of the join key in the reference table now matches the data type in our original dataset, and now the join will work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time_arrow, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(commute_diff, <span class="at">commute_time =</span> JWMNP, mean_commute_time) <span class="sc">|&gt;</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time_arrow, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(commute_diff, <span class="at">commute_time =</span> JWMNP, mean_commute_time) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
