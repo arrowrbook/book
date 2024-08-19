@@ -423,19 +423,8 @@ write_csv_arrow(washington_2021, "./data/transient_data/washington_2021.csv")
 write_csv_arrow(washington_2021, "./data/transient_data/washington_2021.csv.gz")
 ```
 
-The uncompressed CSV is pretty big: `r fs::file_size("./data/transient_data/washington_2021.csv")`.
-
-```{r}
-#| label: size-uncompressed-csv
-fs::file_size("./data/transient_data/washington_2021.csv")
-```
-
-However, after the CSV has been compressed, it shrinks down to `r fs::file_size("./data/transient_data/washington_2021.csv.gz")`.
-
-```{r}
-#| label: compare-compressed-csv
-fs::file_size("./data/transient_data/washington_2021.csv.gz")
-```
+The uncompressed CSV is pretty big: 137MB.
+However, after the CSV has been compressed, it shrinks down to 19.6MB.
 
 It's still much larger than a Parquet file with the same data, but not quite as dramatically so.
 
