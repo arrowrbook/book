@@ -211,7 +211,10 @@ If instead you want the data to remain as an Arrow Table, you should set the `as
 #| label: read_as_data_frame_false
 #| eval: FALSE
 # Read in the CSV as an Arrow Table
-read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", as_data_frame = FALSE)
+read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  as_data_frame = FALSE
+)
 ```
 
 You can do all of the same dplyr operations on Tables as you can on Datasets.
@@ -246,14 +249,20 @@ You can see here on the first few rows, the `PUMA` values are `"00101"`, `"00101
 
 ```{r}
 #| label: pums-puma-readlines
-readLines("./data/raw_csvs/person/2021/ak/psam_p02.csv", n = 5)
+readLines(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  n = 5
+)
 ```
 
 However, if we read in our CSV subset without providing a schema, despite the leading zeroes being present in the data, the data type of this column is inferred to be an integer.
 
 ```{r}
 #| label: pums-puma-schema-get
-pums_csv_one_state <- read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv")
+pums_csv_one_state <- read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv"
+)
+
 head(schema(pums_csv_one_state))
 ```
 
@@ -323,7 +332,10 @@ You can extract the schema using the `schema()` function.
 #| eval: TRUE
 # Read in the file as an Arrow Table and get its schema
 pums_csv_one_state_schema <- schema(
-  read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", as_data_frame = FALSE)
+  read_csv_arrow(
+    "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+    as_data_frame = FALSE
+  )
 )
 ```
 
@@ -344,7 +356,11 @@ We can also assign in different types, and then provide the modified schema when
 pums_csv_one_state_schema[["PUMA"]] <- string()
 
 # Read in the file, using the updated schema
-read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", schema = pums_csv_one_state_schema, skip = 1)
+read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  schema = pums_csv_one_state_schema,
+  skip = 1
+)
 ```
 
 What if you want to save the schema in a script, instead of loading it and updating it all the time?
@@ -392,7 +408,10 @@ You can write CSV files to disk using `write_csv_arrow()`.
 #| label: write-csv
 #| eval: false
 # Save `pums_subset` to CSV file
-write_csv_arrow(pums_subset, "./data/transient_data/new_pums.csv")
+write_csv_arrow(
+  pums_subset,
+  "./data/transient_data/new_pums.csv"
+)
 ```
 
 If you're working with large CSV files, you may want to compress them to reduce the amount of space they take up on disk.
@@ -402,7 +421,10 @@ Arrow automatically detects compression from the file name you give to either th
 #| label: read-compressed-csv
 #| eval: false
 # Write to a gz compressed file
-write_csv_arrow(pums_subset, "pums_subset_compressed.csv.gz")
+write_csv_arrow(
+  pums_subset,
+  "pums_subset_compressed.csv.gz"
+)
 
 # Read from a gz compressed file
 read_csv_arrow("pums_subset_compressed.csv.gz")
@@ -464,10 +486,21 @@ numeric_data_schema <- schema(
   doubles = float64(),
   strings = string()
 )
-numeric_table <- arrow_table(numeric_data, schema = numeric_data_schema)
 
-write_csv_arrow(numeric_table, "./data/transient_data/numeric.csv")
-write_parquet(numeric_table, "./data/transient_data/numeric.parquet")
+numeric_table <- arrow_table(
+  numeric_data,
+  schema = numeric_data_schema
+)
+
+write_csv_arrow(
+  numeric_table,
+  "./data/transient_data/numeric.csv"
+)
+
+write_parquet(
+  numeric_table,
+  "./data/transient_data/numeric.parquet"
+)
 ```
 
 If we read in the CSV file without providing any information about the schema, arrow will have to guess the schema, and incorrectly infer that the all of the columns are integers.
@@ -564,7 +597,11 @@ frac_df <- tibble::tibble(
   total = c(2, 2, 7, 9)
 )
 
-frac_df$fraction = fraction(frac_df$total, sum(frac_df$total))
+frac_df$fraction = fraction(
+  frac_df$total,
+  sum(frac_df$total)
+)
+
 frac_df
 ```
 
@@ -636,7 +673,11 @@ And now let's check out the size of that file if it's saved without dictionary e
 ```{r}
 #| label: pums-subset-nodict
 read_parquet(wa_21_path, as_data_frame = FALSE) |>
-  write_parquet("./data/transient_data/pums_subset_no_dict.parquet", use_dictionary = FALSE)
+  write_parquet(
+    "./data/transient_data/pums_subset_no_dict.parquet",
+    use_dictionary = FALSE
+  )
+
 fs::file_size("./data/transient_data/pums_subset_no_dict.parquet")
 ```
 
@@ -753,7 +794,11 @@ nested_data <- tibble::tibble(
 
 ```{r}
 #| label: nested-col-roundtrip
-write_parquet(nested_data, "./data/transient_data/nested_data.parquet")
+write_parquet(
+  nested_data,
+  "./data/transient_data/nested_data.parquet"
+)
+
 read_parquet("./data/transient_data/nested_data.parquet")
 ```
 
@@ -816,7 +861,10 @@ First, we read the data in from a single CSV as an Arrow Table, and then we show
 
 ```{r}
 #| label: WA 2005 read in
-wa_2005 <- read_csv_arrow("data/raw_csvs/person/2005/wa/ss05pwa.csv", as_data_frame = FALSE)
+wa_2005 <- read_csv_arrow(
+  "data/raw_csvs/person/2005/wa/ss05pwa.csv",
+  as_data_frame = FALSE
+)
 ```
 
 ```{r}
@@ -835,7 +883,10 @@ One way that we can do this is by using a join, matching on the value codes in t
 ```{r}
 #| label: WA COW 2005 join
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"),
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW_label = values_label, .keep = "unused") |>
   select(sporder, SERIALNO, PUMA, ST, PWGTP, COW, COW_label) |>
   head() |>
@@ -847,7 +898,10 @@ Above, we kept both `COW` and `COW_label` to illustrate the mapping, but we coul
 ```{r}
 #| label: WA COW 2005 join replace
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"),
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW = values_label, .keep = "unused") |>
   select(sporder, SERIALNO, PUMA, ST, PWGTP, COW, AGEP) |>
   head() |>
@@ -860,9 +914,15 @@ We can do this with multiple variables at once, and when we're happy with the re
 #| label: join replace write
 #| eval: false
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"), 
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW = values_label, .keep = "unused") |>
-  left_join(filter(codebook, name == "JWTR"), by = c("JWTR" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "JWTR"),
+    by = c("JWTR" = "values_code")
+  ) |>
   mutate(JWTR = values_label, .keep = "unused") |>
   write_parquet("wa_2005.parquet")
 ```
