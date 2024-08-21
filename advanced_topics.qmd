@@ -110,7 +110,10 @@ library(tidyr)
 
 pums_person |>
   group_by(location) |>
-  summarize(max_commute = max(JWMNP, na.rm = TRUE), min_commute = min(JWMNP, na.rm = TRUE)) |>
+  summarize(
+    max_commute = max(JWMNP, na.rm = TRUE),
+    min_commute = min(JWMNP, na.rm = TRUE)
+  ) |>
   pivot_longer(!location, names_to = "metric")
 ```
 
@@ -124,7 +127,10 @@ In our example here, we can pass the data to duckdb, pivot it, and return it to 
 #| label: pivot-duckdb
 pums_person |>
   group_by(location) |>
-  summarize(max_commute = max(JWMNP, na.rm = TRUE), min_commute = min(JWMNP, na.rm = TRUE)) |>
+  summarize(
+    max_commute = max(JWMNP, na.rm = TRUE),
+    min_commute = min(JWMNP, na.rm = TRUE)
+  ) |>
   to_duckdb() |> # send data to duckdb
   pivot_longer(!location, names_to = "metric") |>
   to_arrow() |> # return data back to arrow
@@ -213,7 +219,8 @@ library(ggplot2)
 library(dplyr)
 library(patchwork) # For combining multiple ggplot objects
 
-# Define a function to create a plot with a given CRS and parallel gridlines
+# Define a function to create a plot with a given 
+# CRS and parallel gridlines
 create_plot <- function(us_sf, crs, title) {
   us_transformed <- st_transform(us_sf, crs)
   ggplot(data = us_transformed) +
@@ -288,7 +295,10 @@ This Parquet file has a number of standard columns along with one column, `geome
 ```{r}
 #| label: puma-read-in
 # Read in the puma geoparquet, mark it as such with SF
-PUMA <- arrow::read_parquet("data/PUMA2013_2022.parquet", as_data_frame = FALSE)
+PUMA <- read_parquet(
+  "data/PUMA2013_2022.parquet",
+  as_data_frame = FALSE
+)
 ```
 
 #### Column-level Metadata
@@ -356,12 +366,16 @@ Finally, we pull the data into R and set the correct geometry column to use.
 #| label: correct-projection
 correct_projection <- function(PUMA, crs = "NAD83") {
   PUMA_df <- collect(PUMA)
-  # set the geometry column, but we also need to manually extract the CRS from the
-  # geoparquet metadata
-  PUMA_df <- sf::st_sf(PUMA_df, sf_column_name = "geometry", crs = crs)
+  # set the geometry column, but we also need to manually 
+  # extract the CRS from the geoparquet metadata
+  PUMA_df <- sf::st_sf(PUMA_df, sf_column_name = "geometry",
+                       crs = crs)
 
-  # Move the bounding box + center of the projection so that Alaska is plotted together
-  proj <- "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+  # Move the bounding box + center of the projection so that
+  # Alaska is plotted together
+  proj <- paste0("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23", 
+                 " +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 ", 
+                 "+towgs84=0,0,0,0,0,0,0 +units=m +no_defs")
   PUMA_df$geometry <- st_transform(PUMA_df$geometry, crs = proj)
 
   PUMA_df
@@ -458,15 +472,24 @@ We can clearly see some patterns of migration: French is spoken in parts of nort
 ```{r}
 #| label: pums-langauge-all-US
 puma_by_langauge |>
-  filter(language %in% c("english", "spanish", "french", "navajo")) |>
+  filter(
+    language %in% c("english", "spanish", "french", "navajo")
+  ) |>
   fill_pumas() |>
-  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  inner_join(
+    PUMA,
+    by = c("year" = "YEAR", "location" = "location",
+           "PUMA" = "PUMA")
+  ) |>
   correct_projection() |>
   ggplot() +
-  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker),
+          lwd = 0) +
   coord_sf(crs = "+proj=laea +lon_0=-98 +lat_0=39.5") +
   facet_wrap(vars(language), ncol = 2) +
-  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  scale_fill_distiller(type = "seq", direction = 1, 
+                       palette = "Greys", 
+                       name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   labs(
@@ -486,7 +509,10 @@ ggplot() +
 The standard start to `ggplot2`.
 
 ```{.r}
-  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  geom_sf(
+    aes(geometry = geometry, fill = prop_speaker),
+    lwd = 0
+  ) +
 ```
 
 Set the `geom` to be a map, with the color proportion of speaker.
@@ -505,7 +531,8 @@ This shifts the projection slightly to be as if it were on a globe.
 Making small multiples for each language
 
 ```{.r}
-  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  scale_fill_distiller(type = "seq", direction = 1, 
+    palette = "Greys", name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   labs(
@@ -529,10 +556,13 @@ We've selected slightly different languages for each area to highlight unique di
 puma_by_langauge |>
   filter(language %in% c("english", "spanish", "polish")) |>
   fill_pumas() |>
-  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  inner_join(PUMA, by = c("year" = "YEAR", 
+                          "location" = "location", 
+                          "PUMA" = "PUMA")) |>
   correct_projection() |>
   ggplot() +
-  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker),
+          lwd = 0) +
   coord_sf(
     xlim = c(000000, 100000),
     ylim = c(000000, 150000),
@@ -540,7 +570,9 @@ puma_by_langauge |>
     expand = FALSE
   ) +
   facet_wrap(vars(language), ncol = 3) +
-  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  scale_fill_distiller(type = "seq", direction = 1, 
+                       palette = "Greys", 
+                       name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   labs(
@@ -554,12 +586,16 @@ Or the Northeast, where there are a relatively large proportion of Portugese spe
 ```{r}
 #| label: pums-langauge-northeast
 puma_by_langauge |>
-  filter(language %in% c("english", "spanish", "french", "portuguese")) |>
+  filter(language %in% c("english", "spanish", "french", 
+                         "portuguese")) |>
   fill_pumas() |>
-  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  inner_join(PUMA, by = c("year" = "YEAR", 
+                          "location" = "location", 
+                          "PUMA" = "PUMA")) |>
   correct_projection() |>
   ggplot() +
-  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker), 
+          lwd = 0) +
   coord_sf(
     xlim = c(000000, 650000),
     ylim = c(000000, 810000),
@@ -567,7 +603,9 @@ puma_by_langauge |>
     expand = FALSE
   ) +
   facet_wrap(vars(language), ncol = 4) +
-  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  scale_fill_distiller(type = "seq", direction = 1, 
+                       palette = "Greys", name = 
+                         "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   labs(
