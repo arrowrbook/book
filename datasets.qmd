@@ -75,7 +75,9 @@ We'll talk more on how to pick a strategy later in the chapter.
 ```{r}
 #| label: csv-to-parquet
 #| eval: false
-my_dataset <- open_csv_dataset(path = "./data/my-oversized-csv.csv")
+my_dataset <- open_csv_dataset(
+  path = "./data/my-oversized-csv.csv"
+)
 
 my_dataset |>
   mutate(year = year(datetime), month = month(datetime)) |>
@@ -97,7 +99,10 @@ For example, we can compute the average commute time in Washington by year from 
 open_dataset("./data/person") |>
   filter(location == "wa") |>
   group_by(year) |>
-  summarize(avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarize(
+    avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+      sum(PWGTP)
+  ) |>
   arrange(desc(year)) |>
   collect()
 ```
@@ -184,28 +189,36 @@ We can do this by passing in the parameter `hive_style = FALSE` into our call to
 ```{r}
 #| label: save-non-hive
 open_dataset("./data/person") |>
-  write_dataset("./data/transient_data/person_non_hive", partitioning = "year", hive_style = FALSE)
+  write_dataset(
+    file.path(tmp_dir, "person_non_hive"), 
+    partitioning = "year",
+    hive_style = FALSE
+  )
 ```
 
 If we inspect the content of the new directory, we can see that the filenames indeed are just the year numbers but without the `year` identifier.
 
 ```{r}
 #| label: non-hive-size
-fs::dir_ls("./data/transient_data/person_non_hive")
+tmp_dir <- "./data/transient_data/"
+fs::dir_ls(file.path(tmp_dir, "person_non_hive"))
 ```
 
 Now if we open this dataset like before, `year` is no longer automatically recognized as a column in the dataset.
 
 ```{r}
 #| label: hive-no-year
-ds <- open_dataset("./data/transient_data/person_non_hive")
+ds <- open_dataset(file.path(tmp_dir, "person_non_hive"))
 ```
 
 To get Arrow to recognize that we want to include the directory name as a column in our dataset, we need to tell it do this by manually specifying the `partitioning` argument in our call to `open_dataset()`.
 
 ```{r}
 #| label: non-hive-specify-partitions
-ds <- open_dataset("./data/transient_data/person_non_hive", partitioning = "year")
+ds <- open_dataset(
+  file.path(tmp_dir, "person_non_hive"),
+  partitioning = "year"
+)
 ```
 
 Because this filesystem path is text-based, Arrow must do type inference on this path to guess what type the partition variable should be.
@@ -218,7 +231,10 @@ We do this by using the `hive_partition()` function, and we specify the column n
 
 ```{r}
 #| label: non-hive-specify-partitions-details
-ds <- open_dataset("./data/transient_data/person_non_hive", partitioning = hive_partition(year = int16()))
+ds <- open_dataset(
+  file.path(tmp_dir, "person_non_hive"),
+  partitioning = hive_partition(year = int16())
+)
 ```
 
 The use of Hive-style partitioning when saving datasets is a helpful way of ensuring that we automatically read in the partitions as variables, without additional manual intervention.
@@ -235,7 +251,7 @@ For example, if we wanted to partition the PUMS dataset solely on year (but not 
 #| eval: false
 open_dataset("./data/person") |>
   group_by(year) |>
-  write_dataset("./data/transient_data/person_year")
+  write_dataset(file.path(tmp_dir, "person_year"))
 ```
 
 ### Partitioning data with a new column
@@ -262,7 +278,7 @@ open_dataset("./data/person") |>
     )
   ) |>
   write_dataset(
-    path = "./data/transient_data/person-age-partitions"
+    path = file.path(tmp_dir, "person-age-partitions")
   )
 ```
 
@@ -276,7 +292,7 @@ You can also control the file name using the `basename_template` parameter.
 open_dataset("./data/person") |>
   filter(year >= 2020) |>
   write_dataset(
-    "./data/transient_data/person_starting_2020_fn",
+    file.path(tmp_dir, "person_starting_2020_fn"),
     basename_template = "data_{i}.parquet"
   )
 ```
@@ -285,7 +301,10 @@ This has now updated the name of the saved files.
 
 ```{r}
 #| label: basename-view
-fs::dir_ls("./data/transient_data/person_starting_2020_fn", recurse = TRUE)
+fs::dir_ls(
+  file.path(tmp_dir, "person_starting_2020_fn"),
+  recurse = TRUE
+)
 ```
 
 ### Writing to existing partitions
@@ -307,7 +326,7 @@ In this case, if you'd rather completely delete any existing data in the directo
 open_dataset("./data/person") |>
   filter(year >= 2020) |>
   write_dataset(
-    "./data/transient_data/person_starting_2020",
+    file.path(tmp_dir, "person_starting_2020"),
     existing_data_behavior = "delete_matching"
   )
 ```
@@ -320,7 +339,7 @@ Also, consider starting fresh with a new directory when you want to be sure ther
 open_dataset("./data/person") |>
   filter(year >= 2020) |>
   write_dataset(
-    "./data/transient_data/person_starting_2020",
+    file.path(tmp_dir, "person_starting_2020"),
     existing_data_behavior = "error"
   )
 ```
@@ -341,7 +360,7 @@ write_parquet(mtcars, "./data/transient_data/logs/logs_2024-02-01.parquet")
 
 ```{r}
 #| label: show-dataset-by-filename
-fs::dir_ls("./data/transient_data/logs")
+fs::dir_ls(file.path(tmp_dir, "logs"))
 ```
 
 You can use the `add_filename()` function to add a column to your dataset which contains the filename of the file that each row of data came from.
@@ -356,13 +375,13 @@ Now we can use this new year column to partition our dataset.
 
 ```{r}
 #| label: add-filenames
-open_dataset("./data/transient_data/logs") |>
+open_dataset(file.path(tmp_dir, "logs")) |>
   mutate(file = add_filename()) |>
   mutate(file = str_remove(file, "^.*/logs_")) |>
   mutate(file = str_remove(file, ".parquet$")) |>
   mutate(year_month = str_remove(file, "-..$")) |>
   write_dataset(
-    "./data/transient_data/logs_repartitioned",
+    file.path(tmp_dir, "logs_repartitioned"),
     partitioning = "year_month"
   )
 ```
@@ -370,7 +389,7 @@ open_dataset("./data/transient_data/logs") |>
 ```{r}
 #| label: show-filename-dataset
 #| echo: false
-fs::dir_ls("./data/transient_data/logs_repartitioned")
+fs::dir_ls(file.path(tmp_dir, "logs_repartitioned"))
 ```
 
 ### Partitions containing NA values
@@ -386,7 +405,10 @@ data <- tibble::tibble(
   y = c(rep("group1", 5), NA)
 )
 
-partition_with_na_path <- "./data/transient_data/na-partition-default"
+partition_with_na_path <- file.path(
+  tmp_dir,
+  "na-partition-default"
+)
 
 write_dataset(data, partition_with_na_path, partitioning = "y")
 fs::dir_ls(partition_with_na_path)
@@ -399,12 +421,17 @@ You'll need to supply the data types of the partition variable too, and then pas
 
 ```{r}
 #| label: partition-null-nondefault
-partition_with_custom_na_path <- "./data/transient_data/na-partition-custom"
+partition_with_custom_na_path <- file.path(
+  tmp_dir,
+  "na-partition-custom"
+)
 
 write_dataset(
   data,
   partition_with_custom_na_path,
-  partitioning = hive_partition(y = string(), null_fallback = "no_group")
+  partitioning = hive_partition(
+    y = string(), null_fallback = "no_group"
+  )
 )
 
 fs::dir_ls(partition_with_custom_na_path)
@@ -428,17 +455,26 @@ Here's the code to create these datasets.
 #| eval: false
 # 1. Everything on one big file
 open_dataset("./data/person") |>
-  write_dataset("./data/transient_data/person_onefile")
+  write_dataset(file.path(tmp_dir, "person_onefile"))
 
-pums_one_big_file <- open_dataset("./data/transient_data/person_onefile")
+pums_one_big_file <- open_dataset(
+  file.path(tmp_dir, "person_onefile")
+)
+
 # 2. Partitioned by year
 open_dataset("./data/person") |>
-  write_dataset("./data/transient_data/person_year", partitioning = "year")
+  write_dataset(
+    file.path(tmp_dir, "person_year"),
+    partitioning = "year"
+  )
 
-pums_by_year <- open_dataset("./data/transient_data/person_year")
+pums_by_year <- open_dataset(
+  file.path(tmp_dir, "person_year")
+)
 
 # 3. Partitioned by year and location
-# We don't need to create a new dataset here as this already is the structure of the data
+# We don't need to create a new dataset here as 
+# this already is the structure of the data
 pums_by_year_location <- open_dataset("./data/person")
 
 # 4. Partitioned by year, location, and new column age_group
@@ -455,11 +491,13 @@ open_dataset("./data/person") |>
     )
   ) |>
   write_dataset(
-    path = "./data/transient_data/person_year_location_age",
+    path = file.path(tmp_dir, "person_year_location_age"),
     partitioning = c("year", "location", "age_group")
   )
 
-pums_by_year_location_age <- open_dataset("./data/transient_data/person_year_location_age")
+pums_by_year_location_age <- open_dataset(
+  file.path(tmp_dir, "person_year_location_age")
+)
 ```
 
 The table below shows how many files in each dataset, as well as the minimum, maximum, and median file size.
@@ -479,12 +517,14 @@ The table below shows how many files in each dataset, as well as the minimum, ma
 ```{r}
 #| eval: false
 #| echo: false
-# This isn't run, I just included it here as it is how I got the values for the table
+# This isn't run, I just included it here as it is how I
+# got the values for the table
 dir <- "./data/person"
 length(fs::dir_ls(dir, recurse = TRUE)) # n_files
 max(fs::file_size(fs::dir_ls(dir, recurse = TRUE))) # max
 min(fs::file_size(fs::dir_ls(dir, recurse = TRUE))) # min
-median(fs::file_size(fs::dir_ls(dir, recurse = TRUE))) |> utils:::format.object_size("KB", digits = 2L)
+median(fs::file_size(fs::dir_ls(dir, recurse = TRUE))) |>
+  utils:::format.object_size("KB", digits = 2L)
 s <- summary(fs::file_size(fs::dir_ls(dir, recurse = TRUE)))
 s[["1st Qu."]] |> utils:::format.object_size("KB", digits = 2L)
 s[["3rd Qu."]] |> utils:::format.object_size("MB", digits = 2L)
@@ -499,7 +539,9 @@ First, let's try running query which just requires filtering the data by one of 
 #| eval: false
 open_dataset("<path/to/data>") |>
   filter(year >= 2018) |>
-  summarise(mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarise(
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+      sum(PWGTP)) |>
   collect()
 ```
 
@@ -541,7 +583,9 @@ open_dataset("<path/to/data>") |>
     )
   ) |>
   group_by(year, age_group, location) |>
-  summarise(mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarise(
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
+      sum(PWGTP)) |>
   collect()
 ```
 
@@ -580,9 +624,16 @@ open_dataset("<path/to/data>") |>
       TRUE ~ "65+"
     )
   ) |>
-  filter(year >= 2012, location %in% c("ny", "ca"), age_group == "Under 25") |>
+  filter(
+    year >= 2012,
+    location %in% c("ny", "ca"),
+    age_group == "Under 25"
+  ) |>
   group_by(year, location, age_group) |>
-  summarise(mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarise(
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+      sum(PWGTP)
+  ) |>
   collect()
 ```
 
@@ -692,14 +743,20 @@ Let's say we want to restrict each file to contain 500,000 rows or fewer; to do 
 open_dataset("./data/person") |>
   filter(year >= 2018) |>
   group_by(year) |>
-  write_dataset("./data/transient_data/person_starting_2018", max_rows_per_file = 500000)
+  write_dataset(
+    file.path(tmp_dir, "person_starting_2018"),
+    max_rows_per_file = 500000
+  )
 ```
 
 If we take a look at the files created, we now see there are 7 in each of the year-partitioned directories.
 
 ```{r}
 #| label: max-rows-per-file-view
-fs::dir_ls("./data/transient_data/person_starting_2018", recurse = TRUE)
+fs::dir_ls(
+  file.path(tmp_dir, "person_starting_2018"),
+  recurse = TRUE
+)
 ```
 
 We can also see here that the default name for the file in each partition is `part-i.parquet` where `i` is the file number in that directory with values starting from 0.
@@ -803,8 +860,8 @@ It is possible to work with files in multiple directories in arrow by passing in
 #| label: source_list
 ds <- open_dataset(
   sources = c(
-    file.path("data", "person", "year=2021", "location=ak", "part-0.parquet"),
-    file.path("data", "person", "year=2021", "location=wa", "part-0.parquet")
+    "./data/person/year=2021/location=ak/part-0.parquet",
+    "./data/person/year=2021/location=wa/part-0.parquet"
   )
 )
 ```
@@ -831,7 +888,7 @@ You can specify extra options to `open_dataset()` to exclude these files from yo
 ```{r}
 #| label: setup-metadata-dir
 #| echo: false
-new_dir <- "./data/transient_data/person_with_metadata"
+new_dir <- file.path(tmp_dir, "person_with_metadata")
 fs::dir_create(new_dir)
 
 # copy existing data
@@ -842,7 +899,10 @@ open_dataset("./data/person") |>
 
 purrr::walk(
   fs::dir_ls(new_dir, type = "directory"),
-  ~ writeLines("PUMS data - this be metadata", file.path(.x, "data_info.txt"))
+  ~ writeLines(
+    "PUMS data - this be metadata",
+    file.path(.x, "data_info.txt")
+  )
 )
 ```
 
@@ -850,7 +910,10 @@ Let's say you have a directory containing your dataset, but also containing meta
 
 ```{r}
 #| label: view-metadata-dir
-fs::dir_ls("./data/transient_data/person_with_metadata", recurse = TRUE)
+fs::dir_ls(
+  file.path(tmp_dir, "person_with_metadata"),
+  recurse = TRUE
+)
 ```
 
 If you call `open_dataset()` on this directory, you'll get an error message as arrow will try (and fail) to read in the `data_info.txt` files as Parquet files.
@@ -858,7 +921,7 @@ If you call `open_dataset()` on this directory, you'll get an error message as a
 ```{r}
 #| label: metadata-fail
 #| error: true
-open_dataset("./data/transient_data/person_with_metadata")
+open_dataset(file.path(tmp_dir, "person_with_metadata"))
 ```
 
 However, you can set an option which tells arrow to ignore all files beginning with "data\_".
@@ -867,7 +930,7 @@ However, you can set an option which tells arrow to ignore all files beginning w
 #| label: selector_ignore_prefixes
 #| eval: false
 open_dataset(
-  "./data/transient_data/person_with_metadata",
+  file.path(tmp_dir, "person_with_metadata"),
   factory_options = list(selector_ignore_prefixes = c("data_"))
 )
 ```
@@ -878,7 +941,7 @@ Alternatively, you can let arrow try to read in all the files, but exclude an in
 #| label: exclude_invalid_files
 #| eval: false
 open_dataset(
-  "./data/transient_data/person_with_metadata",
+  file.path(tmp_dir, "person_with_metadata"),
   factory_options = list(exclude_invalid_files = TRUE)
 )
 ```
@@ -888,7 +951,7 @@ This approach may be slower than the previous one as arrow has to try to read in
 ```{r}
 #| label: teardown-metadata-dir
 #| echo: false
-fs::dir_delete("./data/transient_data/person_with_metadata")
+fs::dir_delete(file.path(tmp_dir, "person_with_metadata"))
 ```
 
 ### Combining datasets
@@ -899,7 +962,7 @@ For example, perhaps you have a nightly ETL job that turns CSV to Parquet, but y
 ```{r}
 #| label: setup-multiformat-dataset
 #| echo: false
-new_dir <- "./data/transient_data/person_multiformat"
+new_dir <- file.path(tmp_dir, "person_multiformat")
 csv_dir <- file.path(new_dir, "csv_data")
 parquet_dir <- file.path(new_dir, "parquet_data")
 
@@ -925,9 +988,11 @@ We can then use `dplyr::union_all()` to combine our 2 datasets into one.
 
 ```{r}
 #| label: create-multiformat-datasets
-parquet_dataset <- open_dataset("./data/transient_data/person_multiformat/parquet_data")
+parquet_dataset <- open_dataset(
+  file.path(tmp_dir, "person_multiformat/parquet_data")
+)
 csv_dataset <- open_csv_dataset(
-  "./data/transient_data/person_multiformat/csv_data",
+  file.path(tmp_dir, "person_multiformat/csv_data"),
   skip = 1,
   schema = schema(parquet_dataset),
   partitioning = schema(year = int32(), location = string())
@@ -942,7 +1007,9 @@ We can now query this dataset as if it was a single dataset.
 #| label: query-union-dataset
 combined_data |>
   group_by(year) |>
-  summarise(mean_age = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarise(
+    mean_age = sum(JWMNP * PWGTP, na.rm = TRUE) /
+      sum(PWGTP)) |>
   collect()
 ```
 
