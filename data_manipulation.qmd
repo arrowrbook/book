@@ -108,11 +108,19 @@ We can use the dplyr function `case_when()` to replace the older values with the
 pums_person |>
   mutate(
     CIT = case_when(
-      CIT == "Yes, born in the US" ~ "Born in the United States",
-      CIT == "Yes, naturalized" ~ "U.S. citizen by naturalization",
-      CIT == "Not a citizen" ~ "Not a U.S. citizen",
-      CIT == "Yes, born abroad of American parent(s)" ~ "Born abroad of U.S. citizen parent or parents",
-      CIT == "Yes, born in Puerto Rico, etc." ~ "Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"
+      CIT == "Yes, born in the US" ~ 
+        "Born in the United States",
+      CIT == "Yes, naturalized" ~ 
+        "U.S. citizen by naturalization",
+      CIT == "Not a citizen" ~ 
+        "Not a U.S. citizen",
+      CIT == "Yes, born abroad of American parent(s)" ~ 
+        "Born abroad of U.S. citizen parent or parents",
+      CIT == "Yes, born in Puerto Rico, etc." ~ 
+        paste0(
+          "Born in Puerto Rico, Guam, the U.S. Virgin Islands,", 
+          " or Northern Marianas"
+        )
     )
   ) |>
   distinct(CIT) |>
@@ -125,9 +133,11 @@ We can use the **stringr** function `str_detect()` to create a new column, which
 
 ```{r}
 #| label: self-employed
+library(stringr)
+
 pums_person |>
   mutate(COW = as.character(COW)) |>
-  mutate(self_employed = stringr::str_detect(COW, "Self-employed")) |>
+  mutate(self_employed = str_detect(COW, "Self-employed")) |>
   group_by(year, self_employed) |>
   summarize(mean_age = sum(AGEP * PWGTP) / sum(PWGTP)) |>
   arrange(year, self_employed) |>
@@ -153,9 +163,11 @@ You might start off with something like this:
 
 ```{r}
 #| label: query
+
+higher_ed_string <- "(Bach|Mast|Prof|Doct|college|degree)"
 higher_ed <- pums_person |>
   filter(AGEP > 18) |>
-  mutate(higher_education = grepl("(Bach|Mast|Prof|Doct|college|degree)", SCHL))
+  mutate(higher_education = grepl(higher_ed_string, SCHL))
 ```
 
 You can preview your results using `head()` to only return the first few rows, and calling `select()` will speed things up further, as arrow will only read into memory the requested columns.
@@ -189,7 +201,10 @@ For more details about how this works, see @sec-dplyr-generics below.
 
 higher_ed <- pums_person |>
   filter(AGEP > 18) |>
-  mutate(higher_education = stringr::str_detect(SCHL, "(Bach|Mast|Prof|Doct|college|degree)"))
+  mutate(higher_education = stringr::str_detect(
+    SCHL,
+    higher_ed_string)
+  )
 ```
 
 You can use these functions with or without namespacing, so either `stringr::str_detect()` or just `str_detect()` work.
@@ -266,7 +281,10 @@ We start by creating a reference table of mean commute time by state and year.
 #| label: create-ref-table
 mean_commute_time <- pums_person |>
   group_by(location, year) |>
-  summarize(mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)) |>
+  summarize(
+    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+      sum(PWGTP)
+  ) |>
   collect()
 
 head(mean_commute_time, 5)
@@ -281,7 +299,11 @@ We can then perform a left join to combine this information with the information
 pums_person |>
   left_join(mean_commute_time, by = c("location", "year")) |>
   mutate(commute_diff = mean_commute_time - JWMNP) |>
-  select(commute_diff, commute_time = JWMNP, mean_commute_time) |>
+  select(
+    commute_diff,
+    commute_time = JWMNP,
+    mean_commute_time
+  ) |>
   head(3) |>
   collect()
 ```
@@ -344,9 +366,16 @@ pums_person <- open_dataset("./data/person")
 #| label: fix-lookup-join
 pums_person |>
   mutate(year = cast(year, int16())) |>
-  left_join(mean_commute_time_arrow, by = c("location", "year"))|>
+  left_join(
+    mean_commute_time_arrow,
+    by = c("location", "year")
+  )|>
   mutate(commute_diff = mean_commute_time - JWMNP) |>
-  select(commute_diff, commute_time = JWMNP, mean_commute_time) |>
+  select(
+    commute_diff,
+    commute_time = JWMNP,
+    mean_commute_time
+  ) |>
   head(3) |>
   collect()
 ```
