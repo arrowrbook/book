@@ -1,7 +1,0 @@
-# Welcome {.unnumbered}
-
-This is the website for Scaling Up with R and Arrow.
-
-## Acknowledgements {.unnumbered}
-
-A huge thanks to folks who gave us writing advice and really helpful feedback on our drafts of this book, including Sam Albers, Carl Boettiger, Raúl Cumplido, Dewey Dunnington, Alenka Frim, Colin Gillespie, Stephanie Hazlitt, Jared Lander, Bryce Mecum, François Michonneau, Danielle Navarro, Antoine Pitrou, Brian Repko, and Jacob Wujciak-Jens.
