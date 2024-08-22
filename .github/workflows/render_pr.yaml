@@ -1,10 +1,15 @@
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
 name: Render with the subset data
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -40,7 +45,6 @@ jobs:
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           working-directory: 'desc'
@@ -54,6 +58,7 @@ jobs:
           PUMS_LOC: ./data
           QUARTO_PROFILE: rerender
         uses: quarto-dev/quarto-actions/render@v2
+
       - name: Deploy to GH pages preview
         uses: rossjrw/pr-preview-action@v1
         with:
