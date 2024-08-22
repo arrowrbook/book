@@ -11,7 +11,6 @@ name: Render with the subset data
 permissions:
   contents: write
   pull-requests: write
-  pages: write
 
 jobs:
   render:
@@ -64,4 +63,4 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: './_book'
-          preview-branch: publish
+          preview-branch: published
