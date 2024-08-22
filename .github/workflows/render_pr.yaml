@@ -45,10 +45,6 @@ jobs:
         with:
           working-directory: 'desc'
 
-      - name: Install nightly arrow
-        run: |
-          Rscript -e "arrow::install_arrow(nightly = TRUE)"
-
       - name: Setup PyArrow
         run: |
           Rscript -e "library(reticulate); virtualenv_create('pyarrow-env'); arrow::install_pyarrow('pyarrow-env'); py_install('pandas', 'pyarrow-env')"
