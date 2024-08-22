@@ -1,0 +1,129 @@
+---
+title: "PUMS Readme"
+execute:
+  echo: false
+  warning: false
+format:
+  html:
+    embed-resources: true
+    anchor-sections: true
+---
+
+This dataset is a re-coding and enriching of the [Public Use Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/microdata.html) collected and provided by the United States Census.
+It covers years 2005--2022 using the 1-year estimates (though 2020 is missing since that year's was only released in 5-year estimates due to COVID).
+
+The raw data was retrieved from [the Census's FTP site](https://www2.census.gov/programs-surveys/acs/data/pums/) and the values to recode categorical and string data was retrieved from the Census's API (via the `censusapi` R package).
+
+The data was recoded with the following general principles:
+
+-   If there were string values and there were less than or equal to 10 unique values, we converted these to factors.
+-   If there were string values and there were more than 10 unique values, we converted these to strings.
+-   We used integer or floats for values that were numeric in nature, and recoded special values (*eg* variable `RETP` "Retirement income past 12 months" where a value of -1 means "N/A (Less than 15 years old)") that are missing-like as `NA`. Note: there are also a number of values that are top and bottom coded — these are also converted to numerics (*eg* so a maximum value in those columns actually represents that value or larger; variable `WKHP` or "Usual hours worked per week past 12 months" which has a value of 99 marked as "99 Or More Usual Hours").
+-   If there were codes that broadly corresponded to `TRUE` and `FALSE` (e.g. "yes" and "no"), these were converted into booleans
+
+The book [Analyzing US Census Data: Methods, Maps, and Models in R](https://walker-data.com/census-r/index.html) has [chapters dedicated to analyzing this kind of microdata](https://walker-data.com/census-r/introduction-to-census-microdata.html) with `tidycensus` package.
+Though the `tidycensus` package + approach will have slight differences from analyzing this data with arrow the concepts + analytic approach will be the same.
+
+Though we have not purposefully altered this data, this data should not be relied on to be a perfect or even possibly accurate representation of the official PUMS dataset.
+
+## Datasets and partitioning
+
+There are two datasets, one at `s3://scaling-arrow-pums/person/` which has person-level data and another at `s3://scaling-arrow-pums/household/` which has household-level data.
+
+Each of these datasets is subsequently partitioned by year and then by state/territory with prefixes like `year=2019/location=il` with Parquet files below that.
+
+## Data dictionary 
+
+```{r}
+library(arrow)
+library(dplyr)
+
+pums_vars <- read_parquet("./all_pums_variables.parquet")
+
+# type hardcode
+hardcodes <- c(
+  "ADJUST" = "both", 
+  "CONCAT_ID" = "neither", 
+  "DIVISION" = "both", 
+  "MIGPUMA" = "person", 
+  "MIGSP" = "person", 
+  "POBP" = "person", 
+  "POWPUMA" = "person",
+  "POWSP" = "person",
+  "PUMA" = "both", 
+  "PWGTP" = "person",
+  "PWGTP1-80" = "person", 
+  "RECORD_TYPE" = "neither", 
+  "REGION" = "both", 
+  "REPWALL" = "neither", 
+  "RT" = "both", 
+  "ST" = "both",
+  "WGTP" = "household", 
+  "WGTP1-80" = "household", 
+  "for" = "neither", 
+  "in" = "neither", 
+  "ucgid" = "neither"
+)
+
+vars_cleaned <- pums_vars |> 
+  # collapse the weight variables
+  mutate(
+    label = case_when(
+      grepl("^WGTP.+", name) ~ "Person's Weight replicate 1-80; multiple variables",
+      grepl("^PWGTP.+", name) ~ "Housing Weight replicate 1-80; multiple variables",
+      # RT is sometimes Record type, sometimes Record Type
+      grepl("^RT$", name) ~ "Record type", 
+      .default = label
+    ),
+    name = case_when(
+      grepl("^WGTP.+", name) ~ "WGTP1-80",
+      grepl("^PWGTP.+", name) ~ "PWGTP1-80",
+      .default = name
+    ),
+    dataset = case_when(
+      # hardoce RT because it is given a weight for the last survey
+      name == "RT" ~ "both",
+      suggested_weight == "PWGTP" ~ "person",
+      suggested_weight == "WGTP" ~ "household",
+      is.na(suggested_weight) ~ hardcodes[name],
+      .default = NA
+    )
+  ) |> 
+  group_by(name, dataset) |> 
+  summarize(description = last(label), dataset = unique(dataset)) |>
+  ungroup()
+```
+::: {.panel-tabset}
+
+### Person data
+
+```{r}
+vars_cleaned |> 
+  filter(dataset %in% c("person", "both")) |>
+  select(name, description) |> 
+  arrange(name) |>
+  gt::gt() |>
+  gt::opt_interactive(
+    page_size_default = 50,
+    use_compact_mode = TRUE,
+    use_filters = TRUE
+  ) |>
+  gt::cols_width(name ~ px(125))
+```
+
+### Household data
+
+```{r}
+vars_cleaned |> 
+  filter(dataset %in% c("household", "both")) |>
+  select(name, description) |> 
+  arrange(name) |>
+  gt::gt() |>
+  gt::opt_interactive(
+    page_size_default = 50,
+    use_compact_mode = TRUE,
+    use_filters = TRUE
+  ) |>
+  gt::cols_width(name ~ px(125))
+```
+::: 
