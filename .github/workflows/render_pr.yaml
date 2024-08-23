@@ -62,5 +62,6 @@ jobs:
       - name: Deploy to GH pages preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: './_book'
+          source-dir: _book
           preview-branch: published
+          umbrella-dir: docs/pr-preview
