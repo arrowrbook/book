@@ -1,0 +1,13 @@
+/.quarto/
+.Rproj.user
+.Rhistory
+
+# ignore the rendered book, since GHA does that for us
+_book
+_freeze
+
+.venv
+
+# ignore data files
+data
+PUMS_smol
