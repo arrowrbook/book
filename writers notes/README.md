@@ -1,8 +1,6 @@
 # Scaling Up with R and Arrow
 
-Dev site: https://comfy-gaufre-b4acb3.netlify.app/
-
-Published for feedback: https://scalingupwithrandarrowpreview.netlify.app/
+Published site: [arrowrbook.com](https://arrowrbook.com)
 
 ## How to render
 
@@ -10,6 +8,19 @@ All of the code in this book assumes that the data is at `data/` within the repo
 For convenience of writing, all examples can run with either the full data or the subset data. 
 Which is used depends on which is in (or linked to) the `data/` directory.
 Doing this allows us to have quick iteration cycles knowing that we can compile with examples and write examples without needing to run against the full dataset every single time.
+
+### Rendering with full data for publishing
+
+To render and publish with the full dataset (all of this is done locally): 
+
+* remove the `_freeze/` directory 
+* run `quarto publish gh-pages` 
+
+This will automatically render the book and then add the files to the `gh-pages` branch where the book is hosted from.
+
+#### PR previews
+
+In CI on PRs, we use the subset data to render (and we set `freeze: false` so we never use the frozen output). The preview will be added to the PR automatically. The PR preview action automatically cleans up preview builds so they don't sit around.
 
 ### Subset data
 
@@ -38,24 +49,3 @@ If you would like to store this elsewhere, you can symlink to this folder and ev
 
 Get the PUMS dataset from S3: `aws s3 sync s3://scaling-arrow-pums {some path where you can hold this data}`
 _hand waved for now_: get the raw PUMS CSVs and extract them to `{some path where you can hold this data}/raw_csvs` (you can copy this from the [Subset data above for now](https://github.com/thisisnic/scaling_up_with_r_and_arrow/tree/CI_data/PUMS_smol/raw_csvs/person))
-
-### Rendering with full data for publishing
-
-In CI, we use the subset data to render (and we set `freeze: false` so we never use the frozen output). 
-
-To render and publish with the full dataset (all of this is done locally): 
-
-* checkout the `published` branch and remove both `_book` and `_freeze` to start fresh
-* then switch to the branch you want to render (typically up-to-date `main`)
-* link or placed the full dataset in the `data/` directory
-* remove the `_freeze/` directory and run `quarto render` 
-* switch to the `published` branch and then commit the `_book` and `_freeze/` files
-
-The `published` branch doesn't have the source files, just those needed to render and publish the book to [scalingupwithrandarrowpreview.netlify.app](https://scalingupwithrandarrowpreview.netlify.app).
-
-## Conventions that seem to be working
-
-* merge shitty-first-draft versions of chapters into main, then open subsequent PRs to make changes or additions
-* open issues for more general changes
-* use HTML comments (i.e. `<!-- #34 comment goes here -->`) to note changes in the text; open a corresponding issue and include number in the comment
-* make all changes (except this README, CI, inline comments etc) via PRs so it's easy to get a quick overview of what's been happening in the repo

@@ -63,5 +63,3 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: _book
-          preview-branch: published
-          umbrella-dir: docs/pr-preview
