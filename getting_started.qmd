@@ -143,41 +143,14 @@ One thing to note here is that we need to calculate weighted means because of th
 Again, don't worry if this looks like a lot!
 We picked an example that needed some work on purpose, to show just how easily we can take the tools we know already, like dplyr, and use them with arrow on larger-than-memory datasets.
 
-First, we'll create a couple of functions we can use in our pipeline.
+First, we'll create a couple of lists we can use in our pipeline.
 
 ```{r}
 #| label: pums-data-manip-agg-prep
-get_mode_of_transit <- function(mode_of_transit) {
-  case_when(
-    grepl("car|motorcycle", mode_of_transit, TRUE) ~ 
-      "Car, motorcycle",
-    grepl("bicycle", mode_of_transit, TRUE) ~ "Bicycle",
-    grepl("walked", mode_of_transit, TRUE) ~ "Walked",
-    grepl("bus", mode_of_transit, TRUE) ~ "Bus",
-    grepl("subway|streetcar", mode_of_transit, TRUE) ~ 
-      "Subway, light rail",
-    grepl("railroad|commuter", mode_of_transit, TRUE) ~ 
-      "Commuter rail, train",
-    grepl("worked .* home", mode_of_transit, TRUE) ~ 
-      "Worked from home",
-    grepl("ferry|other", mode_of_transit, TRUE) ~ 
-      "Other method",
-    grepl("taxi", mode_of_transit, TRUE) ~ "Taxicab"
-  )
-}
-
-get_public_private <- function(mode_of_transit) {
-  
-  private_transport <- c("Car, motorcycle", "Bicycle", "Walked")
-  public_transport <- c("Bus", "Subway, light rail", 
-                        "Commuter rail, train")
-  
-  case_when(
-    mode_of_transit %in%  private_transport ~ "Private",
-    mode_of_transit %in% public_transport ~ "Public",
-    TRUE ~ "Other"
-  )
-}
+private_transport <- c("Car, motorcycle", "Bicycle", "Walked")
+public_transport <- c(
+  "Bus", "Subway, light rail", "Commuter rail, train"
+)
 ```
 
 And now we can use them in our data pipeline.
@@ -187,14 +160,34 @@ And now we can use them in our data pipeline.
 commute_by_mode <- pums_person |>
   mutate(
     mode_of_transit = coalesce(JWTR, JWTRNS),
-    mode_of_transit = get_mode_of_transit(mode_of_transit),
-    public_private = get_public_private(mode_of_transit)
+    mode_of_transit = case_when(
+      grepl("car|motorcycle", mode_of_transit, TRUE) ~
+        "Car, motorcycle",
+      grepl("bicycle", mode_of_transit, TRUE) ~ "Bicycle",
+      grepl("walked", mode_of_transit, TRUE) ~ "Walked",
+      grepl("bus", mode_of_transit, TRUE) ~ "Bus",
+      grepl("subway|streetcar", mode_of_transit, TRUE) ~
+        "Subway, light rail",
+      grepl("railroad|commuter", mode_of_transit, TRUE) ~
+        "Commuter rail, train",
+      grepl("worked .* home", mode_of_transit, TRUE) ~
+        "Worked from home",
+      grepl("ferry|other", mode_of_transit, TRUE) ~
+        "Other method",
+      grepl("taxi", mode_of_transit, TRUE) ~ "Taxicab"
+    ),
+    public_private = case_when(
+      mode_of_transit %in% private_transport ~ "Private",
+      mode_of_transit %in% public_transport ~ "Public",
+      TRUE ~ "Other"
+    )
   ) |>
   filter(!is.na(mode_of_transit)) |>
   group_by(year, mode_of_transit, public_private) |>
   summarize(
     mean_commute_time = sum(JWMNP * PWGTP,
-                            na.rm = TRUE) / sum(PWGTP),
+      na.rm = TRUE
+    ) / sum(PWGTP),
     n_commuters = sum(PWGTP)
   )
 
@@ -211,7 +204,7 @@ Note, that until we call `collect()` we aren't even pulling any data into R — 
 baseline <- commute_by_mode |>
   filter(year == 2005) |>
   select(
-    transit_type,
+    mode_of_transit,
     time_baseline = mean_commute_time,
     n_baseline = n_commuters
   )
@@ -219,6 +212,7 @@ baseline <- commute_by_mode |>
 to_plot <- commute_by_mode |>
   left_join(baseline) |>
   mutate(
+    transit_type = mode_of_transit,
     mean_commute_time_relative =
       (mean_commute_time - time_baseline) / time_baseline,
     n_commuters_relative =
@@ -246,19 +240,19 @@ ggplot(to_plot) +
       factor(
         public_private,
         levels = c("Public", "Private", "Other")
-        )
+      )
     ),
     ncol = 1,
     scales = "free_y"
   ) +
-  # These 3 lines + nudge in ggrepel + plot.margin allows the 
+  # These 3 lines + nudge in ggrepel + plot.margin allows the
   # labels to be "outside" the gridline.
   geom_rect(
     mapping = aes(
-      xmin = latest_year + .1, 
-      xmax = Inf, ymin = -Inf, 
+      xmin = latest_year + .1,
+      xmax = Inf, ymin = -Inf,
       ymax = Inf
-    ), 
+    ),
     color = "white",
     fill = "white"
   ) +
@@ -290,11 +284,11 @@ ggplot(to_plot) +
   theme(plot.margin = unit(c(1, 7, 1, 1), "lines")) +
   labs(
     title = paste0(
-      "Percent change in modes of transport for", 
+      "Percent change in modes of transport for",
       " individuals by year"
     ),
     subtitle = paste0(
-      "The baseline year is 2005, with growth (or reduction)", 
+      "The baseline year is 2005, with growth (or reduction)",
       " in individuals for each mode"
     )
   )
@@ -317,17 +311,20 @@ to_plot |>
   facet_wrap(
     vars(factor(
       public_private,
-      levels = c("Public", "Private", "Other"))
-    ),
+      levels = c("Public", "Private", "Other")
+    )),
     ncol = 1,
     scales = "free_y"
   ) +
   # These 3 lines + nudge in ggrepel + plot.margin allows
   # the labels to be "outside" the gridline.
   geom_rect(
-    mapping = aes(xmin = latest_year + .1, xmax = Inf, 
-                  ymin = -Inf, ymax = Inf),
-    color = "white", fill = "white") +
+    mapping = aes(
+      xmin = latest_year + .1, xmax = Inf,
+      ymin = -Inf, ymax = Inf
+    ),
+    color = "white", fill = "white"
+  ) +
   coord_cartesian(clip = "off") +
   scale_x_continuous(expand = expansion(mult = c(0.025, 0))) +
   ggrepel::geom_text_repel(
@@ -356,11 +353,11 @@ to_plot |>
   theme(plot.margin = unit(c(1, 7, 1, 1), "lines")) +
   labs(
     title = paste0(
-      "Duration of commute for different", 
+      "Duration of commute for different",
       " modes of transport by year"
     ),
     subtitle = paste0(
-      "\"Worked from home\" has been removed, since ", 
+      "\"Worked from home\" has been removed, since ",
       "those commutes are all 0."
     )
   )

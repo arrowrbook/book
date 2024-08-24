@@ -100,7 +100,7 @@ open_dataset("./data/person") |>
   filter(location == "wa") |>
   group_by(year) |>
   summarize(
-    avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+    avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
       sum(PWGTP)
   ) |>
   arrange(desc(year)) |>
@@ -188,9 +188,10 @@ We can do this by passing in the parameter `hive_style = FALSE` into our call to
 
 ```{r}
 #| label: save-non-hive
+tmp_dir <- "./data/transient_data/"
 open_dataset("./data/person") |>
   write_dataset(
-    file.path(tmp_dir, "person_non_hive"), 
+    file.path(tmp_dir, "person_non_hive"),
     partitioning = "year",
     hive_style = FALSE
   )
@@ -200,7 +201,6 @@ If we inspect the content of the new directory, we can see that the filenames in
 
 ```{r}
 #| label: non-hive-size
-tmp_dir <- "./data/transient_data/"
 fs::dir_ls(file.path(tmp_dir, "person_non_hive"))
 ```
 
@@ -473,7 +473,7 @@ pums_by_year <- open_dataset(
 )
 
 # 3. Partitioned by year and location
-# We don't need to create a new dataset here as 
+# We don't need to create a new dataset here as
 # this already is the structure of the data
 pums_by_year_location <- open_dataset("./data/person")
 
@@ -540,8 +540,9 @@ First, let's try running query which just requires filtering the data by one of 
 open_dataset("<path/to/data>") |>
   filter(year >= 2018) |>
   summarise(
-    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
-      sum(PWGTP)) |>
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
+      sum(PWGTP)
+  ) |>
   collect()
 ```
 
@@ -585,7 +586,8 @@ open_dataset("<path/to/data>") |>
   group_by(year, age_group, location) |>
   summarise(
     mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)) |>
+      sum(PWGTP)
+  ) |>
   collect()
 ```
 
@@ -631,7 +633,7 @@ open_dataset("<path/to/data>") |>
   ) |>
   group_by(year, location, age_group) |>
   summarise(
-    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
       sum(PWGTP)
   ) |>
   collect()
@@ -1009,7 +1011,8 @@ combined_data |>
   group_by(year) |>
   summarise(
     mean_age = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)) |>
+      sum(PWGTP)
+  ) |>
   collect()
 ```
 
