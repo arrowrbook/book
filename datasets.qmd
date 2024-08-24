@@ -134,7 +134,7 @@ This can significantly speed up analyses of larger datasets.
 
 We have already been working with partitioned data: the data in the PUMS person dataset has been partitioned based on the "year" and "location" columns.
 
-![](images/excalidraw/datasets_pums.png)
+![](images/excalidraw/datasets_pums_small.png)
 Partitioning is where groups of rows of data have been saved to separate files.
 These separate files are saved in directories, where each directory represents the rows of the data where a particular column has a particular value.
 
