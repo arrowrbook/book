@@ -50,9 +50,9 @@ While you can work with compressed CVSs, this solves part of the problem, but no
 
 Many examples will look at working with data hosted on Amazon S3, but the same principles can also be used with data in GCS.
 There are some subtle differences between S3 and GCS which we'll highlight when they come up and outline any differences you need to be aware of.
-In the future, the Apache Arrow project plans to add functionality to work with additional cloud storage services like Azure Blob Storage---this implementation and future ones relating to any other cloud storage services will also follow this model.[^1]
+In the future, the Apache Arrow project plans to add functionality to work with additional cloud storage services like Azure Blob Storage---this implementation and future ones relating to any other cloud storage services will also follow this model.[^azure]
 
-[^1]: At the time of writing, the Arrow C++ library has introduced support for Azure Blob Storage. Users of PyArrow can query datasets on Azure from Python, and once bindings are added to the arrow R package, it will be available from R.
+[^azure]: At the time of writing, the Arrow C++ library has introduced support for Azure Blob Storage. Users of PyArrow can query datasets on Azure from Python, and once bindings are added to the arrow R package, it will be available from R.
 
 In cloud storage terminology, S3 and GCS refer to the place where the data is stored as a **bucket**.  Other systems may use alternative terms, like "blob", but we will use "bucket" here as a generic term.
 

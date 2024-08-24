@@ -647,7 +647,7 @@ This preservation of custom attributes and classes is helpful because it means t
 One thing to note is that this preservation of custom attributes works automatically when you write a Parquet file from R and then read it in to R, but it won't work automatically when writing from R and then reading in another language like Python.
 The custom metadata for each language implementation is stored in a separate location for each language.
 So while reading data into Python which has a custom class that was created in R, Arrow won't automatically create that same class.
-However, you still do have access to that metadata under the `metadata` and then `r` attribute if there are details you need to access from Python. 
+However, you still do have access to that metadata under the `metadata` and then `r` attribute if there are details you need to access from Python.
 
 ### File structure and parallelisation
 
@@ -853,7 +853,7 @@ That is, we'll keep the data in Arrow memory and never pull it into an R data fr
 
 Let's look at the PUMS dataset.
 It is a survey, and it has some features commonly found in surveys that need to be cleaned up.
-For one, the actual row-level data in the survey is encoded based on the type of data it represents.[^1]
+For one, the actual row-level data in the survey is encoded based on the type of data it represents.[^punchcards]
 For columns that are numeric, the data is what is in the data file, but characters, factors, and missing values are recorded as integers.
 <!-- NPR: missing values actually look like empty cells in the CSV, not -1 or whatever -->
 These integers must be mapped to values in the codebook, which is distributed with the data and acts as a lookup for what actual value is represented by the integer in the dataset.
@@ -861,7 +861,7 @@ These integers must be mapped to values in the codebook, which is distributed wi
 For another, the survey questions have changed over time, so data from one year may not line up perfectly with data from other years without some adjustment.
 Many columns in this dataset require transformation to create a nice consistent dataset to work with.
 
-[^1]: Exploring the reasons for this convention is outside of the scope of this book, but it is partly because, historically, folks working with surveys used tools and frameworks that made working with large amounts of data that _wasn't_ numeric difficult.
+[^punchcards]: Exploring the reasons for this convention is outside of the scope of this book, but it is partly because, historically, folks working with surveys used tools and frameworks that made working with large amounts of data that _wasn't_ numeric difficult.
 However, with modern data tools like arrow, we can effectively and efficiently work with data of all types!
 
 Let's start with the `COW` variable, which represents class of worker, categorizing people based on their employment status.

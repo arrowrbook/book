@@ -44,9 +44,9 @@ If you want to know more details about the dataset, including how you can get ho
 Let's take a look at the data in R.
 The data is stored in a directory called `./data/pums/person`.
 This is further split into multiple directories, one for each year, and then within those directories, one for each location.
-Finally, within each state directory, there is a single Parquet file containing the data for that year and location.[^1]
+Finally, within each state directory, there is a single Parquet file containing the data for that year and location.[^parquet-is-coming]
 
-[^1]: Unfamiliar with the Parquet file format? Don't worry, we'll cover that in [Chapter @sec-filesformats]
+[^parquet-is-coming]: Unfamiliar with the Parquet file format? Don't worry, we'll cover that in [Chapter @sec-filesformats]
 
 ```
 ./data/pums/person/

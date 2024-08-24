@@ -373,7 +373,7 @@ When this book was being written, there were already nascent projects to make th
 Today, however, we need to do a couple more things before we can work with it further and use `sf` and `ggplot2` to plot this: make sure that our CRS is set correctly and pulling the data into R.
 To do both of these, we create a helper function.
 This helper function ensures that we use the CRS we saw the data had above.
-It also sets the bounding box and center so that the entirety of the United States is laid out correctly.[^2]
+It also sets the bounding box and center so that the entirety of the United States is laid out correctly.[^alaska]
 Finally, we pull the data into R and set the correct geometry column to use.
 
 ```{r}
@@ -407,10 +407,10 @@ correct_projection <- function(PUMA, crs = "NAD83") {
 
 ### Enhancing PUMS data with GeoParquet PUMAs data {#sec-pums-pumas}
 
-Putting this all together, let's try making a plot[^1] showing different languages spoken throughout the United States.
+Putting this all together, let's try making a plot[^lang-choropleth] showing different languages spoken throughout the United States.
 The analysis we will build up is the percentage of speakers for languages spoken in the US.
 We will then plot this data, subsetting to a few interesting languages depending on what region we are plotting.
-In the PUMS dataset, the smallest geographic area is called a [PUMA (Public Use Microdata Areas)](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html).[^3]
+In the PUMS dataset, the smallest geographic area is called a [PUMA (Public Use Microdata Areas)](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html).[^pumas-rawr]
 These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state.
 
 As always, we start with our PUMS dataset.
@@ -782,8 +782,8 @@ We began talking about user-defined functions (UDFs), explaining how to create a
 We also looked at the interoperability between Arrow and DuckDB, showing how to use DuckDB for tasks not natively supported in Arrow.
 Finally, we took a look at extending arrow, with a focus on geospatial data, introducing the concept of GeoParquet for on-disk geospatial data representation that can quickly and easily be turned into an in-memory representation.
 
-[^1]: This type of plot is called a choropleth where a geographic representation is colored or shaded to show different values in different areas.
+[^lang-choropleth]: This type of plot is called a choropleth where a geographic representation is colored or shaded to show different values in different areas.
 
-[^2]: Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.
+[^alaska]: Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.
 
-[^3]: There is also a more [detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_
+[^pumas-rawr]: There is also a more [detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_

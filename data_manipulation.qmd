@@ -39,10 +39,10 @@ We can point at all of the files and query them together as a single dataset mad
 #| label: now_use_parquet
 pums_person <- open_dataset("./data/person")
 ```
-Although a lot of the cleaning has been done — we've recoded all of the character and factor variables, replaced sentinels[^2] for missing values with actual missing values, etc. — there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.
+Although a lot of the cleaning has been done — we've recoded all of the character and factor variables, replaced sentinels[^sentinel] for missing values with actual missing values, etc. — there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.
 
 You can create data analysis pipelines in arrow similarly to how you would using dplyr.
-For example, if you wanted to calculate the mean age of individuals from Washington across the years, you could run:[^1]
+For example, if you wanted to calculate the mean age of individuals from Washington across the years, you could run:[^well-actually-weights]
 
 ```{r}
 #| label: building-queries
@@ -211,7 +211,7 @@ You can use these functions with or without namespacing, so either `stringr::str
 
 When we wrote this book, there were 37 dplyr functions and 211 other functions available in arrow---though this number may have increased since!
 We've demonstrated some string operations here; both the base R and stringr flavors are supported.
-There is also deep support for **lubridate** functions for working with date and time data.[^3]
+There is also deep support for **lubridate** functions for working with date and time data.[^user-2022]
 If you want to find out which functions are available in arrow, you can view the help page which lists all of the dplyr functions and other function mappings by calling `?acero`.
 
 While many functions are implemented in arrow, you aren't limited by just what is included in the package.
@@ -410,8 +410,8 @@ This allowed us to run analyses on datasets that in total are larger than can fi
 The next chapter will go into more details about how and why datasets work in Arrow for a deeper understanding of the capabilities, caveats, and best practices.
 
 
-[^1]: Note, that we might think we could use `summarize(mean_age = mean(AGEP))`, but because this dataset has row-level weights, we need to account for that in our analysis to get accurate results.
+[^well-actually-weights]: Note, that we might think we could use `summarize(mean_age = mean(AGEP))`, but because this dataset has row-level weights, we need to account for that in our analysis to get accurate results.
 
-[^2]: Sentinel may be an unfamiliar term — you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as `-1` that means that the data is missing — not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.
+[^sentinel]: Sentinel may be an unfamiliar term — you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as `-1` that means that the data is missing — not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.
 
-[^3]: The 2022 UseR! conference workshop on arrow, "[Larger-Than-Memory Data Workflows with Apache Arrow](https://arrow-user2022.netlify.app/)," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including [datetime functions](https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support). We figured everyone had seen enough of the NYC taxi dataset and chose to use U.S. Census data for examples in this book. This means we can show some more interesting queries and results, but unfortunately, there is no interesting datetime data in it!
+[^user-2022]: The 2022 UseR! conference workshop on arrow, "[Larger-Than-Memory Data Workflows with Apache Arrow](https://arrow-user2022.netlify.app/)," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including [datetime functions](https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support). We figured everyone had seen enough of the NYC taxi dataset and chose to use U.S. Census data for examples in this book. This means we can show some more interesting queries and results, but unfortunately, there is no interesting datetime data in it!
