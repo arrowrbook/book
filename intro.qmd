@@ -166,8 +166,11 @@ For example, missing data is represented as a bitmask for all data types, unlike
 Filtering by missing values, or checking if values are missing, is faster using bitmasks.[^wes]
 The Arrow string array is also represented in a way that improves the efficiency and speed of access relative to R and Python.[^danielle]
 
-[^wes]: Wes McKinney describes the rationale well [here](https://wesmckinney.com/blog/apache-arrow-pandas-internals/).
-[^danielle]: [This blog post by Danielle Navarro](https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types) provides an accessible explanation of the Arrow string data type.
+[^wes]: Wes McKinney describes the rationale well
+[[here](https://wesmckinney.com/blog/apache-arrow-pandas-internals/).]{.content-visible when-format="html"}
+[here: https://wesmckinney.com/blog/apache-arrow-pandas-internals/.]{.content-visible when-format="pdf"}
+[^danielle]: [[This blog post by Danielle Navarro](https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types) provides an accessible explanation of the Arrow string data type.]{.content-visible when-format="html"}
+[This blog post by Danielle Navarro provides an accessible explanation of the Arrow string data type: https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types.]{.content-visible when-format="pdf"}
 
 Second, Arrow has a **rich type system**, encompassing all key data structures found across the database landscape, including many types not natively supported in R.[^type-appendix]
 Bringing together the type system with the columnar data layout, we get the Arrow specification.

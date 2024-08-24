@@ -108,17 +108,17 @@ We can use the dplyr function `case_when()` to replace the older values with the
 pums_person |>
   mutate(
     CIT = case_when(
-      CIT == "Yes, born in the US" ~ 
+      CIT == "Yes, born in the US" ~
         "Born in the United States",
-      CIT == "Yes, naturalized" ~ 
+      CIT == "Yes, naturalized" ~
         "U.S. citizen by naturalization",
-      CIT == "Not a citizen" ~ 
+      CIT == "Not a citizen" ~
         "Not a U.S. citizen",
-      CIT == "Yes, born abroad of American parent(s)" ~ 
+      CIT == "Yes, born abroad of American parent(s)" ~
         "Born abroad of U.S. citizen parent or parents",
-      CIT == "Yes, born in Puerto Rico, etc." ~ 
+      CIT == "Yes, born in Puerto Rico, etc." ~
         paste0(
-          "Born in Puerto Rico, Guam, the U.S. Virgin Islands,", 
+          "Born in Puerto Rico, Guam, the U.S. Virgin Islands,",
           " or Northern Marianas"
         )
     )
@@ -282,7 +282,7 @@ We start by creating a reference table of mean commute time by state and year.
 mean_commute_time <- pums_person |>
   group_by(location, year) |>
   summarize(
-    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) / 
+    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) /
       sum(PWGTP)
   ) |>
   collect()
@@ -414,4 +414,7 @@ The next chapter will go into more details about how and why datasets work in Ar
 
 [^sentinel]: Sentinel may be an unfamiliar term — you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as `-1` that means that the data is missing — not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.
 
-[^user-2022]: The 2022 UseR! conference workshop on arrow, "[Larger-Than-Memory Data Workflows with Apache Arrow](https://arrow-user2022.netlify.app/)," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including [datetime functions](https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support). We figured everyone had seen enough of the NYC taxi dataset and chose to use U.S. Census data for examples in this book. This means we can show some more interesting queries and results, but unfortunately, there is no interesting datetime data in it!
+[^user-2022]: The 2022 UseR! conference workshop on arrow,
+["[Larger-Than-Memory Data Workflows with Apache Arrow](https://arrow-user2022.netlify.app/)," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including [datetime functions](https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support).]{.content-visible when-format="html"}
+["Larger-Than-Memory Data Workflows with Apache Arrow," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including datetime functions. See https://arrow-user2022.netlify.app/.]{.content-visible when-format="pdf"}
+We figured everyone had seen enough of the NYC taxi dataset and chose to use U.S. Census data for examples in this book. This means we can show some more interesting queries and results, but unfortunately, there is no interesting datetime data in it!

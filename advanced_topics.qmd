@@ -156,7 +156,9 @@ For example, arrow has historically had better dplyr support than duckdb because
 On the other hand, Acero does not currently have a SQL interface.
 But there is no technical limitations preventing duckdb from improving dplyr support---and by the time you are reading this, they very well may have![^duckplyr]---nor from there being a SQL interface to arrow.
 
-[^duckplyr: Indeed, see [duckplyr](https://duckdblabs.github.io/duckplyr/).]
+[^duckplyr]: Indeed, see
+[[duckplyr](https://duckdblabs.github.io/duckplyr/).]{.content-visible when-format="html"}
+[duckplyr: https://duckdblabs.github.io/duckplyr/.]{.content-visible when-format="pdf"}
 
 For most applications, you could use either arrow or duckdb just fine.
 But, if you do encounter cases where one package supports something the other doesn't, the smooth integration between arrow and duckdb means can leverage the best of both.
@@ -219,7 +221,7 @@ library(ggplot2)
 library(dplyr)
 library(patchwork) # For combining multiple ggplot objects
 
-# Define a function to create a plot with a given 
+# Define a function to create a plot with a given
 # CRS and parallel gridlines
 create_plot <- function(us_sf, crs, title) {
   us_transformed <- st_transform(us_sf, crs)
@@ -380,7 +382,7 @@ Finally, we pull the data into R and set the correct geometry column to use.
 #| label: correct-projection
 correct_projection <- function(PUMA, crs = "NAD83") {
   PUMA_df <- collect(PUMA)
-  # set the geometry column, but we also need to manually 
+  # set the geometry column, but we also need to manually
   # extract the CRS from the geoparquet metadata
   PUMA_df <- sf::st_sf(PUMA_df, sf_column_name = "geometry",
                        crs = crs)
@@ -391,11 +393,11 @@ correct_projection <- function(PUMA, crs = "NAD83") {
     "+proj=aea",
     "+lat_1=29.5",
     "+lat_2=45.5",
-    "+lat_0=23", 
+    "+lat_0=23",
     "+lon_0=-96",
     "+x_0=0",
     "+y_0=0",
-    "+ellps=GRS80", 
+    "+ellps=GRS80",
     "+towgs84=0,0,0,0,0,0,0",
     "+units=m +no_defs"
   )
@@ -511,8 +513,8 @@ puma_by_langauge |>
           lwd = 0) +
   coord_sf(crs = "+proj=laea +lon_0=-98 +lat_0=39.5") +
   facet_wrap(vars(language), ncol = 2) +
-  scale_fill_distiller(type = "seq", direction = 1, 
-                       palette = "Greys", 
+  scale_fill_distiller(type = "seq", direction = 1,
+                       palette = "Greys",
                        name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -596,7 +598,7 @@ This shifts the projection slightly to be as if it were on a globe.
 Making small multiples for each language
 
 ```{.r}
-  scale_fill_distiller(type = "seq", direction = 1, 
+  scale_fill_distiller(type = "seq", direction = 1,
     palette = "Greys", name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -622,8 +624,8 @@ We've selected slightly different languages for each area to highlight unique di
 puma_by_langauge |>
   filter(language %in% c("english", "spanish", "polish")) |>
   fill_pumas() |>
-  inner_join(PUMA, by = c("year" = "YEAR", 
-                          "location" = "location", 
+  inner_join(PUMA, by = c("year" = "YEAR",
+                          "location" = "location",
                           "PUMA" = "PUMA")) |>
   correct_projection() |>
   ggplot() +
@@ -636,8 +638,8 @@ puma_by_langauge |>
     expand = FALSE
   ) +
   facet_wrap(vars(language), ncol = 3) +
-  scale_fill_distiller(type = "seq", direction = 1, 
-                       palette = "Greys", 
+  scale_fill_distiller(type = "seq", direction = 1,
+                       palette = "Greys",
                        name = "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -703,15 +705,15 @@ Or the Northeast, where there are a relatively large proportion of Portugese spe
 #| label: pums-langauge-northeast
 #| eval: false
 puma_by_langauge |>
-  filter(language %in% c("english", "spanish", "french", 
+  filter(language %in% c("english", "spanish", "french",
                          "portuguese")) |>
   fill_pumas() |>
-  inner_join(PUMA, by = c("year" = "YEAR", 
-                          "location" = "location", 
+  inner_join(PUMA, by = c("year" = "YEAR",
+                          "location" = "location",
                           "PUMA" = "PUMA")) |>
   correct_projection() |>
   ggplot() +
-  geom_sf(aes(geometry = geometry, fill = prop_speaker), 
+  geom_sf(aes(geometry = geometry, fill = prop_speaker),
           lwd = 0) +
   coord_sf(
     xlim = c(000000, 650000),
@@ -720,8 +722,8 @@ puma_by_langauge |>
     expand = FALSE
   ) +
   facet_wrap(vars(language), ncol = 4) +
-  scale_fill_distiller(type = "seq", direction = 1, 
-                       palette = "Greys", name = 
+  scale_fill_distiller(type = "seq", direction = 1,
+                       palette = "Greys", name =
                          "proportion of speakers") +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -786,4 +788,6 @@ Finally, we took a look at extending arrow, with a focus on geospatial data, int
 
 [^alaska]: Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.
 
-[^pumas-rawr]: There is also a more [detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_
+[^pumas-rawr]: There is also a more
+[[detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_]{.content-visible when-format="html"}
+[detailed description of PUMAs in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_: https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma]{.content-visible when-format="pdf"}
