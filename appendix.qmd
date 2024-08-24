@@ -67,7 +67,8 @@ The way to configure this in AWS might change, but [the AWS documentation](https
 Once you have setup your [AWS account and CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html), download the data into a `data` directory to use:
 
 ```{.bash}
-aws s3 cp --request-payer requester --recursive s3://scaling-arrow-pums/ ./data/
+aws s3 cp --request-payer requester --recursive \
+  s3://scaling-arrow-pums/ ./data/
 ```
 
 This is the full dataset the book was built with, but does require that you setup an AWS account, configure it correctly, and pay the small transfer fee.

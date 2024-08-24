@@ -161,7 +161,8 @@ commute_by_mode <- pums_person |>
   mutate(JWMNP_hours = JWMNP / 60) |>
   group_by(year) |>
   summarize(
-    mean_commute_time = sum(JWMNP_hours * PWGTP, na.rm = TRUE) / sum(PWGTP, na.rm = TRUE),
+    mean_commute_time = sum(JWMNP_hours * PWGTP, na.rm = TRUE) /
+      sum(PWGTP, na.rm = TRUE),
     n_commuters = sum(PWGTP, na.rm = TRUE),
     .groups = "drop"
   ) |>
@@ -185,7 +186,8 @@ commute_by_mode <- pums_person |>
   to_arrow() |>
   group_by(year) |>
   summarize(
-    mean_commute_time = sum(JWMNP_hours * PWGTP, na.rm = TRUE) / sum(PWGTP, na.rm = TRUE),
+    mean_commute_time = sum(JWMNP_hours * PWGTP, na.rm = TRUE) /
+      sum(PWGTP, na.rm = TRUE),
     n_commuters = sum(PWGTP, na.rm = TRUE),
     .groups = "drop"
   ) |>

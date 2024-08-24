@@ -9,6 +9,7 @@ While CSVs are ubiquitous, Parquet files have a lot of nice features that make t
 
 In this chapter, we'll explore the different file formats that Arrow can read and write, focusing particularly on the tools you need to ingest data from CSVs and store them in Parquet files with high fidelity.
 
+We'll start off by creating a directory to work with temporary files created in this chapter.
 ```{r}
 #| label: faf_setup
 #| include: false
@@ -19,6 +20,15 @@ library(bit64)
 if (!dir.exists("./data/transient_data")) {
   dir.create("./data/transient_data")
 }
+tmp_dir <- "./data/transient_data"
+```
+
+```{r}
+#| label: faf_data_dir
+#| eval: false
+tmp_dir <- "./data/transient_data"
+dir.create(tmp_dir)
+
 ```
 
 ## Overview of supported formats
@@ -98,10 +108,10 @@ writeLines(
     '{"species": "dog", "sounds": ["woof", "bark", "growl"]}',
     '{"species": "bird", "sounds": ["tweet", "squawk"]}'
   ),
-  "./data/transient_data/animals.jsonl"
+  file.path(tmp_dir, "animals.jsonl")
 )
 
-read_json_arrow("./data/transient_data/animals.jsonl")
+read_json_arrow(file.path(tmp_dir, "animals.jsonl"))
 ```
 
 Arrow supports reading NDJSON files, but at the time of writing does not support writing them.
@@ -211,7 +221,10 @@ If instead you want the data to remain as an Arrow Table, you should set the `as
 #| label: read_as_data_frame_false
 #| eval: FALSE
 # Read in the CSV as an Arrow Table
-read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", as_data_frame = FALSE)
+read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  as_data_frame = FALSE
+)
 ```
 
 You can do all of the same dplyr operations on Tables as you can on Datasets.
@@ -246,14 +259,20 @@ You can see here on the first few rows, the `PUMA` values are `"00101"`, `"00101
 
 ```{r}
 #| label: pums-puma-readlines
-readLines("./data/raw_csvs/person/2021/ak/psam_p02.csv", n = 5)
+readLines(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  n = 5
+)
 ```
 
 However, if we read in our CSV subset without providing a schema, despite the leading zeroes being present in the data, the data type of this column is inferred to be an integer.
 
 ```{r}
 #| label: pums-puma-schema-get
-pums_csv_one_state <- read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv")
+pums_csv_one_state <- read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv"
+)
+
 head(schema(pums_csv_one_state))
 ```
 
@@ -322,8 +341,11 @@ You can extract the schema using the `schema()` function.
 #| label: get-schema
 #| eval: TRUE
 # Read in the file as an Arrow Table and get its schema
-pums_csv_one_state_schema <- schema(
-  read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", as_data_frame = FALSE)
+one_state_schema <- schema(
+  read_csv_arrow(
+    "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+    as_data_frame = FALSE
+  )
 )
 ```
 
@@ -332,7 +354,7 @@ Schemas can be interacted with like lists in R, and so if we want to look more c
 ```{r}
 #| label: pums-csv-field
 #| eval: TRUE
-pums_csv_one_state_schema[["PUMA"]]
+one_state_schema[["PUMA"]]
 ```
 
 We can also assign in different types, and then provide the modified schema when re-reading the file to use those types.
@@ -341,21 +363,28 @@ We can also assign in different types, and then provide the modified schema when
 #| label: edit-schema
 #| eval: TRUE
 # Update the data types of the PUMA field
-pums_csv_one_state_schema[["PUMA"]] <- string()
+one_state_schema[["PUMA"]] <- string()
 
 # Read in the file, using the updated schema
-read_csv_arrow("./data/raw_csvs/person/2021/ak/psam_p02.csv", schema = pums_csv_one_state_schema, skip = 1)
+read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
+  schema = one_state_schema,
+  skip = 1
+)
 ```
 
 What if you want to save the schema in a script, instead of loading it and updating it all the time?
 You can use the `code()` method to extract the code from the schema, which you can then copy and paste into your script.
 We subset the schema with `[c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", "REGION", "ST")]` only for clarity and space savings in the book.
-In real use, call `pums_csv_one_state_schema$code()` to use the whole schema.
+In real use, call `one_state_schema$code()` to use the whole schema.
 
 ```{r}
 #| label: schema-code
 # Print the code needed to create this schema
-pums_csv_one_state_schema[c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", "REGION", "ST")]$code()
+one_state_schema[
+  c("RT", "SERIALNO", "DIVISION", "SPORDER", 
+    "PUMA", "REGION", "ST")
+]$code()
 ```
 
 The last bit of schema manipulation which is useful to know about is how to add or remove items from a schema.
@@ -364,25 +393,29 @@ You can add a new item by assigning a data type to a new item in the schema.
 
 ```{r}
 #| label: add_to_schema
-pums_csv_one_state_schema[["new_var"]] <- float64()
-pums_csv_one_state_schema[c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", "REGION", "ST", "new_var")]
+one_state_schema[["new_var"]] <- float64()
+one_state_schema[
+  c("RT", "SERIALNO", "DIVISION", "SPORDER", 
+    "PUMA", "REGION", "ST", "new_var")
+]
 ```
 
 To remove items from a schema or select a subset, you can create a new schema containing a vector of the names of the desired fields.
 
 ```{r}
 #| label: schema_subset
-to_keep <- c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", "REGION", "ST", "AGEP", "new_var")
-pums_csv_one_state_schema_mini <- pums_csv_one_state_schema[to_keep]
-pums_csv_one_state_schema_mini
+to_keep <- c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", 
+             "REGION", "ST", "AGEP", "new_var")
+one_state_schema_mini <- one_state_schema[to_keep]
+one_state_schema_mini
 ```
 Alternatively, to just remove items, you can assign the value `NULL` to them, again, just as you could with a list.
 
 ```{r}
 #| label: schema_val_null
 
-pums_csv_one_state_schema_mini[["new_var"]] <- NULL
-pums_csv_one_state_schema_mini
+one_state_schema_mini[["new_var"]] <- NULL
+one_state_schema_mini
 ```
 ### Writing CSVs {#sec-writing-csvs}
 
@@ -392,7 +425,10 @@ You can write CSV files to disk using `write_csv_arrow()`.
 #| label: write-csv
 #| eval: false
 # Save `pums_subset` to CSV file
-write_csv_arrow(pums_subset, "./data/transient_data/new_pums.csv")
+write_csv_arrow(
+  pums_subset,
+  file.path(tmp_dir, "new_pums.csv")
+)
 ```
 
 If you're working with large CSV files, you may want to compress them to reduce the amount of space they take up on disk.
@@ -402,10 +438,15 @@ Arrow automatically detects compression from the file name you give to either th
 #| label: read-compressed-csv
 #| eval: false
 # Write to a gz compressed file
-write_csv_arrow(pums_subset, "pums_subset_compressed.csv.gz")
+write_csv_arrow(
+  pums_subset,
+  file.path(tmp_dir, "pums_subset_compressed.csv.gz")
+)
 
 # Read from a gz compressed file
-read_csv_arrow("pums_subset_compressed.csv.gz")
+read_csv_arrow(
+  file.path(tmp_dir, "pums_subset_compressed.csv.gz")
+)
 ```
 
 Compressed CSVs take up significantly less space on disk, but are slower to read and write.
@@ -416,11 +457,11 @@ We can load in the original data, and then save it to disk, first as an uncompre
 #| label: save-compressed-csv
 # Read in the data
 washington_2021 <- read_parquet(
-  file.path("data", "person", "year=2021", "location=wa", "part-0.parquet")
+  "./data/person/year=2021/location=wa/part-0.parquet"
 )
 
-write_csv_arrow(washington_2021, "./data/transient_data/washington_2021.csv")
-write_csv_arrow(washington_2021, "./data/transient_data/washington_2021.csv.gz")
+write_csv_arrow(washington_2021, file.path(tmp_dir, "washington_2021.csv"))
+write_csv_arrow(washington_2021, file.path(tmp_dir, "washington_2021.csv.gz"))
 ```
 
 The uncompressed CSV is pretty big: 137MB.
@@ -464,24 +505,35 @@ numeric_data_schema <- schema(
   doubles = float64(),
   strings = string()
 )
-numeric_table <- arrow_table(numeric_data, schema = numeric_data_schema)
 
-write_csv_arrow(numeric_table, "./data/transient_data/numeric.csv")
-write_parquet(numeric_table, "./data/transient_data/numeric.parquet")
+numeric_table <- arrow_table(
+  numeric_data,
+  schema = numeric_data_schema
+)
+
+write_csv_arrow(
+  numeric_table,
+  file.path(tmp_dir, "numeric.csv")
+)
+
+write_parquet(
+  numeric_table,
+  file.path(tmp_dir, "numeric.parquet")
+)
 ```
 
 If we read in the CSV file without providing any information about the schema, arrow will have to guess the schema, and incorrectly infer that the all of the columns are integers.
 
 ```{r}
 #| label: csv-schema-wrong
-read_csv_arrow("./data/transient_data/numeric.csv")
+read_csv_arrow(file.path(tmp_dir, "numeric.csv"))
 ```
 
 However, if we read in the Parquet file, the "doubles" column is correctly identified as containing doubles and the "strings" column is correctly identified as containing strings as well as maintains the leading 0.
 
 ```{r}
 #| label: parquet-schema-right
-read_parquet("./data/transient_data/numeric.parquet")
+read_parquet(file.path(tmp_dir, "numeric.parquet"))
 ```
 
 The inclusion of the schema metadata in the Parquet files means that these files can easily be shared with less chance of errors from having to guess data types.
@@ -543,7 +595,8 @@ fraction <- function(n = integer(), d = integer()) {
 
 }
 
-# define a format method for the object so we can control how it's printed
+# define a format method for the object 
+# so we can control how it's printed
 format.fraction <- function(x, ...) {
   paste0(field(x, "numerator"), "/", field(x, "denominator"))
 }
@@ -564,7 +617,11 @@ frac_df <- tibble::tibble(
   total = c(2, 2, 7, 9)
 )
 
-frac_df$fraction = fraction(frac_df$total, sum(frac_df$total))
+frac_df$fraction = fraction(
+  frac_df$total,
+  sum(frac_df$total)
+)
+
 frac_df
 ```
 
@@ -627,7 +684,10 @@ First, let's look at the file size of the Parquet file for Washington in 2021, w
 
 ```{r}
 #| label: pums-subset-size
-wa_21_path <- "./data/person/year=2021/location=wa/part-0.parquet"
+wa_21_path <- paste0(
+  "./data/person/year=2021/location=wa/", 
+  "part-0.parquet"
+)
 fs::file_size(wa_21_path)
 ```
 
@@ -636,8 +696,12 @@ And now let's check out the size of that file if it's saved without dictionary e
 ```{r}
 #| label: pums-subset-nodict
 read_parquet(wa_21_path, as_data_frame = FALSE) |>
-  write_parquet("./data/transient_data/pums_subset_no_dict.parquet", use_dictionary = FALSE)
-fs::file_size("./data/transient_data/pums_subset_no_dict.parquet")
+  write_parquet(
+    file.path(tmp_dir, "pums_subset_no_dict.parquet"),
+    use_dictionary = FALSE
+  )
+
+fs::file_size(file.path(tmp_dir, "pums_subset_no_dict.parquet"))
 ```
 
 The difference is significant; the file is `r round(fs::file_size("./data/transient_data/pums_subset_no_dict.parquet") / fs::file_size(wa_21_path), 2)` times larger!
@@ -676,7 +740,10 @@ Let's first take a look at the size of the file containing just the `MAR` column
 
 ```{r}
 #| label: parquet-unordered
-unordered_path <- "./data/transient_data/pums_subset_mar_unordered.parquet"
+unordered_path <- file.path(
+  tmp_dir,
+  "pums_subset_mar_unordered.parquet"
+)
 
 # Write unordered data to a file
 write_parquet(pums_subset_mar, unordered_path)
@@ -689,7 +756,10 @@ And now, after rearranging the data by the `MAR` column.
 
 ```{r}
 #| label: parquet-ordered
-ordered_path <- "./data/transient_data/pums_subset_mar_ordered.parquet"
+ordered_path <- file.path(
+  tmp_dir,
+  "pums_subset_mar_ordered.parquet"
+)
 
 # Order data by the `MAR` column
 pums_subset_mar_ordered <- pums_subset_mar |>
@@ -753,7 +823,11 @@ nested_data <- tibble::tibble(
 
 ```{r}
 #| label: nested-col-roundtrip
-write_parquet(nested_data, "./data/transient_data/nested_data.parquet")
+write_parquet(
+  nested_data,
+  "./data/transient_data/nested_data.parquet"
+)
+
 read_parquet("./data/transient_data/nested_data.parquet")
 ```
 
@@ -797,7 +871,9 @@ Using the metadata distributed for PUMS recoding — in the survey world, this i
 #| label: codebook prep
 #| echo: false # we don't actually want to show the code to get to this cause it's a bit escoteric
 
-codebook <- read_parquet("pums_dataset/all_pums_variables.parquet") |>
+codebook <- read_parquet(
+  "pums_dataset/all_pums_variables.parquet"
+  ) |>
   transform(values_code = as.integer64(values_code)) |>
   filter(year == 2005) |>
   arrange(name, values_code) |>
@@ -816,7 +892,10 @@ First, we read the data in from a single CSV as an Arrow Table, and then we show
 
 ```{r}
 #| label: WA 2005 read in
-wa_2005 <- read_csv_arrow("data/raw_csvs/person/2005/wa/ss05pwa.csv", as_data_frame = FALSE)
+wa_2005 <- read_csv_arrow(
+  "data/raw_csvs/person/2005/wa/ss05pwa.csv",
+  as_data_frame = FALSE
+)
 ```
 
 ```{r}
@@ -835,7 +914,10 @@ One way that we can do this is by using a join, matching on the value codes in t
 ```{r}
 #| label: WA COW 2005 join
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"),
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW_label = values_label, .keep = "unused") |>
   select(sporder, SERIALNO, PUMA, ST, PWGTP, COW, COW_label) |>
   head() |>
@@ -847,7 +929,10 @@ Above, we kept both `COW` and `COW_label` to illustrate the mapping, but we coul
 ```{r}
 #| label: WA COW 2005 join replace
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"),
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW = values_label, .keep = "unused") |>
   select(sporder, SERIALNO, PUMA, ST, PWGTP, COW, AGEP) |>
   head() |>
@@ -860,9 +945,15 @@ We can do this with multiple variables at once, and when we're happy with the re
 #| label: join replace write
 #| eval: false
 wa_2005 |>
-  left_join(filter(codebook, name == "COW"), by = c("COW" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "COW"), 
+    by = c("COW" = "values_code")
+  ) |>
   mutate(COW = values_label, .keep = "unused") |>
-  left_join(filter(codebook, name == "JWTR"), by = c("JWTR" = "values_code")) |>
+  left_join(
+    filter(codebook, name == "JWTR"),
+    by = c("JWTR" = "values_code")
+  ) |>
   mutate(JWTR = values_label, .keep = "unused") |>
   write_parquet("wa_2005.parquet")
 ```
