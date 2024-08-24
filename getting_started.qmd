@@ -275,7 +275,7 @@ plot
 #| fig-width: 4.5
 #| fig-height: 7.5
 #| echo: false
-print(plot, vp=grid::viewport(width = 7.5, height = 4.5, angle=90))
+print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::
 
@@ -347,7 +347,7 @@ plot
 #| fig-width: 4.5
 #| fig-height: 7.5
 #| echo: false
-print(plot, vp=grid::viewport(angle=90))
+print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::
 
