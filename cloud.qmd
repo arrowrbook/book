@@ -13,12 +13,7 @@ If you want to read a single file directly into memory, you can pass a URL direc
 
 ```{r}
 #| label: read_parquet_url
-read_parquet(
-  paste0(
-    "https://github.com/apache/arrow/raw/main/r/inst/", 
-    "v0.7.1.parquet"
-  )
-)
+read_parquet(system.file("v0.7.1.parquet", package = "arrow"))
 ```
 
 If you want to work with multi-file datasets, however, the HTTP protocol isn't compatible with Arrow's ability to scan files and read metadata before data is accessed to optimize what is eventually pulled into memory upon collecting a query.
