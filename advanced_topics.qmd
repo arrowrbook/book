@@ -7,13 +7,114 @@
 library(arrow)
 library(dplyr)
 ```
-
 ```{r}
 #| label: setup-advanced-data-manip
 #| include: false
 pums_person <- open_dataset("./data/person")
 ```
 
+In this chapter we're going to look at advanced data manipulation topics.
+We'll be looking in more detail at how bindings from R functions to Acero bindings work, as well as the converse of this - functions which exist in Acero, and don't have tidyverse or base R equivalents, and how you can access these in your arrow pipelines.
+
+We're going to explore how you can get around edge cases where functions you want to use inside dplyr functions don't have an Acero function to be mapped to directly, but you can still use them by calling back into R to do these calculations.
+Finally, we'll look at a practical case of extending Arrow to work with the specialist data types found in the geospatial domain.
+
+## Acero bindings
+
+In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.
+
+Acero, arrow's query engine, has a large number of functions implemented for performing calculations on data.
+The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
+
+Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
+
+Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.
+
+| Feature                        | R (`sd`)                                                | Acero (`stddev`)                                                                        |
+|-------------------|----------------------|--------------------------------|
+| **Function Name**              | `sd`                                                    | `stddev`                                                                                |
+| **Function Options**           | `na.rm = FALSE`                                         | `ddof = 0`, `skip_nulls = FALSE`, `min_count = 1`                                       |
+| **Purpose**                    | Computes standard deviation                             | Computes standard deviation                                                             |
+| **Handling of Missing Values** | `na.rm`: Boolean, removes `NA` values (default `FALSE`) | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`)                          |
+| **Degrees of Freedom**         | Not available                                           | `ddof`: Integer, denominator degrees of freedom (default `0`)                           |
+| **Minimum Count**              | Not available                                           | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
+
+There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
+
+This also highlights the slight different in terminology here; whereas R has separate concepts of `NA` and `NULL`, Arrow considers them to be the same things.
+
+You don't usually have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.
+Let's take a closer look at an example.
+
+Say we wanted to only return data for states whose names start with the letter "w".
+We can take our dataset and use `dplyr::filter()` to return this subset, but we need to pick a function to pass to `dplyr::filter()` to actually *do* the filtering.
+
+Let's start first by looking at the Acero function we want Arrow to use.
+We wouldn't usually ever have to do this when working with Arrow, but it's useful in understanding how this all works.
+
+If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this.
+It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
+
+So how do we use this from the arrow R package?
+We start off by considering which R function to use.
+Let's go with the base R function `startsWith()`.
+The table below shows a comparison with the Acero equivalent.
+
+| Feature                     | R (`startsWith()`)                                | Acero (`starts_with()`)                            |
+|-----------------|------------------------|--------------------------------|
+| **Function Name**           | `startsWith`                                      | `starts_with`                                      |
+| **Function Arguments**      | `prefix`                                     | `pattern`, `ignore_case = false`              |
+| **Purpose**                 | Checks if a string starts with a specified prefix | Checks if a string starts with a specified pattern |
+| **Prefix/Pattern Argument** | `prefix`: The prefix to match                     | `pattern`: The pattern to match                    |
+| **Case Sensitivity**        | Always case-sensitive                             | `ignore_case`: Boolean, set to `false` by default  |
+
+There is already a mapping between these two functions, and we can see this by creating our query but not actually executing it.
+
+```{r}
+#| label: startsWith
+open_dataset("data/person/") |> 
+  select(location) |> 
+  filter(startsWith(x = location, prefix = "w"))
+```
+
+The information about the Acero mapping is shown here in the line which starts with "\* Filter" - this contains a human-readable representation of the Arrow Expression created.
+
+It shows that that `startsWith()` has been translated to the Acero function `starts_with()`.
+The options for the Acero function have been set based on the values which were passed in via the R expression.
+We set the `startsWith()` argument `prefix` to "w", which was passed to the Acero `starts_with()` option called `pattern`.
+As `startsWith()` is always case-sensitive, the Acero `starts_with()` option `ignore_case` has been set to `false`.
+
+This approach is great for the most typical case where we know the R function we want to use as arrow automatically translates to the relevant Acero function, but what about if we just want to start with Acero functions?
+
+We can view the full list of Acero functions available to use in arrow by calling `list_compute_functions()`.
+At the time of writing there were 262 Acero functions available to use in R - the first 20 are shown below.
+
+```{r}
+#| label: list_compute_functions
+list_compute_functions() |> 
+  head(20)
+```
+
+You can also use these functions in your arrow dplyr pipelines by prefixing them with `"arrow_"`.
+
+This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents - which can be used instead. 
+However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function.
+
+Let's take a look at how we'd do that with the Acero function `starts_with()`, if we wanted the returned results to now be case-insensitive.
+
+```{r}
+#| label: starts_with_call_directly
+open_dataset("data/person/") |> 
+  select(location) |> 
+  filter(
+    arrow_starts_with(
+      location,
+      options=list(pattern="w", ignore_case = TRUE)
+    )
+  )
+```
+
+For the most part, Acero functions have an R mapping, which are generally simpler to work with, and in general, we recommend using those unless you have a specific reason to want to call the Acero equivalent directly.
 ## User-defined functions {#sec-UDF}
 
 We described how to use functions in dplyr pipelines in [Section @sec-dplyr-use-funcs], but what if you want to use a function which doesn't have an arrow binding?
