@@ -163,18 +163,21 @@ The result of this is that when the data manipulation task involved retrieving v
 The Arrow specification is a columnar format, and so is optimized for analytical workflows.
 Furthermore, implementation choices in the memory layout are optimized for fast evaluation and aggregation.
 For example, missing data is represented as a bitmask for all data types, unlike R, pandas, and NumPy, which use sentinel values that vary by type.
-Filtering by missing values, or checking if values are missing, is faster using bitmasks.[^1]
-The Arrow string array is also represented in a way that improves the efficiency and speed of access relative to R and Python.[^2]
+Filtering by missing values, or checking if values are missing, is faster using bitmasks.[^wes]
+The Arrow string array is also represented in a way that improves the efficiency and speed of access relative to R and Python.[^danielle]
 
-[^1]: Wes McKinney describes the rationale well [here](https://wesmckinney.com/blog/apache-arrow-pandas-internals/).
-[^2]: [This blog post by Danielle Navarro](https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types) provides an accessible explanation of the Arrow string data type.
+[^wes]: Wes McKinney describes the rationale well
+[[here](https://wesmckinney.com/blog/apache-arrow-pandas-internals/).]{.content-visible when-format="html"}
+[here: https://wesmckinney.com/blog/apache-arrow-pandas-internals/.]{.content-visible when-format="pdf"}
+[^danielle]: [[This blog post by Danielle Navarro](https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types) provides an accessible explanation of the Arrow string data type.]{.content-visible when-format="html"}
+[This blog post by Danielle Navarro provides an accessible explanation of the Arrow string data type: https://blog.djnavarro.net/posts/2022-03-04_data-types-in-arrow-and-r/#character-types.]{.content-visible when-format="pdf"}
 
-Second, Arrow has a **rich type system**, encompassing all key data structures found across the database landscape, including many types not natively supported in R.[^3]
+Second, Arrow has a **rich type system**, encompassing all key data structures found across the database landscape, including many types not natively supported in R.[^type-appendix]
 Bringing together the type system with the columnar data layout, we get the Arrow specification.
 Reducing it to its core, Arrow defines **Arrays**, columns of data of the same type.
 A data-frame-like arrangement of Arrays of equal length is a **RecordBatch**, which has a **Schema** that maps column names to the corresponding data types.
 
-[^3]: See [Appendix @sec-arrow-types] for full list of types and how they map to R types.
+[^type-appendix]: See [Appendix @sec-arrow-types] for full list of types and how they map to R types.
 
 Libraries can then define additional abstractions on top of those core structures.
 For example, in C++ (and thus the R package) we have a **Table**, which can be thought of as a data frame that is chunked into multiple batches, and a **RecordBatchReader**, an iterator that yields RecordBatches for processing.

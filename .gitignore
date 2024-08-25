@@ -1,12 +1,14 @@
 /.quarto/
 .Rproj.user
 .Rhistory
+.DS_Store
+*.orig
 
 # ignore the rendered book, since GHA does that for us
 _book
 _freeze
 site_libs
-*_files 
+*_files
 
 .venv
 
@@ -14,7 +16,7 @@ site_libs
 data
 PUMS_smol
 
-# quarto + tex detritus
+# ignore pdf rendering artifacts
 index.aux
 index.bbl
 index.blg
@@ -22,4 +24,7 @@ index.log
 index.pdf
 index.tex
 /krantz.cls
-Scaling-Up-With-R-and-Arrow.tex
+/Scaling-Up-With-R-and-Arrow.tex
+# IDK why these get generated here
+/advanced_topics_files
+/getting_started_files

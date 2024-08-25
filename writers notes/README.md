@@ -4,17 +4,17 @@ Published site: [arrowrbook.com](https://arrowrbook.com)
 
 ## How to render
 
-All of the code in this book assumes that the data is at `data/` within the repo. 
-For convenience of writing, all examples can run with either the full data or the subset data. 
+All of the code in this book assumes that the data is at `data/` within the repo.
+For convenience of writing, all examples can run with either the full data or the subset data.
 Which is used depends on which is in (or linked to) the `data/` directory.
 Doing this allows us to have quick iteration cycles knowing that we can compile with examples and write examples without needing to run against the full dataset every single time.
 
 ### Rendering with full data for publishing
 
-To render and publish with the full dataset (all of this is done locally): 
+To render and publish with the full dataset (all of this is done locally):
 
-* remove the `_freeze/` directory 
-* run `quarto publish gh-pages` 
+* remove the `_freeze/` directory
+* run `quarto publish gh-pages`
 
 This will automatically render the book and then add the files to the `gh-pages` branch where the book is hosted from.
 
@@ -39,7 +39,7 @@ git checkout --no-overlay CI_data -- PUMS_smol
 git restore --staged PUMS_smol
 ```
 
-Which will place the `PUMS_smol` directory in your repo. 
+Which will place the `PUMS_smol` directory in your repo.
 You can then link it to the data directory to be used (e.g. `ln -s PUMS_smol data`)
 
 ### Full data
