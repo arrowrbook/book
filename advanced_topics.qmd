@@ -20,18 +20,27 @@ Finally, we'll look at a practical case of extending Arrow to work with the spec
 
 ## Acero bindings
 
-In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.  
+In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.
 
 Acero, arrow's query engine, has a large number of functions implemented for performing calculations on data.
 The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
 
-Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.  
+Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
 
-Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.  
+Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.
+
+| Feature                        | R (`sd`)                                                | Acero (`stddev`)                                                                        |
+|-------------------|----------------------|--------------------------------|
+| **Function Name**              | `sd`                                                    | `stddev`                                                                                |
+| **Function Options**           | `na.rm = FALSE`                                         | `ddof = 0`, `skip_nulls = FALSE`, `min_count = 1`                                       |
+| **Purpose**                    | Computes standard deviation                             | Computes standard deviation                                                             |
+| **Handling of Missing Values** | `na.rm`: Boolean, removes `NA` values (default `FALSE`) | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`)                          |
+| **Degrees of Freedom**         | Not available                                           | `ddof`: Integer, denominator degrees of freedom (default `0`)                           |
+| **Minimum Count**              | Not available                                           | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
 
 There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
 
-This also highlights the slight different in terminology here; whereas R has separate concepts of `NA` and `NULL`, Arrow considers them to be the same things. 
+This also highlights the slight different in terminology here; whereas R has separate concepts of `NA` and `NULL`, Arrow considers them to be the same things.
 
 You don't usually have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.
 Let's take a closer look at an example.
@@ -42,14 +51,23 @@ We can take our dataset and use `dplyr::filter()` to return this subset, but we 
 Let's start first by looking at the Acero function we want Arrow to use.
 We wouldn't usually ever have to do this when working with Arrow, but it's useful in understanding how this all works.
 
-If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this. It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
+If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this.
+It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
 
 So how do we use this from the arrow R package?
-We start off by considering which R function to use.  Let's go with the base R function `startsWith()`.
+We start off by considering which R function to use.
+Let's go with the base R function `startsWith()`.
+The table below shows a comparison with the Acero equivalent.
 
-![Documentation for the base function `startsWith()`](images/startsWith_docs.png)
+| Feature                     | R (`startsWith()`)                                | Acero (`starts_with()`)                            |
+|-----------------|------------------------|--------------------------------|
+| **Function Name**           | `startsWith`                                      | `starts_with`                                      |
+| **Function Arguments**      | `prefix`                                     | `pattern`, `ignore_case = false`              |
+| **Purpose**                 | Checks if a string starts with a specified prefix | Checks if a string starts with a specified pattern |
+| **Prefix/Pattern Argument** | `prefix`: The prefix to match                     | `pattern`: The pattern to match                    |
+| **Case Sensitivity**        | Always case-sensitive                             | `ignore_case`: Boolean, set to `false` by default  |
 
-This function has an Acero mapping, and we can see this by creating our query but not actually executing it, but instead looking at the query we generate
+There is already a mapping between these two functions, and we can see this by creating our query but not actually executing it.
 
 ```{r}
 #| label: startsWith
@@ -58,7 +76,7 @@ open_dataset("data/person/") |>
   filter(startsWith(x = location, prefix = "w"))
 ```
 
-Some information about the Acero mapping is shown here, in the line which starts with "* Filter" - this contains a human-readable representation of the Arrow Expression created.
+The information about the Acero mapping is shown here in the line which starts with "\* Filter" - this contains a human-readable representation of the Arrow Expression created.
 
 It shows that that `startsWith()` has been translated to the Acero function `starts_with()`.
 The options for the Acero function have been set based on the values which were passed in via the R expression.
@@ -67,16 +85,21 @@ As `startsWith()` is always case-sensitive, the Acero `starts_with()` option `ig
 
 This approach is great for the most typical case where we know the R function we want to use as arrow automatically translates to the relevant Acero function, but what about if we just want to start with Acero functions?
 
-We can view the full list of Acero functions avaialable to use in arrow by calling `list_compute_functions()`.  At the time of writing there were 262 Acero functions available to use in R.
+We can view the full list of Acero functions available to use in arrow by calling `list_compute_functions()`.
+At the time of writing there were 262 Acero functions available to use in R - the first 20 are shown below.
 
 ```{r}
 #| label: list_compute_functions
 list_compute_functions() |> 
-  head(10)
+  head(20)
 ```
 
-You can also use these functions in your arrow dplyr pipelines by passing them to `call_function()`.
-Let's take a look at how we'd do that with the Acero function `starts_with()`.
+You can also use these functions in your arrow dplyr pipelines by prefixing them with `"arrow_"`.
+
+This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents - which can be used instead. 
+However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function.
+
+Let's take a look at how we'd do that with the Acero function `starts_with()`, if we wanted the returned results to now be case-insensitive.
 
 ```{r}
 #| label: starts_with_call_directly
@@ -85,10 +108,13 @@ open_dataset("data/person/") |>
   filter(
     arrow_starts_with(
       location,
-      options=list(pattern="w", ignore_case = FALSE)
+      options=list(pattern="w", ignore_case = TRUE)
     )
   )
 ```
+
+For the most part, Acero functions have an R mapping, which are generally simpler to work with, and in general, we recommend using those unless you have a specific reason to want to call the Acero equivalent directly.
+
 ## User-defined functions {#sec-UDF}
 
 We described how to use functions in dplyr pipelines in [Section @sec-dplyr-use-funcs], but what if you want to use a function which doesn't have an arrow binding?
@@ -150,8 +176,7 @@ You'll also be slowed down a little by the fact that arrow has to convert back a
 
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
-![How Acero bindings work](images/excalidraw/adv_normal.png)
-The extra steps needed are because we are working more directly with Acero, the part of the Arrow C++ library that runs the data manipulation queries, and as Acero is written in C++ we have to make sure we are giving it the correct information to work with.
+![How Acero bindings work](images/excalidraw/adv_normal.png) The extra steps needed are because we are working more directly with Acero, the part of the Arrow C++ library that runs the data manipulation queries, and as Acero is written in C++ we have to make sure we are giving it the correct information to work with.
 
 C++ is strongly typed, which means that when a variable is created, you also have to declare its type, which cannot be changed later.
 This is quite different to R, where, for example, you can create an integer variable which later becomes a double.
@@ -170,11 +195,10 @@ For compatibility with this piece-wise reading and writing, UDFs need to be able
 
 ![How UDFs work](images/excalidraw/adv_udf.png)
 
-
 Most of the time you don't need to worry about these internal details of Acero!
 However, when working with UDFs, we're working a lot closer to Acero's internals, and need to step into these deeper waters.
 
-## DuckDB{#sec-duckdb-practical}
+## DuckDB {#sec-duckdb-practical}
 
 Although arrow implements a lot of the dplyr API, you may want to work with functions from other packages which haven't been implemented in arrow or can't be written as UDFs.
 For example, if you want to change the shape of your data, you might want to use `tidyr::pivot_longer()`, but this is not yet supported in arrow.
@@ -214,7 +238,8 @@ pums_person |>
   collect()
 ```
 
-We start off with an Arrow Dataset, which is turned into a dataset query when we call `summarize()`.  We're still using lazy evaluation here, and no calculations have been run on our data.
+We start off with an Arrow Dataset, which is turned into a dataset query when we call `summarize()`.
+We're still using lazy evaluation here, and no calculations have been run on our data.
 
 When we call `to_duckdb()`, this function creates a virtual DuckDB table whose data points to the Arrow object.
 We then call `pivot_longer()`, which runs in duckdb.
@@ -231,9 +256,10 @@ We also have enjoyed collaborating with the DuckDB maintainers over the years an
 In any case, it would be hard to make a clear, simple statement like "use arrow for X and duckdb for Y," if for no other reason than that both projects are in active development, and any claim would quickly become outdated.
 For example, arrow has historically had better dplyr support than duckdb because duckdb relied on dbplyr to translate dplyr verbs into SQL, while the arrow developers invested heavily in mapping R functions to Acero functions for a higher fidelity translation.
 On the other hand, Acero does not currently have a SQL interface.
-But there is no technical limitations preventing duckdb from improving dplyr support---and by the time you are reading this, they very well may have![^duckplyr]---nor from there being a SQL interface to arrow.
+But there is no technical limitations preventing duckdb from improving dplyr support---and by the time you are reading this, they very well may have\![
+\^duckplyr\]---nor from there being a SQL interface to arrow.
 
-[^duckplyr: Indeed, see [duckplyr](https://duckdblabs.github.io/duckplyr/).]
+\[\^duckplyr: Indeed, see [duckplyr](https://duckdblabs.github.io/duckplyr/).\]
 
 For most applications, you could use either arrow or duckdb just fine.
 But, if you do encounter cases where one package supports something the other doesn't, the smooth integration between arrow and duckdb means can leverage the best of both.
@@ -333,7 +359,7 @@ combined_plot <- wrap_plots(plots, ncol = 2)
 #| echo: false
 combined_plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -374,11 +400,12 @@ At the time of writing, there is also a nascent project called GeoArrow designed
 GeoArrow aims to use the formats and approach of GeoParquet, so should be very similar.
 
 #### GeoParquet data
+
 The GeoParquet specification has 2 components: the format of the metadata and then the format of the data itself.
 There are two levels of metadata:
 
-1. file-level metadata which contains information about the version of the GeoParquet specification that the saved data conforms to and which column is the primary geometry column
-2. column-level metadata about the individual geometry columns
+1.  file-level metadata which contains information about the version of the GeoParquet specification that the saved data conforms to and which column is the primary geometry column
+2.  column-level metadata about the individual geometry columns
 
 To make this concrete, we will use geospatial definitions for PUMAs (we will discuss what these are in more detail in [Section @sec-pums-pumas]).
 This Parquet file has a number of standard columns along with one column, `geometry`, that includes the geospatial specifications: in this case, polygons and multipolygons, which are the shapes of the PUMAs.
@@ -396,8 +423,8 @@ PUMA <- read_parquet(
 
 The column-level GeoParquet metadata stores 2 different types of information:
 
-1. What kind of geometry is represented in the column, e.g. point, polygon, linestring etc
-2. Further metadata about that column, for example the CRS.
+1.  What kind of geometry is represented in the column, e.g. point, polygon, linestring etc
+2.  Further metadata about that column, for example the CRS.
 
 #### Data format
 
@@ -430,6 +457,7 @@ The most important thing that we care about here is the CRS.
 ```{r}
 schema(PUMA)$metadata$geo
 ```
+
 This is a `projjson` encoding of the CRS for the `geometry` column.
 This encoding is text, which is actually `JSON`.
 
@@ -450,8 +478,10 @@ When this book was being written, there were already nascent projects to make th
 Today, however, we need to do a couple more things before we can work with it further and use `sf` and `ggplot2` to plot this: make sure that our CRS is set correctly and pulling the data into R.
 To do both of these, we create a helper function.
 This helper function ensures that we use the CRS we saw the data had above.
-It also sets the bounding box and center so that the entirety of the United States is laid out correctly.[^2]
+It also sets the bounding box and center so that the entirety of the United States is laid out correctly.[^advanced_topics-1]
 Finally, we pull the data into R and set the correct geometry column to use.
+
+[^advanced_topics-1]: Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.
 
 ```{r}
 #| label: correct-projection
@@ -484,11 +514,16 @@ correct_projection <- function(PUMA, crs = "NAD83") {
 
 ### Enhancing PUMS data with GeoParquet PUMAs data {#sec-pums-pumas}
 
-Putting this all together, let's try making a plot[^1] showing different languages spoken throughout the United States.
+Putting this all together, let's try making a plot[^advanced_topics-2] showing different languages spoken throughout the United States.
 The analysis we will build up is the percentage of speakers for languages spoken in the US.
 We will then plot this data, subsetting to a few interesting languages depending on what region we are plotting.
-In the PUMS dataset, the smallest geographic area is called a [PUMA (Public Use Microdata Areas)](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html).[^3]
-These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state.
+In the PUMS dataset, the smallest geographic area is called a [PUMA (Public Use Microdata Areas)](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html).
+[^advanced_topics-3] These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state
+.
+
+[^advanced_topics-2]: This type of plot is called a choropleth where a geographic representation is colored or shaded to show different values in different areas.
+
+[^advanced_topics-3]: There is also a more [detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's *Analyzing US Census Data: Methods, Maps, and Models in R*
 
 As always, we start with our PUMS dataset.
 We build up a `dplyr` query to clean some data inconsistencies (varying capitalization), group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA.
@@ -522,10 +557,10 @@ puma_by_langauge |>
   collect()
 ```
 
-And then we can take that data, join it to our arrow table of PUMAs and plot it using `ggplot2`.[^pumafill]
+And then we can take that data, join it to our arrow table of PUMAs and plot it using `ggplot2`.[^advanced_topics-4]
 We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.
 
-[^pumafill]: You may notice a function `fill_pumas()` in the code below.
+[^advanced_topics-4]: You may notice a function `fill_pumas()` in the code below.
     This function is a wrapper around some dplyr joins to make it so that each PUMA has one row for each language.
     Because many languages are not spoken at all in many PUMAs, we need to do this so that the plots still show those PUMAs as 0.
 
@@ -599,7 +634,6 @@ puma_by_langauge |>
   )
 ```
 
-
 ```{r}
 #| label: pums-langauge-all-US-plot
 #| echo: false
@@ -627,7 +661,7 @@ plot <- puma_by_langauge |>
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -639,18 +673,17 @@ plot
 ```
 :::
 
-
-::: {.callout-tip}
+::: callout-tip
 That plotting code might look intimidating at first, but most of it is to add theming and to get the projection on the globe.
 Breaking this down chunk by chunk:
 
-```{.r}
+``` r
 ggplot() +
 ```
 
 The standard start to `ggplot2`.
 
-```{.r}
+``` r
   geom_sf(
     aes(geometry = geometry, fill = prop_speaker),
     lwd = 0
@@ -660,19 +693,19 @@ The standard start to `ggplot2`.
 Set the `geom` to be a map, with the color proportion of speaker.
 Also set the line width of the outlines of each PUMA to be none.
 
-```{.r}
+``` r
   coord_sf(crs = "+proj=laea +lon_0=-98 +lat_0=39.5") +
 ```
 
 This shifts the projection slightly to be as if it were on a globe.
 
-```{.r}
+``` r
   facet_wrap(vars(language), ncol = 2) +
 ```
 
 Making small multiples for each language
 
-```{.r}
+``` r
   scale_fill_distiller(type = "seq", direction = 1, 
     palette = "Greys", name = "proportion of speakers") +
   theme_minimal() +
@@ -691,7 +724,6 @@ At that scale, it can be hard to see just how detailed this map ends up being.
 Not only are the coastlines detailed, but the PUMAs themselves are quite small with their own unique borders.
 We can zoom in on the area around Chicago to see just how detailed these get.
 We've selected slightly different languages for each area to highlight unique distributions, like the relatively large number of Polish speakers in the Chicago metro area.
-
 
 ```{r}
 #| label: pums-langauge-chicagoland
@@ -724,7 +756,6 @@ puma_by_langauge |>
   )
 ```
 
-
 ```{r}
 #| label: pums-langauge-chicagoland-plot
 #| echo: false
@@ -751,14 +782,13 @@ plot <- puma_by_langauge |>
   )
 ```
 
-
 ::: {.content-visible when-format="html"}
 ```{r}
 #| label: pums-langauge-chicagoland-plot-html
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -772,7 +802,6 @@ plot +
   ) 
 ```
 :::
-
 
 Or the Northeast, where there are a relatively large proportion of Portugese speakers in Massachusetts, and French speakers in Northern Maine.
 
@@ -808,7 +837,6 @@ puma_by_langauge |>
   )
 ```
 
-
 ```{r}
 #| label: pums-langauge-northeast-plot
 #| echo: false
@@ -840,7 +868,7 @@ plot <- puma_by_langauge |>
 #| echo: false
 plot + facet_wrap(vars(language), ncol = 4)
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -858,9 +886,3 @@ This chapter explored advanced topics for working with the arrow R package.
 We began talking about user-defined functions (UDFs), explaining how to create and utilize them to handle functions not natively supported by Arrow.
 We also looked at the interoperability between Arrow and DuckDB, showing how to use DuckDB for tasks not natively supported in Arrow.
 Finally, we took a look at extending arrow, with a focus on geospatial data, introducing the concept of GeoParquet for on-disk geospatial data representation that can quickly and easily be turned into an in-memory representation.
-
-[^1]: This type of plot is called a choropleth where a geographic representation is colored or shaded to show different values in different areas.
-
-[^2]: Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.
-
-[^3]: There is also a more [detailed description of PUMAs](https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma) in Kyle Walker's _Analyzing US Census Data: Methods, Maps, and Models in R_
