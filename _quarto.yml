@@ -55,10 +55,29 @@ format:
     hyperrefoptions: "bookmarks=false"
     links-as-notes: true
     colorlinks: false
+    # For breaking lines in output
+    knitr:
+      opts_chunk:
+        R.options:
+          width: 64
+    include-in-header: 
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+    include-before-body:
+      text: |
+        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+          showspaces = false,
+          showtabs = false,
+          breaksymbolleft={},
+          breaklines
+          % Note: setting commandchars=\\\{\} here will cause an error 
+        }
     # highlight-style: grayscale-custom.theme
     # include-in-header: latex/preamble.tex
     # include-before-body: latex/before_body.tex
     # include-after-body: latex/after_body.tex
+
 editor: source
 
 execute:
