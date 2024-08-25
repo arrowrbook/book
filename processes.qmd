@@ -1,5 +1,7 @@
 # Sharing Data and Interoperability {#sec-processes}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| label: reticulate-chapter-setup
 #| include: false

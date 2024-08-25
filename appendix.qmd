@@ -1,5 +1,7 @@
 # Appendix {#sec-appendix}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)

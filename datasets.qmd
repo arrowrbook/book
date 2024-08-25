@@ -1,5 +1,7 @@
 # Datasets {#sec-datasets}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| label: datasets-setup
 #| include: FALSE

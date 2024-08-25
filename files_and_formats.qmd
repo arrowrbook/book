@@ -1,5 +1,7 @@
 # Files and Formats {#sec-filesformats}
 
+{{< include _knitr_hooks.qmd >}}
+
 In the previous chapter, we started exploring a dataset made up of CSV files, and then skipped ahead to working with a version we'd converted to Parquet files.
 While CSVs are ubiquitous, Parquet files have a lot of nice features that make them ideal for analytic workloads:
 

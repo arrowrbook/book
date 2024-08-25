@@ -8,6 +8,8 @@ library(dplyr)
 
 # Introduction {#sec-intro}
 
+{{< include _knitr_hooks.qmd >}}
+
 ## The problem of larger-than-memory data
 
 Those of us who love working in the R programming language know how well suited it is for data analysis.
