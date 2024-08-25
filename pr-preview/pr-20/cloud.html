@@ -161,7 +161,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text">Acknowledgements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -296,7 +296,9 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>In the previous chapters, we’ve discussed working with data which is stored on a local filesystem, but Arrow also can also work with data stored on a remote machine.</p>
 <p>If you want to read a single file directly into memory, you can pass a URL directly into a file-reading function, and the file will be downloaded to a temporary directory and then loaded into your R session.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(<span class="fu">system.file</span>(<span class="st">"v0.7.1.parquet"</span>, <span class="at">package =</span> <span class="st">"arrow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://github.com/apache/arrow/raw/main/r/inst/v0.7.1.parquet"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -330,7 +332,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>Working with cloud storage services is similar in many ways to working with data stored in local filesystems, and you can use the same file and dataset opening functions for both tasks. To open a file or dataset saved in cloud storage, instead of passing in a path to a local file to these functions, you can instead pass in the cloud storage path as a URI.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"s3://scaling-arrow-pums/person/year=2005/"</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"s3://scaling-arrow-pums/person/year=2005/"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">"location=ak/part-0.parquet"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"s3://scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -338,7 +340,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>Note that when working with data stored on GCS, even when working with a publicly accessible bucket, you’ll need to provide a login name of “anonymous”. The equivalent of the above commands for GCS—these won’t run here as these buckets haven’t been set up—would be:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">"location=ak/part-0.parquet"</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        )</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>

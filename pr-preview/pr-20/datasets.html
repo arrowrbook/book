@@ -161,7 +161,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text">Acknowledgements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -468,7 +468,7 @@ Use `schema()` to see entire schema</code></pre>
 <section id="partitioning" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="partitioning"><span class="header-section-number">6.4</span> Partitioning</h2>
 <p>We have already been working with partitioned data: the data in the PUMS person dataset has been partitioned based on the “year” and “location” columns.</p>
-<p><img src="images/excalidraw/datasets_pums.png" class="img-fluid"> Partitioning is where groups of rows of data have been saved to separate files. These separate files are saved in directories, where each directory represents the rows of the data where a particular column has a particular value.</p>
+<p><img src="images/excalidraw/datasets_pums_small.png" class="img-fluid"> Partitioning is where groups of rows of data have been saved to separate files. These separate files are saved in directories, where each directory represents the rows of the data where a particular column has a particular value.</p>
 <p>You’re not limited to a single level of directories; you can have multiple nested levels. The PUMS person dataset has “year” at the top level and “location” in the next level down. What this means is that there are 17 directories at the top level: one for each of the years in the dataset, which range from 2005 to 2022. Within each of these year directories, there are 52 subdirectories; one for each of the different locations. In total, we end up with 884 bottom-level directories, and inside each of them there is a single Parquet file for each year/location combination.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>One thing to note is that the data in the column that we partition by is <em>not included</em> in the columns within the Parquet files themselves. This is partially to conserve data: rather than include the same value over and over again inside the Parquet files, it is put once in the directory name. More importantly<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> though, this prevents the possibility of having two columns which disagree with each other. What should happen if the directory says <code>year=2008</code>, but the column <code>year</code> in the file is all <code>2020</code>?</p>
 <p>There are many reasons to work with partitioned data—you may have received the data in this format, or you may have chosen to partition your data to take advantage of improved performance on data analysis and smaller file sizes.</p>
@@ -738,7 +738,7 @@ Use `schema()` to see entire schema</code></pre>
 <p>The table below shows how many files in each dataset, as well as the minimum, maximum, and median file size.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 24%">
+<col style="width: 26%">
 <col style="width: 12%">
 <col style="width: 10%">
 <col style="width: 13%">
@@ -749,50 +749,50 @@ Use `schema()` to see entire schema</code></pre>
 <thead>
 <tr class="header">
 <th>Dataset</th>
-<th># of Files</th>
-<th>Min size</th>
-<th>1st Quartile</th>
-<th>Median size</th>
-<th>3rd Quartile</th>
-<th>Max size</th>
+<th style="text-align: right;"># of Files</th>
+<th style="text-align: right;">Min size</th>
+<th style="text-align: right;">1st Quartile</th>
+<th style="text-align: right;">Median size</th>
+<th style="text-align: right;">3rd Quartile</th>
+<th style="text-align: right;">Max size</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>pums_one_big_file</td>
-<td>1</td>
-<td>7786.3 MB</td>
-<td>7786.3 MB</td>
-<td>7786.3 MB</td>
-<td>7786.3 MB</td>
-<td>7786.3 MB</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7786.3 MB</td>
+<td style="text-align: right;">7786.3 MB</td>
+<td style="text-align: right;">7786.3 MB</td>
+<td style="text-align: right;">7786.3 MB</td>
+<td style="text-align: right;">7786.3 MB</td>
 </tr>
 <tr class="even">
 <td>pums_by_year</td>
-<td>34</td>
-<td>0.1MB</td>
-<td>0.1MB</td>
-<td>211.8MB</td>
-<td>459.9 MB</td>
-<td>493MB</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">211.8 MB</td>
+<td style="text-align: right;">459.9 MB</td>
+<td style="text-align: right;">493 MB</td>
 </tr>
 <tr class="odd">
 <td>pums_by_year_location</td>
-<td>1785</td>
-<td>0.1MB</td>
-<td>0.1MB</td>
-<td>0.1MB</td>
-<td>6.02MB</td>
-<td>56.1MB</td>
+<td style="text-align: right;">1785</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">6.02 MB</td>
+<td style="text-align: right;">56.1 MB</td>
 </tr>
 <tr class="even">
 <td>pums_by_year_location_age</td>
-<td>14124</td>
-<td>0.1MB</td>
-<td>0.1MB</td>
-<td>0.4MB</td>
-<td>1.09MB</td>
-<td>17.6MB</td>
+<td style="text-align: right;">14124</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">0.1 MB</td>
+<td style="text-align: right;">0.4 MB</td>
+<td style="text-align: right;">1.09 MB</td>
+<td style="text-align: right;">17.6 MB</td>
 </tr>
 </tbody>
 </table>
