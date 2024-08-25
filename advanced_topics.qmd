@@ -20,39 +20,34 @@ Finally, we'll look at a practical case of extending Arrow to work with the spec
 
 ## Acero bindings
 
-In Chapter [data manip whatever] we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to give into that a little deeper.  
+In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.  
 
-Acero, arrow's query engine, has a large number of functions implemented for performing calculations on data.  The complete list can be found in the docs here: https://arrow.apache.org/docs/cpp/compute.html#available-functions
+Acero, arrow's query engine, has a large number of functions implemented for performing calculations on data.
+The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
 
 Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.  
 
-Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev`.  
+Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.  
 
-There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero#s stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return null.
+There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
 
-<!-- add screenshot of sd docs page and then screenshot of varianceoptions and stddev
-https://arrow.apache.org/docs/cpp/api/compute.html#_CPPv4N5arrow7compute15VarianceOptionsE
-https://arrow.apache.org/docs/cpp/compute.html#available-functions
--->
+This also highlights the slight different in terminology here; whereas R has separate concepts of `NA` and `NULL`, Arrow considers them to be the same things. 
 
-This also highlights the slight different in terminology here; whereas R has separate concepts of NA and NULL, Arrow considers them to be the same things. 
+You don't usually have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.
+Let's take a closer look at an example.
 
-You don't have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.  Let's take a closer look at an example.
-
-Let's say we wanted to only return data for states whose names start with the letter "w".  We can take our dataset and use `dplyr::filter()` to return this subset.
-We need to pick a function to pass to `dplyr::filter()` to actually *do* the filtering.
+Say we wanted to only return data for states whose names start with the letter "w".
+We can take our dataset and use `dplyr::filter()` to return this subset, but we need to pick a function to pass to `dplyr::filter()` to actually *do* the filtering.
 
 Let's start first by looking at the Acero function we want Arrow to use.
 We wouldn't usually ever have to do this when working with Arrow, but it's useful in understanding how this all works.
 
-If we look at the Acero compute function docs, we'll see that there is a function `starts_with` which does this. It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
-
-<!-- picture -->
+If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this. It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
 
 So how do we use this from the arrow R package?
 We start off by considering which R function to use.  Let's go with the base R function `startsWith()`.
 
-<!-- picture -->
+![Documentation for the base function `startsWith()`](images/startsWith_docs.png)
 
 This function has an Acero mapping, and we can see this by creating our query but not actually executing it, but instead looking at the query we generate
 
@@ -83,19 +78,15 @@ list_compute_functions() |>
 You can also use these functions in your arrow dplyr pipelines by passing them to `call_function()`.
 Let's take a look at how we'd do that with the Acero function `starts_with()`.
 
-# TODO: work out how to get this working!!
 ```{r}
 #| label: starts_with_call_directly
 open_dataset("data/person/") |> 
   select(location) |> 
   filter(
-    
-      arrow_starts_with(
-        location,
-        pattern = "w",
-        ignore_case = FALSE
-      )
-    
+    arrow_starts_with(
+      location,
+      options=list(pattern="w", ignore_case = FALSE)
+    )
   )
 ```
 ## User-defined functions {#sec-UDF}
