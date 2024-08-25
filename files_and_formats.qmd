@@ -382,7 +382,7 @@ In real use, call `one_state_schema$code()` to use the whole schema.
 #| label: schema-code
 # Print the code needed to create this schema
 one_state_schema[
-  c("RT", "SERIALNO", "DIVISION", "SPORDER", 
+  c("RT", "SERIALNO", "DIVISION", "SPORDER",
     "PUMA", "REGION", "ST")
 ]$code()
 ```
@@ -395,7 +395,7 @@ You can add a new item by assigning a data type to a new item in the schema.
 #| label: add_to_schema
 one_state_schema[["new_var"]] <- float64()
 one_state_schema[
-  c("RT", "SERIALNO", "DIVISION", "SPORDER", 
+  c("RT", "SERIALNO", "DIVISION", "SPORDER",
     "PUMA", "REGION", "ST", "new_var")
 ]
 ```
@@ -404,7 +404,7 @@ To remove items from a schema or select a subset, you can create a new schema co
 
 ```{r}
 #| label: schema_subset
-to_keep <- c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA", 
+to_keep <- c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA",
              "REGION", "ST", "AGEP", "new_var")
 one_state_schema_mini <- one_state_schema[to_keep]
 one_state_schema_mini
@@ -595,7 +595,7 @@ fraction <- function(n = integer(), d = integer()) {
 
 }
 
-# define a format method for the object 
+# define a format method for the object
 # so we can control how it's printed
 format.fraction <- function(x, ...) {
   paste0(field(x, "numerator"), "/", field(x, "denominator"))
@@ -685,7 +685,7 @@ First, let's look at the file size of the Parquet file for Washington in 2021, w
 ```{r}
 #| label: pums-subset-size
 wa_21_path <- paste0(
-  "./data/person/year=2021/location=wa/", 
+  "./data/person/year=2021/location=wa/",
   "part-0.parquet"
 )
 fs::file_size(wa_21_path)
@@ -946,7 +946,7 @@ We can do this with multiple variables at once, and when we're happy with the re
 #| eval: false
 wa_2005 |>
   left_join(
-    filter(codebook, name == "COW"), 
+    filter(codebook, name == "COW"),
     by = c("COW" = "values_code")
   ) |>
   mutate(COW = values_label, .keep = "unused") |>

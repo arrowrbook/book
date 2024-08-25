@@ -13,7 +13,10 @@ If you want to read a single file directly into memory, you can pass a URL direc
 
 ```{r}
 #| label: read_parquet_url
-read_parquet(system.file("v0.7.1.parquet", package = "arrow"))
+
+read_parquet(
+  "https://github.com/apache/arrow/raw/main/r/inst/v0.7.1.parquet"
+)
 ```
 
 If you want to work with multi-file datasets, however, the HTTP protocol isn't compatible with Arrow's ability to scan files and read metadata before data is accessed to optimize what is eventually pulled into memory upon collecting a query.
@@ -65,7 +68,7 @@ To open a file or dataset saved in cloud storage, instead of passing in a path t
 #| label: open_parquet_s3
 #| eval: false
 read_parquet(
-  paste0("s3://scaling-arrow-pums/person/year=2005/", 
+  paste0("s3://scaling-arrow-pums/person/year=2005/",
          "location=ak/part-0.parquet")
 )
 open_dataset("s3://scaling-arrow-pums/person/")
@@ -78,7 +81,7 @@ The equivalent of the above commands for GCS---these won't run here as these buc
 #| label: open_parquet_gcs
 #| eval: false
 read_parquet(
-  paste0("gs://anonymous@scaling-arrow-pums/person/year=2005/", 
+  paste0("gs://anonymous@scaling-arrow-pums/person/year=2005/",
          "location=ak/part-0.parquet"
         )
 )
