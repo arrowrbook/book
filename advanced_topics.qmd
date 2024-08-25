@@ -241,10 +241,24 @@ plots <- lapply(crs_list, function(crs_info) {
 
 # Combine plots using patchwork
 combined_plot <- wrap_plots(plots, ncol = 2)
-
-# Display the combined plot
-print(combined_plot)
 ```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: projections-html
+#| echo: false
+combined_plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: projections-pdf
+#| echo: false
+combined_plot & theme(plot.title = element_text(size = 9))
+```
+:::
+
 
 Saving geospatial data to Arrow format isn't as simple as taking the data and mapping values to the equivalent Arrow data types.
 Many geospatial applications have custom data types used to describe the location and shape being represented in the data.
@@ -457,6 +471,7 @@ We can clearly see some patterns of migration: French is spoken in parts of nort
 
 ```{r}
 #| label: pums-langauge-all-US
+#| eval: false
 puma_by_langauge |>
   filter(language %in% c("english", "spanish", "french", "navajo")) |>
   fill_pumas() |>
@@ -474,6 +489,45 @@ puma_by_langauge |>
     subtitle = "across the US by PUMA"
   )
 ```
+
+
+```{r}
+#| label: pums-langauge-all-US-plot
+#| echo: false
+plot <- puma_by_langauge |>
+  filter(language %in% c("english", "spanish", "french", "navajo")) |>
+  fill_pumas() |>
+  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  correct_projection() |>
+  ggplot() +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  coord_sf(crs = "+proj=laea +lon_0=-98 +lat_0=39.5") +
+  facet_wrap(vars(language), ncol = 2) +
+  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Proportion of speakers by language",
+    subtitle = "across the US by PUMA"
+  )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: pums-langauge-all-US-plot-html
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: pums-langauge-all-US-plot-pdf
+#| echo: false
+#| fig-height: 7
+plot
+```
+:::
 
 ::: {.callout-tip}
 That plotting code might look intimidating at first, but most of it is to add theming and to get the projection on the globe.
@@ -526,6 +580,7 @@ We've selected slightly different languages for each area to highlight unique di
 
 ```{r}
 #| label: pums-langauge-chicagoland
+#| eval: false
 puma_by_langauge |>
   filter(language %in% c("english", "spanish", "polish")) |>
   fill_pumas() |>
@@ -549,10 +604,58 @@ puma_by_langauge |>
   )
 ```
 
+```{r}
+#| label: pums-langauge-chicagoland-plot
+#| echo: false
+plot <- puma_by_langauge |>
+  filter(language %in% c("english", "spanish", "polish")) |>
+  fill_pumas() |>
+  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  correct_projection() |>
+  ggplot() +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  coord_sf(
+    xlim = c(000000, 100000),
+    ylim = c(000000, 150000),
+    crs = "+proj=laea +lon_0=-88.3 +lat_0=41.5",
+    expand = FALSE
+  ) +
+  facet_wrap(vars(language), ncol = 3) +
+  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Proportion of speakers by language",
+    subtitle = "in the Chicago area by PUMA"
+  )
+```
+
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: pums-langauge-chicagoland-plot-html
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: pums-langauge-chicagoland-plot-pdf
+#| echo: false
+#| fig-height: 5
+plot +
+  scale_x_continuous(
+    breaks = seq(-86, -89, by = -0.5)
+  ) 
+```
+:::
+
 Or the Northeast, where there are a relatively large proportion of Portugese speakers in Massachusetts, and French speakers in Northern Maine.
 
 ```{r}
 #| label: pums-langauge-northeast
+#| eval: false
 puma_by_langauge |>
   filter(language %in% c("english", "spanish", "french", "portuguese")) |>
   fill_pumas() |>
@@ -575,6 +678,49 @@ puma_by_langauge |>
     subtitle = "in the Northeast"
   )
 ```
+
+```{r}
+#| label: pums-langauge-northeast-plot
+#| echo: false
+plot <- puma_by_langauge |>
+  filter(language %in% c("english", "spanish", "french", "portuguese")) |>
+  fill_pumas() |>
+  inner_join(PUMA, by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")) |>
+  correct_projection() |>
+  ggplot() +
+  geom_sf(aes(geometry = geometry, fill = prop_speaker), lwd = 0) +
+  coord_sf(
+    xlim = c(000000, 650000),
+    ylim = c(000000, 810000),
+    crs = "+proj=laea +lon_0=-74.5 +lat_0=40.4",
+    expand = FALSE
+  ) +
+  scale_fill_distiller(type = "seq", direction = 1, palette = "Greys", name = "proportion of speakers") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Proportion of speakers by language",
+    subtitle = "in the Northeast"
+  )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: pums-langauge-northeast-plot-html
+#| echo: false
+plot + facet_wrap(vars(language), ncol = 4)
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: pums-langauge-northeast-plot-pdf
+#| echo: false
+#| fig-height: 9
+plot + facet_wrap(vars(language), ncol = 2)
+```
+:::
+
 
 ## Summary
 

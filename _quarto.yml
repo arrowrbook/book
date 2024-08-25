@@ -48,8 +48,8 @@ format:
     biblio-style: apalike
     documentclass: krantz
     classoption: [krantz2]
-    fig-width: 4.5
-    fig-height: 7.5
+    fig-width: 6
+    # fig-height: 9
     format-resources:
       - latex/krantz.cls
     hyperrefoptions: "bookmarks=false"
