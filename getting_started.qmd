@@ -228,7 +228,7 @@ Now we can use the data in `to_plot` that we just pulled in to R to make a plot 
 #| echo: false
 latest_year <- max(to_plot$year)
 
-ggplot(to_plot) +
+plot <- ggplot(to_plot) +
   aes(
     x = year,
     y = n_commuters_relative,
@@ -294,6 +294,23 @@ ggplot(to_plot) +
   )
 ```
 
+::: {.content-visible when-format="html"}
+```{r}
+#| label: pums-data-manip-agg-plot-n_commuters-html
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: pums-data-manip-agg-plot-n_commuters-pdf
+#| echo: false
+#| fig-height: 9
+print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
+```
+:::
+
 One striking thing is that we can see that after the 2020 Covid pandemic, the number of people working from home jumped to over 500% compared to 2005.
 There was already growth for working from home before then, but there was — understandably — a giant bump there.
 We also saw public transit modes drop in 2021 and then come back up in 2022.
@@ -303,7 +320,7 @@ We also saw public transit modes drop in 2021 and then come back up in 2022.
 #| echo: false
 latest_year <- max(to_plot$year)
 
-to_plot |>
+plot <- to_plot |>
   filter(transit_type != "Worked from home") |>
   ggplot() +
   aes(x = year, y = mean_commute_time, color = transit_type) +
@@ -362,6 +379,23 @@ to_plot |>
     )
   )
 ```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: pums-data-manip-agg-plot-commute_time-html
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: pums-data-manip-agg-plot-commute_time-pdf
+#| echo: false
+#| fig-height: 9
+print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
+```
+:::
 
 And we can see how the commuting durations also change, as mean duration in minutes.
 Below we can see that, besides "Other method", all modes of transit seem to be getting longer over time, with commuter rail and bicycles seeing some of the largest increases.

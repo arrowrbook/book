@@ -40,6 +40,43 @@ format:
     df-print: paged
     fig-width: 8
     fig-height: 6
+  pdf:
+    toc: false
+    toc-title: "Contents"
+    keep-tex: true
+    cite-method: natbib
+    biblio-style: apalike
+    documentclass: krantz
+    classoption: [krantz2]
+    fig-width: 6
+    # fig-height: 9
+    format-resources:
+      - latex/krantz.cls
+    hyperrefoptions: "bookmarks=false"
+    links-as-notes: true
+    colorlinks: false
+    # For breaking lines in output
+    knitr:
+      opts_chunk:
+        R.options:
+          width: 64
+    include-in-header: 
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+    include-before-body:
+      text: |
+        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+          showspaces = false,
+          showtabs = false,
+          breaksymbolleft={},
+          breaklines
+          % Note: setting commandchars=\\\{\} here will cause an error 
+        }
+    # highlight-style: grayscale-custom.theme
+    # include-in-header: latex/preamble.tex
+    # include-before-body: latex/before_body.tex
+    # include-after-body: latex/after_body.tex
 
 editor: source
 
