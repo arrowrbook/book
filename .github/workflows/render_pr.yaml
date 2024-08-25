@@ -58,6 +58,10 @@ jobs:
           PUMS_LOC: ./data
           QUARTO_PROFILE: rerender
         uses: quarto-dev/quarto-actions/render@v2
+        with:
+          # TODO: pdf version is failing to render
+          # The error message suggests to run `quarto install tinytex` first
+          to: html
 
       - name: Deploy to GH pages preview
         uses: rossjrw/pr-preview-action@v1
