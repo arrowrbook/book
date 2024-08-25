@@ -5,9 +5,21 @@
 # ignore the rendered book, since GHA does that for us
 _book
 _freeze
+site_libs
+*_files 
 
 .venv
 
 # ignore data files
 data
 PUMS_smol
+
+# quarto + tex detritus
+index.aux
+index.bbl
+index.blg
+index.log
+index.pdf
+index.tex
+/krantz.cls
+Scaling-Up-With-R-and-Arrow.tex
