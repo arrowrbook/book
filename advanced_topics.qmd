@@ -19,7 +19,49 @@ We'll be looking in more detail at how bindings from R functions to Acero bindin
 We're going to explore how you can get around edge cases where functions you want to use inside dplyr functions don't have an Acero function to be mapped to directly, but you can still use them by calling back into R to do these calculations.
 Finally, we'll look at a practical case of extending Arrow to work with the specialist data types found in the geospatial domain.
 
-## Acero bindings
+## Acero
+
+Acero is the Arrow C++ library's query execution engine.
+A query execution engine is a library which allows users to perform queries against a data source.
+It takes input data and the operations to be performed on the data, combines them, and returns the output from this process.
+
+It typically has multiple steps, which could include things like:
+
+* like taking the query and parsing it into an algebraic format
+* re-ordering and optimising the query in order to run it in the most efficient way
+* actually running the query
+
+Acero doesn't contain a query optimizer, but there is some code in the R package which reorders queries before passing it to Acero.
+
+When you call dplyr functions on Arrow tabular objects like tables and datasets, the code in the R package translates this into execution plan - directed graphs which express what operations need to take place.
+
+These are represented by nodes.
+For example, a ProjectNode is used to create a new column.
+
+You can see the execution plan by running `show_query()`, which displays the execution plan, as a final step in a query.
+
+```{r}
+#| label: show_query
+open_dataset("data/person/") |>
+  transmute(age_renamed = AGEP) |>
+  show_query()
+```
+In the example above, the SourceNode and the SinkNode provide the input and the output.
+The middle step, the ProjectNode is where the new column is created.
+
+A more complex query will end up with more nodes representing the different operations.
+
+```{r}
+#| label: show_query_complex
+open_dataset("data/person/") |>
+  filter(location == "wa") |>
+  group_by(year) |>
+  summarize(mean_age = mean(AGEP)) |>
+  show_query()
+```
+For the most part, we don't have to worry too much about the details of these; though they can be useful for investigating queries which run slower than expected, to get a closer look at exactly what is being run in Acero.
+
+## Acero function bindings
 
 In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.
 
@@ -27,22 +69,29 @@ Acero, arrow's query engine, has a large number of functions implemented for per
 The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
 
 Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
+Other functions have slightly different names.
+While in R we use the `-` operator to subtract one value from another, in Acero, there are functions `subtract()` and `subtract_checked()`.
+The latter function is more commonly used as it accounts for overflow and raises an error if the value returned is beyond the minimum or maximum value for that data type.
 
-Other functions have slightly different names; whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.
-
-| Feature                        | R (`sd`)                                                | Acero (`stddev`)                                                                        |
-|-------------------|----------------------|--------------------------------|
-| **Function Name**              | `sd`                                                    | `stddev`                                                                                |
-| **Function Options**           | `na.rm = FALSE`                                         | `ddof = 0`, `skip_nulls = FALSE`, `min_count = 1`                                       |
-| **Purpose**                    | Computes standard deviation                             | Computes standard deviation                                                             |
-| **Handling of Missing Values** | `na.rm`: Boolean, removes `NA` values (default `FALSE`) | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`)                          |
-| **Degrees of Freedom**         | Not available                                           | `ddof`: Integer, denominator degrees of freedom (default `0`)                           |
-| **Minimum Count**              | Not available                                           | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
-
-There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
-
-You don't usually have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.
+You don't usually have to worry about these details yourself though, as the code in the arrow R package does a direct translation from R function to the Acero equivalent.
 Let's take a closer look at an example.
+
+### A simple Acero binding
+
+The query below calculates a new column, the age of the respondents in the previous year, by deducting 1 from the value in the `AGEP` column.
+There is already a mapping between the `-` operator in R and `subtract_checked()` in Acero, and we can see this by creating our query but not actually executing it.
+
+```{r}
+#| label: minus_binding
+open_dataset("data/person/") |>
+  transmute(age_previous_year = AGEP-1)
+```
+
+When we print the query, the output shows that new column `age_previous_year` is calculated by calling the Acero function `subtract_checked()` and passing in a reference to the `AGEP` column and the number `1`.
+
+These mappings also exist for slightly more complex functions which have additional parameters to pass in.
+
+### Bindings for more complex functions
 
 Say we wanted to only return data for states whose names start with the letter "w".
 We can take our dataset and use `dplyr::filter()` to return this subset, but we need to pick a function to pass to `dplyr::filter()` to actually *do* the filtering.
@@ -66,8 +115,6 @@ The table below shows a comparison with the Acero equivalent.
 | **Prefix/Pattern Argument** | `prefix`: The prefix to match                     | `pattern`: The pattern to match                    |
 | **Case Sensitivity**        | Always case-sensitive                             | `ignore_case`: Boolean, set to `false` by default  |
 
-There is already a mapping between these two functions, and we can see this by creating our query but not actually executing it.
-
 ```{r}
 #| label: startsWith
 open_dataset("data/person/") |> 
@@ -82,7 +129,45 @@ The options for the Acero function have been set based on the values which were 
 We set the `startsWith()` argument `prefix` to "w", which was passed to the Acero `starts_with()` option called `pattern`.
 As `startsWith()` is always case-sensitive, the Acero `starts_with()` option `ignore_case` has been set to `false`.
 
-This approach is great for the most typical case where we know the R function we want to use as arrow automatically translates to the relevant Acero function, but what about if we just want to start with Acero functions?
+### Bindings for aggregation functions
+
+The arrow R package also has bindings for aggregation functions which take multiple rows of data and calculate a single values.
+For example, whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.
+
+| Feature                        | R (`sd`)                                                | Acero (`stddev`)                                                                        |
+|-------------------|----------------------|--------------------------------|
+| **Function Name**              | `sd`                                                    | `stddev`                                                                                |
+| **Function Options**           | `na.rm = FALSE`                                         | `ddof = 0`, `skip_nulls = FALSE`, `min_count = 1`                                       |
+| **Purpose**                    | Computes standard deviation                             | Computes standard deviation                                                             |
+| **Handling of Missing Values** | `na.rm`: Boolean, removes `NA` values (default `FALSE`) | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`)                          |
+| **Degrees of Freedom**         | Not available                                           | `ddof`: Integer, denominator degrees of freedom (default `0`)                           |
+| **Minimum Count**              | Not available                                           | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
+
+There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
+
+```{r}
+#| label: sd_binding
+open_dataset("data/person/") |> 
+  summarise(sd_age = sd(AGEP))
+```
+
+The output here doesn't show the function mapping as aggregation functions are a special case which are handled differently.
+
+However, you can see the mapping as part of a more complex output - if you call `show_query()` as a final step.
+
+```{r}
+#| label: show_query
+open_dataset("data/person/") |> 
+  summarise(sd_age = sd(AGEP)) |>
+  show_query()
+```
+
+We can see in the output above a references to the Acero `stddev()` function, as well as the values of the parameters passed to it.
+
+### Using Acero functions directly
+
+We don't have to know anything at all about about Acero functions in the typical case, where we know the R function we want to use, as arrow automatically translates it to the relevant Acero function if a binding does exist.
+But, what about if we want to use an Acero function which doesn't have an R equivalent to start from?
 
 We can view the full list of Acero functions available to use in arrow by calling `list_compute_functions()`.
 At the time of writing there were 262 Acero functions available to use in R - the first 20 are shown below.
@@ -93,10 +178,10 @@ list_compute_functions() |>
   head(20)
 ```
 
-You can also use these functions in your arrow dplyr pipelines by prefixing them with `"arrow_"`.
+You can use these functions in your arrow dplyr pipelines by prefixing them with `"arrow_"`.
 
 This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents - which can be used instead. 
-However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function.
+However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function, or there is equivalent R function at all.
 
 Let's say that we wanted to do an analysis of the languages spoken by respondents in different areas.
 The columns we need for this analysis are:
