@@ -98,21 +98,26 @@ You can also use these functions in your arrow dplyr pipelines by prefixing them
 This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents - which can be used instead. 
 However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function.
 
-Let's take a look at how we'd do that with the Acero function `starts_with()`, if we wanted the returned results to now be case-insensitive.
+Let's say that we wanted to do an analysis of the languages spoken by respondents in different areas.
+The columns we need for this analysis are:
+
+* `LANP` - the language spoken in each area
+* `PWGTP` - the weighting for that row in the dataset
+* `PUMA` - a five digit number representing the smallest geographical area represented in the data
+
+Although the `PUMA` code is number, as it can begin with a zero, it's saved as a string. 
+We know from having looked through the data that some rows in the dataset contain extra text, but for our analysis, we only want the rows in the dataset which contain only numbers in the `PUMA` column.
+We can use the Acero function `utf8_is_digit()` which returns `TRUE` if a string contains only numbers and `FALSE` is there are any other characters in the string to do this filtering.
 
 ```{r}
-#| label: starts_with_call_directly
+#| label: utf8_is_digit
 open_dataset("data/person/") |> 
-  select(location) |> 
-  filter(
-    arrow_starts_with(
-      location,
-      options=list(pattern="w", ignore_case = TRUE)
-    )
-  )
+  select(PUMA, LANP, PWGTP) |>
+  filter(arrow_utf8_is_digit(PUMA))
 ```
 
-For the most part, Acero functions have an R mapping, which are generally simpler to work with, and in general, we recommend using those unless you have a specific reason to want to call the Acero equivalent directly.
+For the most part, Acero functions have an R mapping, which are generally simpler to work with, and in general, we recommend using those unless you have a specific reason to want to call the Acero equivalent directly like in the example above.
+
 ## User-defined functions {#sec-UDF}
 
 We described how to use functions in dplyr pipelines in [Section @sec-dplyr-use-funcs], but what if you want to use a function which doesn't have an arrow binding?
