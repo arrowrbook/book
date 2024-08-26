@@ -156,7 +156,7 @@ The output here doesn't show the function mapping as aggregation functions are a
 However, you can see the mapping as part of a more complex output - if you call `show_query()` as a final step.
 
 ```{r}
-#| label: show_query
+#| label: show_query_agg
 open_dataset("data/person/") |> 
   summarise(sd_age = sd(AGEP)) |>
   show_query()
