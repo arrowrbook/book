@@ -41,8 +41,6 @@ Other functions have slightly different names; whereas R has `sd()` for calculat
 
 There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
 
-This also highlights the slight different in terminology here; whereas R has separate concepts of `NA` and `NULL`, Arrow considers them to be the same things.
-
 You don't usually have to worry about these differences yourself though, as the code in the arrow R package does a direct translation from one to the other.
 Let's take a closer look at an example.
 
