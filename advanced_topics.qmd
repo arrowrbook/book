@@ -13,11 +13,16 @@ library(dplyr)
 pums_person <- open_dataset("./data/person")
 ```
 
-In this chapter we're going to look at advanced data manipulation topics.
-We'll be looking in more detail at how bindings from R functions to Acero bindings work, as well as the converse of this - functions which exist in Acero, and don't have tidyverse or base R equivalents, and how you can access these in your arrow pipelines.
+In this chapter we're going to dive into some more advanced topics.
+As we've shown in the previous chapters, the arrow R package includes support for hundreds of functions in R and has a rich type system.
+These empower you to solve most common data analysis problems.
+However, if you ever need to extend that set of functionality, there are several options.
 
-We're going to explore how you can get around edge cases where functions you want to use inside dplyr functions don't have an Acero function to be mapped to directly, but you can still use them by calling back into R to do these calculations.
-Finally, we'll look at a practical case of extending Arrow to work with the specialist data types found in the geospatial domain.
+To start, we'll look in more detail at how bindings from R functions to Acero, the Arrow C++ query engine, work.
+We'll also explore the converse of this: functions that exist in Acero and don't have R equivalents, and how you can access these in your arrow pipelines.
+Then, we're going to show how you can call back from Acero into R to do calculations where functions you want to use inside don't have a corresponding Acero function.
+For other cases, we'll show how the Arrow format's focus on interoperability lets you stream data to and from other query engines, such as DuckDB, to access different functionality they have.
+Finally, we'll look at a practical case of extending Arrow's type system to work with geospatial data.
 
 ## Acero
 
@@ -27,16 +32,15 @@ It takes input data and the operations to be performed on the data, combines the
 
 It typically has multiple steps, which could include things like:
 
-* like taking the query and parsing it into an algebraic format
-* re-ordering and optimising the query in order to run it in the most efficient way
+* taking the query and parsing it into an algebraic format
+* re-ordering and optimising the query in order to run it in the most efficient way[^optimizer]
 * actually running the query
 
-Acero doesn't contain a query optimizer, but there is some code in the R package which reorders queries before passing it to Acero.
+[^optimizer]: Acero doesn't have a logical query optimizer, but as we have seen, it does support optimizations like predicated pushdown: this is what makes filtering on partitioned datasets fast. To take advantage of these optimzations, there is code in the R package that reorders queries before passing it to Acero.
 
-When you call dplyr functions on Arrow tabular objects like tables and datasets, the code in the R package translates this into execution plan - directed graphs which express what operations need to take place.
-
-These are represented by nodes.
-For example, a ProjectNode is used to create a new column.
+When you call dplyr functions on Arrow tabular objects like tables and datasets, the code in the R package translates this into execution plan---directed graphs that express what operations need to take place.
+These operations are represented by nodes.
+For example, a `ProjectNode` is used to create a new column.
 
 You can see the execution plan by running `show_query()`, which displays the execution plan, as a final step in a query.
 
@@ -46,8 +50,8 @@ open_dataset("data/person/") |>
   transmute(age_renamed = AGEP) |>
   show_query()
 ```
-In the example above, the SourceNode and the SinkNode provide the input and the output.
-The middle step, the ProjectNode is where the new column is created.
+In the example above, the `SourceNode` and the `SinkNode` provide the input and the output.
+The middle step, the `ProjectNode` is where the new column is created.
 
 A more complex query will end up with more nodes representing the different operations.
 
@@ -59,21 +63,22 @@ open_dataset("data/person/") |>
   summarize(mean_age = mean(AGEP)) |>
   show_query()
 ```
-For the most part, we don't have to worry too much about the details of these; though they can be useful for investigating queries which run slower than expected, to get a closer look at exactly what is being run in Acero.
+
+Generally, we don't have to worry about the details of these query plans, though they can be useful to get a closer look at exactly what is being run in Acero.
 
 ## Acero function bindings
 
 In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.
 
-Acero, arrow's query engine, has a large number of functions implemented for performing calculations on data.
+Acero has a large number of functions implemented for performing calculations on data.
 The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
 
-Some of these functions have the same names are the R equivalent, for example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
+Some of these functions have the same names are the R equivalent.
+For example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
 Other functions have slightly different names.
 While in R we use the `-` operator to subtract one value from another, in Acero, there are functions `subtract()` and `subtract_checked()`.
 The latter function is more commonly used as it accounts for overflow and raises an error if the value returned is beyond the minimum or maximum value for that data type.
 
-You don't usually have to worry about these details yourself though, as the code in the arrow R package does a direct translation from R function to the Acero equivalent.
 Let's take a closer look at an example.
 
 ### A simple Acero binding
@@ -84,20 +89,21 @@ There is already a mapping between the `-` operator in R and `subtract_checked()
 ```{r}
 #| label: minus_binding
 open_dataset("data/person/") |>
-  transmute(age_previous_year = AGEP-1)
+  transmute(age_previous_year = AGEP - 1)
 ```
 
 When we print the query, the output shows that new column `age_previous_year` is calculated by calling the Acero function `subtract_checked()` and passing in a reference to the `AGEP` column and the number `1`.
 
-These mappings also exist for slightly more complex functions which have additional parameters to pass in.
-
 ### Bindings for more complex functions
+
+Mappings also exist for slightly more complex functions that have additional parameters.
 
 Say we wanted to only return data for states whose names start with the letter "w".
 We can take our dataset and use `dplyr::filter()` to return this subset, but we need to pick a function to pass to `dplyr::filter()` to actually *do* the filtering.
 
 Let's start first by looking at the Acero function we want Arrow to use.
-We wouldn't usually ever have to do this when working with Arrow, but it's useful in understanding how this all works.
+To be clear: we wouldn't usually have to do this when working with arrow.
+This is just to illustrate how this all works.
 
 If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this.
 It has 2 options - `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
@@ -117,8 +123,8 @@ The table below shows a comparison with the Acero equivalent.
 
 ```{r}
 #| label: startsWith
-open_dataset("data/person/") |> 
-  select(location) |> 
+open_dataset("data/person/") |>
+  select(location) |>
   filter(startsWith(x = location, prefix = "w"))
 ```
 
@@ -126,7 +132,7 @@ The information about the Acero mapping is shown here in the line which starts w
 
 It shows that that `startsWith()` has been translated to the Acero function `starts_with()`.
 The options for the Acero function have been set based on the values which were passed in via the R expression.
-We set the `startsWith()` argument `prefix` to "w", which was passed to the Acero `starts_with()` option called `pattern`.
+We set the `startsWith()` argument `prefix` to "w", and that was passed to the Acero `starts_with()` option called `pattern`.
 As `startsWith()` is always case-sensitive, the Acero `starts_with()` option `ignore_case` has been set to `false`.
 
 ### Bindings for aggregation functions
@@ -147,17 +153,20 @@ There are also some differences in the options for these functions; while R's `s
 
 ```{r}
 #| label: sd_binding
-open_dataset("data/person/") |> 
+open_dataset("data/person/") |>
   summarise(sd_age = sd(AGEP))
 ```
 
-The output here doesn't show the function mapping as aggregation functions are a special case which are handled differently.
+The output here doesn't show the function mapping as aggregation functions are handled differently from `select()`, `filter()`, and `mutate()`.
+The aggregation step is contained in the nested `.data` attribute of the query.
+This nesting ensures that the steps of the query are evaluated in this order.
+While `select()`, `filter()`, and `mutate()` can happen successively and be reflected in a single query step, any actions that happen on the data after `summarize()` (and, for that matter, joins) cannot be collapsed or rearranged like that.
 
-However, you can see the mapping as part of a more complex output - if you call `show_query()` as a final step.
+You can see the full query by calling `show_query()` as a final step.
 
 ```{r}
 #| label: show_query_agg
-open_dataset("data/person/") |> 
+open_dataset("data/person/") |>
   summarise(sd_age = sd(AGEP)) |>
   show_query()
 ```
@@ -174,14 +183,14 @@ At the time of writing there were 262 Acero functions available to use in R - th
 
 ```{r}
 #| label: list_compute_functions
-list_compute_functions() |> 
+list_compute_functions() |>
   head(20)
 ```
 
 You can use these functions in your arrow dplyr pipelines by prefixing them with `"arrow_"`.
 
-This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents - which can be used instead. 
-However, there are some niche use-cases where this could be helpful - for example, if you want to use Acero options which don't exist in the R equivalent function, or there is equivalent R function at all.
+This isn't necessary when working with Acero functions which have a direct mapping to their R equivalents, which can be used instead.
+However, there are some niche use-cases where this could be helpful, such as if you want to use Acero options that don't exist in the R equivalent function, or if there is no equivalent R function at all.
 
 Let's say that we wanted to do an analysis of the languages spoken by respondents in different areas.
 The columns we need for this analysis are:
@@ -190,25 +199,25 @@ The columns we need for this analysis are:
 * `PWGTP` - the weighting for that row in the dataset
 * `PUMA` - a five digit number representing the smallest geographical area represented in the data
 
-Although the `PUMA` code is number, as it can begin with a zero, it's saved as a string. 
+Although the `PUMA` code is number, as it can begin with a zero, it's saved as a string.
 We know from having looked through the data that some rows in the dataset contain extra text, but for our analysis, we only want the rows in the dataset which contain only numbers in the `PUMA` column.
-We can use the Acero function `utf8_is_digit()` which returns `TRUE` if a string contains only numbers and `FALSE` is there are any other characters in the string to do this filtering.
+We can use the Acero function `utf8_is_digit()`, which returns `TRUE` if a string contains only numbers and `FALSE` is there are any other characters in the string, to do this filtering.
 
 ```{r}
 #| label: utf8_is_digit
-open_dataset("data/person/") |> 
+open_dataset("data/person/") |>
   select(PUMA, LANP, PWGTP) |>
   filter(arrow_utf8_is_digit(PUMA))
 ```
 
-For the most part, Acero functions have an R mapping, which are generally simpler to work with, and in general, we recommend using those unless you have a specific reason to want to call the Acero equivalent directly like in the example above.
-
 ## User-defined functions {#sec-UDF}
 
-We described how to use functions in dplyr pipelines in [Section @sec-dplyr-use-funcs], but what if you want to use a function which doesn't have an arrow binding?
+Most functions you want to use exist both in R and in Acero, and the arrow package has bindings that map the R syntax to the Acero functions.
+The previous section showed how to use Acero functions that don't exist in R.
+But what if you want to use a R function which doesn't have an Acero equivalent?
 
 In this case, you can create a **user-defined function** (UDF).
-User-defined functions allow arrow to use functions that don't have Acero bindings, by calculating the results in your R session instead.
+User-defined functions allow arrow to use functions that don't have Acero bindings by calculating the results in your R session instead.
 
 There is some additional processing overhead here because some of the calculation is being done by your R session and not by Acero, but it's a helpful tool to have in these circumstances.
 
@@ -237,6 +246,7 @@ Next, define the function itself.
 The first argument must always be `context`---this is used by the C++ code to store metadata to help it convert data between R and C++, but you don't need to do anything here manually other than name it as the first argument to your function.
 Next, define an argument which will be the columns in your dataset to use in the calculation, and any other values you need.
 In our case, we want the column representing the original string, which we've called `x`.
+
 The body of the function itself is identical to when we defined it as an R function.
 The parameters `in_type` and `out_type` control the arrow data types of the input and output columns.
 Here, we pass in a named list of data types to `in_type`, and a data type to `out_type`.
@@ -253,14 +263,15 @@ pums_person |>
   collect()
 ```
 
-UDFs only work on scalar functions: functions which take one row of data as input and return one row of data as output.
+UDFs only work on scalar functions---functions which take one row of data as input and return one row of data as output.
+Acero does not currently support user-defined aggregation functions.
 For example, you could create a UDF which calculates the square of a number, but you can't create one which calculates the median value in a column of data.
 These functions also cannot depend on other values, so you can't write a UDF which implements `lag()` or `lead()` which calculate a value based on the previous or next row in the data.
 
 Because the UDF code is run in your R session, you won't be able to take advantage of some of the features of arrow, such as being able to run code on multiple CPU cores, or the faster speed of executing C++ code.
 You'll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation must be run one at a time instead of allowing parallelisation.
 
-### How does all of this work under the hood?
+### How do UDFs work under the hood?
 
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
@@ -450,7 +461,7 @@ combined_plot <- wrap_plots(plots, ncol = 2)
 #| echo: false
 combined_plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -754,7 +765,7 @@ plot <- puma_by_langauge |>
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -885,7 +896,7 @@ plot <- puma_by_langauge |>
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -896,7 +907,7 @@ plot
 plot +
   scale_x_continuous(
     breaks = seq(-86, -89, by = -0.5)
-  ) 
+  )
 ```
 :::
 
@@ -967,7 +978,7 @@ plot <- puma_by_langauge |>
 #| echo: false
 plot + facet_wrap(vars(language), ncol = 4)
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
