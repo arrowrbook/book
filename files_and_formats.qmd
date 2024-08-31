@@ -167,6 +167,8 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 
 @tbl-formats summarizes the features and tradeoffs of the file formats that arrow works with.
 
+::: {.content-hidden when-format="pdf"}
+
 |                                 | CSV | ND-JSON | Parquet | Arrow |
 |---------------------------------|-----|---------|---------|-------|
 | Read using Arrow                | ✓   | ✓       | ✓       | ✓     |
@@ -181,6 +183,24 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 | Widely adopted                  | ✓   |         | ✓       |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
+:::
+::: {.content-hidden when-format="html"}
+
+|                                 | CSV | ND-JSON | Parquet | Arrow |
+|---------------------------------|-----|---------|---------|-------|
+| Read using Arrow                | x   | x       | x       | x     |
+| Write using Arrow               | x   |         | x       | x     |
+| Human-readable                  | x   | x       |         |       |
+| Fast read/write                 |     |         | x       | x     |
+| Includes schema                 |     |         | x       | x     |
+| Metadata                        |     |         | x       | x     |
+| Nested structures               |     | x       | x       | x     |
+| Compression                     |     |         | x       | x     |
+| High-fidelity type preservation |     |         | x       | x     |
+| Widely adopted                  | x   |         | x       |       |
+
+: Comparison of formats supported by Arrow {#tbl-formats}
+:::
 
 Now that we've surveyed the file formats, we're going to discuss how to read in CSVs effectively since they are both widespread and potentially challenging.
 We'll also demonstrate why exactly Parquet files are beneficial in terms of file size, speed, and fidelity, and show you how to convert your CSV data into Parquet files.
