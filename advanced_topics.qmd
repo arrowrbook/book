@@ -128,7 +128,8 @@ open_dataset("data/person/") |>
   filter(startsWith(x = location, prefix = "w"))
 ```
 
-The information about the Acero mapping is shown here in the line which starts with "\* Filter" - this contains a human-readable representation of the Arrow Expression created.
+The information about the Acero mapping is shown here in the line which starts with "\* Filter".
+This contains a human-readable representation of the Arrow Expression created.
 
 It shows that that `startsWith()` has been translated to the Acero function `starts_with()`.
 The options for the Acero function have been set based on the values which were passed in via the R expression.
