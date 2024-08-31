@@ -106,7 +106,7 @@ To be clear: we wouldn't usually have to do this when working with arrow.
 This is just to illustrate how this all works.
 
 If we look at the [Acero compute function docs](https://arrow.apache.org/docs/cpp/compute.html#available-functions), we'll see that there is a function `starts_with` which does this.
-It has 2 options: `pattern` the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
+It has 2 options: `pattern`, the substring to match at the start of the string, and `ignore_case`, whether the matching should be case sensitive.
 
 So how do we use this from the arrow R package?
 We start off by considering which R function to use.
