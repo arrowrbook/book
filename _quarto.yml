@@ -41,7 +41,7 @@ format:
     fig-width: 8
     fig-height: 6
   pdf:
-    toc: false
+    toc: true
     toc-title: "Contents"
     keep-tex: true
     cite-method: natbib
@@ -52,7 +52,9 @@ format:
     # fig-height: 9
     format-resources:
       - latex/krantz.cls
-    hyperrefoptions: "bookmarks=false"
+    hyperrefoptions:
+      - "bookmarks=false"
+      - "linktoc=none"
     links-as-notes: true
     colorlinks: false
     # For breaking lines in output
@@ -60,7 +62,7 @@ format:
       opts_chunk:
         R.options:
           width: 64
-    include-in-header: 
+    include-in-header:
       text: |
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -71,7 +73,7 @@ format:
           showtabs = false,
           breaksymbolleft={},
           breaklines
-          % Note: setting commandchars=\\\{\} here will cause an error 
+          % Note: setting commandchars=\\\{\} here will cause an error
         }
     # highlight-style: grayscale-custom.theme
     # include-in-header: latex/preamble.tex
