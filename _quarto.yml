@@ -64,6 +64,7 @@ format:
       text: |
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \frontmatter
     include-before-body:
       text: |
         \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
