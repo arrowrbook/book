@@ -1,4 +1,4 @@
-# Foreword
+# Foreword {.unnumbered}
 
 **Foreword by Wes McKinney**
 
