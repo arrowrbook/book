@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>7&nbsp; Advanced Topics – Scaling Up With R and Arrow</title>
+<title>7&nbsp; Advanced Topics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4JT42QR6DV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
-</script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -126,7 +118,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced_topics.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced_topics.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,18 +131,6 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
-    </div>
-      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -161,67 +141,67 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Acknowledgements</span></a>
+ <span class="menu-text">Scaling Up With R and Arrow</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foreword</span></a>
+ <span class="menu-text">Scaling Up With R and Arrow</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text">Scaling Up With R and Arrow</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -236,7 +216,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
   </div>
 </li>
       </ul>
@@ -274,12 +254,19 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span id="sec-adv-topics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></h1>
+<p class="subtitle lead">Bigger Data, Easier Workflows</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nic Crane, Jonathan Keane, and Neal Richardson </p>
+          </div>
+  </div>
     
   
     
@@ -374,7 +361,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ar","2":"max_commute","3":"186"},{"1":"az","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wi","2":"max_commute","3":"177"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wa","2":"max_commute","3":"152"},{"1":"ak","2":"max_commute","3":"194"},{"1":"wy","2":"max_commute","3":"176"},{"1":"al","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"ak","2":"max_commute","3":"194"},{"1":"al","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wi","2":"max_commute","3":"177"},{"1":"az","2":"max_commute","3":"184"},{"1":"wv","2":"max_commute","3":"193"},{"1":"ar","2":"max_commute","3":"186"},{"1":"wy","2":"max_commute","3":"176"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"al","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -652,7 +639,7 @@ $creator$version
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"az","2":"00800","3":"2018","4":"english","5":"93152","6":"0.807209705"},{"1":"az","2":"00120","3":"2018","4":"english","5":"88711","6":"0.779171388"},{"1":"az","2":"00400","3":"2018","4":"navajo","5":"17677","6":"0.123525548"},{"1":"az","2":"00400","3":"2018","4":"english","5":"109171","6":"0.762878746"},{"1":"az","2":"00203","3":"2018","4":"english","5":"108103","6":"0.867447160"},{"1":"az","2":"00100","3":"2018","4":"cantonese","5":"257","6":"0.001554363"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"00101","3":"2018","4":"english","5":"109629","6":"0.824954286"},{"1":"ak","2":"00101","3":"2018","4":"spanish","5":"5478","6":"0.041221753"},{"1":"ak","2":"00300","3":"2018","4":"english","5":"148423","6":"0.895198403"},{"1":"ak","2":"00300","3":"2018","4":"vietnamese","5":"90","6":"0.000542826"},{"1":"ak","2":"00400","3":"2018","4":"english","5":"77749","6":"0.683303452"},{"1":"ak","2":"00200","3":"2018","4":"english","5":"158153","6":"0.951113169"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1285,30 +1272,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cloud.html" class="pagination-link" aria-label="Cloud">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span>
+      <a href="./cloud.html" class="pagination-link" aria-label="Scaling Up With R and Arrow">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./processes.html" class="pagination-link" aria-label="Sharing Data and Interoperability">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./processes.html" class="pagination-link" aria-label="Scaling Up With R and Arrow">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane, and Neal Richardson.</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
-</div>
-  </div>
-</footer>
 
 
 
