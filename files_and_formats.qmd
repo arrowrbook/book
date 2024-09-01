@@ -40,7 +40,7 @@ Arrow supports reading and writing files in multiple formats:
 -   Parquet
 -   the Arrow format itself
 
-The functions for reading and writing individual files in arrow are shown in the table below.
+The functions for reading and writing individual files in arrow are shown in @tbl-file-funcs.
 
 +-------------------------------------+-----------------------+----------------------+
 | Format                              | Reading               | Writing              |
@@ -61,6 +61,8 @@ The functions for reading and writing individual files in arrow are shown in the
 |                                     |                       |                      |
 |                                     | read_feather()        | write_feather()      |
 +-------------------------------------+-----------------------+----------------------+
+
+: Functions for reading and writing individual files {#tbl-file-funcs}
 
 Let's briefly review the file formats.
 

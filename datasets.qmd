@@ -114,6 +114,8 @@ In this chapter, we'll be looking at topics relevant to both of these workflows,
 We've already looked at some examples using the `open_dataset()` function.
 The previous examples used Arrow and Parquet datasets, but Arrow supports the same formats for datasets that it does for working with individual files: CSV and similar text-delimited formats, Parquet, Arrow IPC format, and line-delimited JSON.
 
+The different functions for reading and writing datasets are shown in @tbl-dataset-funcs below.
+
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | Format                      | Reading                                                | Writing                            |
 +:===========================:+:======================================================:+:==================================:+
@@ -125,6 +127,8 @@ The previous examples used Arrow and Parquet datasets, but Arrow supports the sa
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | Line-delimited JSON         | open_dataset(..., format = "json")                     | (Not supported)                    |
 +-----------------------------+--------------------------------------------------------+------------------------------------+
+
+: Functions for reading and writing datasets {#tbl-dataset-funcs}
 
 The convenience functions `open_csv_dataset()` and `open_delim_dataset()` are wrappers around `open_dataset(..., format = "csv")` but using arguments which match `read_csv_arrow()` and `read_delim_arrow()` to make it easier to switch between working with individual files and multifile datasets by just changing the function call.
 
