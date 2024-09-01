@@ -1,3 +1,7 @@
+```{=latex}
+\mainmatter
+\setcounter{chapter}{1}
+```
 
 ```{r}
 #| label: intro-chapter-setup
