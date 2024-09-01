@@ -183,6 +183,7 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 | Widely adopted                  | ✓   |         | ✓       |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
+
 :::
 ::: {.content-hidden when-format="html"}
 
@@ -200,6 +201,7 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 | Widely adopted                  | x   |         | x       |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
+
 :::
 
 Now that we've surveyed the file formats, we're going to discuss how to read in CSVs effectively since they are both widespread and potentially challenging.
@@ -808,6 +810,7 @@ You can use `arrow::arrow_info()` to see a full list of codecs and other capabil
 Let's take a look at the degree of difference between an uncompressed CSV file, uncompressed Parquet file, compared to "snappy", the default on Linux, and "zstd", one of the current top-performing codecs.
 
 We wrote the files to disk, and then read in just the "AGEP", "COW", and "year" columns.
+The results can be see in @tbl-format-bench.
 
 |         Format         |  Size  | Write time | Read time |
 |:----------------------:|:------:|:----------:|-----------|
@@ -815,6 +818,8 @@ We wrote the files to disk, and then read in just the "AGEP", "COW", and "year" 
 | Parquet - uncompressed | 37.1MB |   14.89s   | 9.215s    |
 |    Parquet - snappy    | 35.8MB |  15.378s   | 10.051s   |
 |     Parquet - zstd     | 30.7MB |  15.203s   | 9.942s    |
+
+: Comparison of file size, read and write times for CSV and Parquet {#tbl-format-bench}
 
 Ultimately, the different Parquet codecs results in similar performance for read and write times with the data here, though this can vary massively based on the data being written/read.
 The key points to take away here are:
