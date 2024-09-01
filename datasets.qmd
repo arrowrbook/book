@@ -114,6 +114,8 @@ In this chapter, we'll be looking at topics relevant to both of these workflows,
 We've already looked at some examples using the `open_dataset()` function.
 The previous examples used Arrow and Parquet datasets, but Arrow supports the same formats for datasets that it does for working with individual files: CSV and similar text-delimited formats, Parquet, Arrow IPC format, and line-delimited JSON.
 
+The different functions for reading and writing datasets are shown in @tbl-dataset-funcs below.
+
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | Format                      | Reading                                                | Writing                            |
 +:===========================:+:======================================================:+:==================================:+
@@ -125,6 +127,8 @@ The previous examples used Arrow and Parquet datasets, but Arrow supports the sa
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | Line-delimited JSON         | open_dataset(..., format = "json")                     | (Not supported)                    |
 +-----------------------------+--------------------------------------------------------+------------------------------------+
+
+: Functions for reading and writing datasets {#tbl-dataset-funcs}
 
 The convenience functions `open_csv_dataset()` and `open_delim_dataset()` are wrappers around `open_dataset(..., format = "csv")` but using arguments which match `read_csv_arrow()` and `read_delim_arrow()` to make it easier to switch between working with individual files and multifile datasets by just changing the function call.
 
@@ -500,7 +504,7 @@ pums_by_year_location_age <- open_dataset(
 )
 ```
 
-The table below shows how many files in each dataset, as well as the minimum, maximum, and median file size.
+@tbl-file-size shows how many files in each dataset, as well as the minimum, maximum, and median file size.
 
 ::: {.content-visible when-format="html"}
 | Dataset                   | \# of Files | Min size  | 1st Quartile | Median size | 3rd Quartile | Max size  |
@@ -509,6 +513,8 @@ The table below shows how many files in each dataset, as well as the minimum, ma
 | pums_by_year              | 34          | 0.1 MB    | 0.1 MB       | 211.8 MB    | 459.9 MB     | 493 MB    |
 | pums_by_year_location     | 1785        | 0.1 MB    | 0.1 MB       | 0.1 MB      | 6.02 MB      | 56.1 MB   |
 | pums_by_year_location_age | 14124       | 0.1 MB    | 0.1 MB       | 0.4 MB      | 1.09 MB      | 17.6 MB   |
+
+: Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
 
 ::: {.content-visible when-format="pdf"}
@@ -518,6 +524,8 @@ The table below shows how many files in each dataset, as well as the minimum, ma
 | pums_by_year              | 34          | 0.1 MB    | 211.8 MB    | 493 MB    |
 | pums_by_year_location     | 1785        | 0.1 MB    | 0.1 MB      | 56.1 MB   |
 | pums_by_year_location_age | 14124       | 0.1 MB    | 0.4 MB      | 17.6 MB   |
+
+: Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
 
 ```{r}
@@ -552,7 +560,7 @@ open_dataset("<path/to/data>") |>
   collect()
 ```
 
-Here's the results of running that query on Nic's laptop, with the datasets we created earlier.
+@tbl-partition-query shows the results of running that query on Nic's laptop, with the datasets we created earlier.
 
 | Dataset                   | Query Completion Time (s) |
 |---------------------------|---------------------------|
@@ -560,6 +568,8 @@ Here's the results of running that query on Nic's laptop, with the datasets we c
 | pums_by_year              | 1.0                       |
 | pums_by_year_location     | 1.8                       |
 | pums_by_year_location_age | 6.5                       |
+
+: Time taken to run a query unrelated to dataset partitions, with different partitioning structures {#tbl-partition-query}
 
 In this case, the fastest query time was on the dataset which was partitioned solely by year, the only partition column used in the query.
 In the case of storing the data in one big file, Arrow has to open the file and use the metadata to work out which of the contents to use in the analysis.
@@ -597,7 +607,7 @@ open_dataset("<path/to/data>") |>
   collect()
 ```
 
-We ran it again on Nic's laptop, and these were the results.
+We ran it again on Nic's laptop, and the results are shown in @tbl-partition-query-2.
 
 | Dataset                   | Query Completion Time (s) |
 |---------------------------|---------------------------|
@@ -605,6 +615,8 @@ We ran it again on Nic's laptop, and these were the results.
 | pums_by_year              | 3.2                       |
 | pums_by_year_location     | 3.3                       |
 | pums_by_year_location_age | 11.5                      |
+
+: Time taken to run a query relating to dataset partitions, with different partitioning structures {#tbl-partition-query-2}
 
 The final query was tested without the call to `mutate()` as the column already existed as a partition, but this made little difference to the overall time---too many partitions create an overhead because Arrow has to open too many different files.
 There's a relatively fixed cost to opening and reading any Parquet file, no matter how big that file is.
@@ -654,8 +666,10 @@ Once again, we removed the call to `mutate()` for the dataset which already had 
 | pums_by_year_location     | 2.2                       |
 | pums_by_year_location_age | 0.8                       |
 
+: Time taken to run a query which filters on dataset partitions, with different partitioning structures {#tbl-partition-query-3}
+
 This time the differences were a lot more marked!
-As you can see in the table above, it's the variables most commonly used for filtering which partitions have the most impact on.
+As you can see in @tbl-partition-query-3, it's the variables most commonly used for filtering which partitions have the most impact on.
 
 We don't recommend repartitioning your data every time you want to run a query on your dataset, as the overhead of time spent rewriting the data to disk means it probably won't be worth it.
 What we'd recommend instead is thinking about which variables you use most frequently in calls to `filter()` in your analyses, and store your data in partitions based on these variables.

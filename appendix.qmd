@@ -292,7 +292,7 @@ tibble::tibble(x = 1:3) |>
 
 #### Translations from R to Arrow {#sec-types-r-arrow}
 
-The following chart is slightly modified from [the Arrow project documentation](https://arrow.apache.org/docs/r/), but clearly marks the mappings between R types and Arrow types.
+@tbl-r-arrow-types is slightly modified from [the Arrow project documentation](https://arrow.apache.org/docs/r/), but clearly marks the mappings between R types and Arrow types.
 
 | Original R type    | Arrow type after translation |
 |--------------------|------------------------------|
@@ -311,6 +311,8 @@ The following chart is slightly modified from [the Arrow project documentation](
 | hms::hms           | time32                       |
 | difftime           | duration                     |
 
+: R data types and their equivalent Arrow data types {#tbl-r-arrow-types}
+
 ^1^: The two types `float64` and `double` are the same in Arrow C++; however, only `float64()` is used in arrow since the function `double()` already exists in base R.
 
 ^2^: If the character vector is exceptionally large---over 2GB of strings---it will be converted to a `large_utf8` Arrow type.
@@ -318,6 +320,8 @@ The following chart is slightly modified from [the Arrow project documentation](
 ^3^: Only lists where all elements are the same type are able to be translated to Arrow list type (which is a "list of" some type). Arrow has a heterogeneous list type, but that is not exposed in the arrow R package.
 
 #### Converting from Arrow to R {#sec-types-arrow-r}
+
+@tbl-arrow-r-types shows Arrow types and the R types they are translated to.
 
 | Original Arrow type | R type after translation    |
 |---------------------|-----------------------------|
@@ -353,6 +357,8 @@ The following chart is slightly modified from [the Arrow project documentation](
 | null                | vctrs::vctrs_unspecified    |
 | map                 | arrow_list ^5^              |
 | union               | \- ^2^                      |
+
+: Arrow data types and their equivalent R data types {#tbl-arrow-r-types}
 
 ^1^: These integer types may contain values that exceed the range of R's `integer` type (32 bit signed integer).
 When they do, `uint32` and `uint64` are converted to `double` ("numeric") and `int64` is converted to `bit64::integer64`.

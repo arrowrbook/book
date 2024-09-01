@@ -161,11 +161,14 @@ tibble::tibble(max_age = 94L)
 
 An important question to ask here is how long it took to run the query.
 We compared running the same query from above on the same machine---a Posit Cloud instance with 1GB of RAM---with a local copy of the data compared to the cloud version of the same data.
+The results are shown in @tbl-cloud-local.
 
 | Location | Time (s) |
 |----------|----------|
 | Local    |    0.2   |
 | Cloud    |   24.1   |
+
+: Time taken to run the same query on a local machine and connecting to an S3 bucket {#tbl-cloud-local}
 
 There's a huge difference between these results: it was 120 times faster to work with a local copy of the data!
 This was due to the need for data transfer; in the local query, Arrow could just scan the data and perform the necessary calculations, whereas in the cloud query, we needed to download the data first before we could return it to our R session.
@@ -353,13 +356,15 @@ We ran this query on Nic's laptop connecting to the following buckets:
 
 We then tried the queried the original S3 bucket again, but from a Posit Cloud instance deployed on Amazon EC2 in the `us-east-1` region.
 
-The average times across 3 runs are shown in the table below.
+The average times across 3 runs are shown in @tbl-cloud-location.
 
 | Bucket Location          | Access Location          | Time (seconds) |
 |--------------------------|--------------------------|----------------|
 | Virginia, US (us-east-1) | Manchester, UK           | 56             |
 | London, UK (eu-west-2)   | Manchester, UK           | 50             |
 | Virginia, US (us-east-1) | Virginia, US (us-east-1) | 24             |
+
+: Time taken to run the same query with varying bucket location and access location {#tbl-cloud-location}
 
 Using a bucket in the same geographical region resulted in a slight decrease in time to run the query and collect the data, when transferring the results to work with locally.
 However, geographic location alone wasn't the sole factor determining transfer times.

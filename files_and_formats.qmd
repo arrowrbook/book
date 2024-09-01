@@ -40,7 +40,7 @@ Arrow supports reading and writing files in multiple formats:
 -   Parquet
 -   the Arrow format itself
 
-The functions for reading and writing individual files in arrow are shown in the table below.
+The functions for reading and writing individual files in arrow are shown in @tbl-file-funcs.
 
 +-------------------------------------+-----------------------+----------------------+
 | Format                              | Reading               | Writing              |
@@ -61,6 +61,8 @@ The functions for reading and writing individual files in arrow are shown in the
 |                                     |                       |                      |
 |                                     | read_feather()        | write_feather()      |
 +-------------------------------------+-----------------------+----------------------+
+
+: Functions for reading and writing individual files {#tbl-file-funcs}
 
 Let's briefly review the file formats.
 
@@ -167,6 +169,8 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 
 @tbl-formats summarizes the features and tradeoffs of the file formats that arrow works with.
 
+::: {.content-hidden when-format="pdf"}
+
 |                                 | CSV | ND-JSON | Parquet | Arrow |
 |---------------------------------|-----|---------|---------|-------|
 | Read using Arrow                | ✓   | ✓       | ✓       | ✓     |
@@ -181,6 +185,26 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 | Widely adopted                  | ✓   |         | ✓       |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
+
+:::
+::: {.content-hidden when-format="html"}
+
+|                                 | CSV | ND-JSON | Parquet | Arrow |
+|---------------------------------|-----|---------|---------|-------|
+| Read using Arrow                | x   | x       | x       | x     |
+| Write using Arrow               | x   |         | x       | x     |
+| Human-readable                  | x   | x       |         |       |
+| Fast read/write                 |     |         | x       | x     |
+| Includes schema                 |     |         | x       | x     |
+| Metadata                        |     |         | x       | x     |
+| Nested structures               |     | x       | x       | x     |
+| Compression                     |     |         | x       | x     |
+| High-fidelity type preservation |     |         | x       | x     |
+| Widely adopted                  | x   |         | x       |       |
+
+: Comparison of formats supported by Arrow {#tbl-formats}
+
+:::
 
 Now that we've surveyed the file formats, we're going to discuss how to read in CSVs effectively since they are both widespread and potentially challenging.
 We'll also demonstrate why exactly Parquet files are beneficial in terms of file size, speed, and fidelity, and show you how to convert your CSV data into Parquet files.
@@ -788,6 +812,7 @@ You can use `arrow::arrow_info()` to see a full list of codecs and other capabil
 Let's take a look at the degree of difference between an uncompressed CSV file, uncompressed Parquet file, compared to "snappy", the default on Linux, and "zstd", one of the current top-performing codecs.
 
 We wrote the files to disk, and then read in just the "AGEP", "COW", and "year" columns.
+The results can be see in @tbl-format-bench.
 
 |         Format         |  Size  | Write time | Read time |
 |:----------------------:|:------:|:----------:|-----------|
@@ -795,6 +820,8 @@ We wrote the files to disk, and then read in just the "AGEP", "COW", and "year" 
 | Parquet - uncompressed | 37.1MB |   14.89s   | 9.215s    |
 |    Parquet - snappy    | 35.8MB |  15.378s   | 10.051s   |
 |     Parquet - zstd     | 30.7MB |  15.203s   | 9.942s    |
+
+: Comparison of file size, read and write times for CSV and Parquet {#tbl-format-bench}
 
 Ultimately, the different Parquet codecs results in similar performance for read and write times with the data here, though this can vary massively based on the data being written/read.
 The key points to take away here are:
