@@ -285,6 +285,7 @@ You can see here on the first few rows, the `PUMA` values are `"00101"`, `"00101
 
 ```{r}
 #| label: pums-puma-readlines
+#| width_limit: 72
 readLines(
   "./data/raw_csvs/person/2021/ak/psam_p02.csv",
   n = 5

@@ -360,9 +360,19 @@ schema(PUMA)$metadata$geo
 This is a `projjson` encoding of the CRS for the `geometry` column.
 This encoding is text, which is actually `JSON`.
 
+::: {.content-visible when-format="html"}
 ```{r}
 jsonlite::fromJSON(schema(PUMA)$metadata$geo)
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| height_limit: 20
+jsonlite::fromJSON(schema(PUMA)$metadata$geo)
+```
+:::
 
 And from this we can see that the CRS for our PUMAs is `{r} jsonlite::fromJSON(schema(PUMA)$metadata$geo)$columns$geometry$crs$name`.
 We will use this later when we plot the data.

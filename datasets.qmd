@@ -26,7 +26,7 @@ Datasets don't represent data loaded into memory, but instead contains informati
 -   what format the files are in
 -   what the schema of those files is---the column names and types
 
-![Dataset components](images/excalidraw/datasets_dataset.png){width="1250"}
+![Dataset components](images/excalidraw/datasets_dataset.png){width="100%"}
 
 If we take a look at the PUMS person dataset, we can see that it contains a total of 832 files, which are in Parquet format.
 
