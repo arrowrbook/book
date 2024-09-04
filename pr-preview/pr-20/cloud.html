@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -402,7 +402,13 @@ See $.data for the source Arrow object</code></pre>
 </div>
 </div>
 </div>
-<p>An important question to ask here is how long it took to run the query. We compared running the same query from above on the same machine—a Posit Cloud instance with 1GB of RAM—with a local copy of the data compared to the cloud version of the same data.</p>
+<p>An important question to ask here is how long it took to run the query. We compared running the same query from above on the same machine—a Posit Cloud instance with 1GB of RAM—with a local copy of the data compared to the cloud version of the same data. The results are shown in <a href="#tbl-cloud-local" class="quarto-xref">Table&nbsp;<span>7.1</span></a>.</p>
+<div id="tbl-cloud-local" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cloud-local-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.1: Time taken to run the same query on a local machine and connecting to an S3 bucket
+</figcaption>
+<div aria-describedby="tbl-cloud-local-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -421,6 +427,9 @@ See $.data for the source Arrow object</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>There’s a huge difference between these results: it was 120 times faster to work with a local copy of the data! This was due to the need for data transfer; in the local query, Arrow could just scan the data and perform the necessary calculations, whereas in the cloud query, we needed to download the data first before we could return it to our R session.</p>
 <p>A reasonable question to ask here might be why did it took 24 seconds to run a query which only had 1 row of data in the results? The answer to this question is that we actually downloaded more than 1 row of data—in fact, we downloaded all of the data for California in 2022—with the final aggregation being performed locally. Let’s take a look at the reasons for this, and see what we can do to minimize data transfer in our queries.</p>
 </section>
@@ -529,7 +538,13 @@ See $.data for the source Arrow object</code></pre>
 <li>an identical bucket located in the <code>eu-west-2</code> region, in London</li>
 </ol>
 <p>We then tried the queried the original S3 bucket again, but from a Posit Cloud instance deployed on Amazon EC2 in the <code>us-east-1</code> region.</p>
-<p>The average times across 3 runs are shown in the table below.</p>
+<p>The average times across 3 runs are shown in <a href="#tbl-cloud-location" class="quarto-xref">Table&nbsp;<span>7.2</span></a>.</p>
+<div id="tbl-cloud-location" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cloud-location-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.2: Time taken to run the same query with varying bucket location and access location
+</figcaption>
+<div aria-describedby="tbl-cloud-location-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -556,6 +571,9 @@ See $.data for the source Arrow object</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>Using a bucket in the same geographical region resulted in a slight decrease in time to run the query and collect the data, when transferring the results to work with locally. However, geographic location alone wasn’t the sole factor determining transfer times.</p>
 <p>The time to complete the query was significantly shorter on Posit Cloud deployed on EC2 than when transferring to a machine outside of the AWS network. The speed up is because of the interconnection between AWS data centers as well as the fact that the data is now being transferred within AWS’s internal network with optimized infrastructure, rather than over the internet.</p>
 <p>It’s also worth keeping in mind the impact on cost—not just in terms of speed, but money too. At time of writing, it was free to transfer data from an S3 bucket to another AWS service like EC2 within the same AWS region, but there were charges associated with transferring data between regions, or out to the internet, which was the most expensive of all.</p>
