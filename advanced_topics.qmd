@@ -76,6 +76,7 @@ You'll also be slowed down a little by the fact that arrow has to convert back a
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
 ![How Acero bindings work](images/excalidraw/adv_normal.png)
+
 The extra steps needed are because we are working more directly with Acero, the part of the Arrow C++ library that runs the data manipulation queries, and as Acero is written in C++ we have to make sure we are giving it the correct information to work with.
 
 C++ is strongly typed, which means that when a variable is created, you also have to declare its type, which cannot be changed later.
