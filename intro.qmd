@@ -132,7 +132,7 @@ For developers, this is costly.
 We need special adapter code to map the data structures from one project to the other.
 And you have to do that special for every project you want to exchange with.
 
-![](images/excalidraw/intro_copy_and_convert.png)
+![Without something like Arrow, you need an interconnections between each data systems](images/excalidraw/intro_copy_and_convert.png)
 
 Even once those technical challenges are solved, there are performance costs at runtime.
 Converting data between formats takes processing time, and it can lose some details in translation.
@@ -140,7 +140,7 @@ Converting data between formats takes processing time, and it can lose some deta
 Facing this scenario, developers from several of these projects came together and asked: can we define a standard for representing columnar data, such that each project only needs to implement that?
 Having that standard saves on engineering effort because there’s just one adapter to write.
 
-![](images/excalidraw/intro_arrow_adapter.png)
+![Using Arrow as a standard interchange, you need to only write one interconnect per system and you can then use any of the others that speak Arrow](images/excalidraw/intro_arrow_adapter.png)
 
 But in order to get the most savings, you also need to minimize the translation overhead.
 Ideally, the standard format would be exactly what every analytic project uses internally---then there is no translation.
@@ -154,7 +154,7 @@ Many traditional databases and common formats for storing tabular data, such as 
 This format is great for transactional workflows, where entire rows are being retrieved or updated, or extra rows are being appended to the data.
 However, it's less well suited for analytic workflows involving data manipulation, where we want to select a subset of columns, and perform operations like aggregated summaries.
 
-![](images/excalidraw/intro_columnar_fast.png)
+![Comparison of how row-oriented and column-oriented formats store the same tabular data](images/excalidraw/intro_columnar_fast.png)
 
 Analytic workflows are better handled by column-oriented formats.
 What this means is that values from the same *column* are stored in sequential areas in memory, so values from a table would be stored top-to-bottom and then left-to-right.
@@ -189,7 +189,7 @@ The first significant proof of the value of Arrow as a standard came in 2017 wit
 As we will discuss further in [Chapter @sec-processes], using Arrow to exchange data demonstrated significant speedups in workflows that involved Spark and pandas together.
 <!-- Tensorflow, Hugging Face, others? -->
 
-![](images/excalidraw/intro_implementations.png)
+![Implementation structure showing how the Arrow standard is implemented in a number of languages, and some of the higher level language implementations like Python and R depend on lower-level implementations like C++](images/excalidraw/intro_implementations.png)
 
 After the initial foundations were built, projects both inside Apache Arrow and in the broader community began building Arrow-native solutions.
 That is, Arrow wasn't just the means of exchanging data with others: it was the memory model on the inside.
