@@ -361,16 +361,16 @@ Use `schema()` to see entire schema</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pums_person<span class="sc">$</span>files[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=ak/part-0.parquet"
- [2] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=al/part-0.parquet"
- [3] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=ar/part-0.parquet"
- [4] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=az/part-0.parquet"
- [5] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=ca/part-0.parquet"
- [6] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=wa/part-0.parquet"
- [7] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=wi/part-0.parquet"
- [8] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=wv/part-0.parquet"
- [9] "/home/runner/work/book/book/PUMS_smol/person/year=2005/location=wy/part-0.parquet"
-[10] "/home/runner/work/book/book/PUMS_smol/person/year=2018/location=ak/part-0.parquet"</code></pre>
+<pre><code> [1] "./data/person/year=2005/location=ak/part-0.parquet"
+ [2] "./data/person/year=2005/location=al/part-0.parquet"
+ [3] "./data/person/year=2005/location=ar/part-0.parquet"
+ [4] "./data/person/year=2005/location=az/part-0.parquet"
+ [5] "./data/person/year=2005/location=ca/part-0.parquet"
+ [6] "./data/person/year=2005/location=wa/part-0.parquet"
+ [7] "./data/person/year=2005/location=wi/part-0.parquet"
+ [8] "./data/person/year=2005/location=wv/part-0.parquet"
+ [9] "./data/person/year=2005/location=wy/part-0.parquet"
+[10] "./data/person/year=2018/location=ak/part-0.parquet"</code></pre>
 </div>
 </div>
 <p>You may notice that the directories in which the files are stored related to variables in the dataset: <code>year</code> and <code>location</code>. This way of structuring data is known as partitioning, and we’ll be looking at this in more detail in a later section.</p>
@@ -1168,7 +1168,7 @@ AGEP: int8</code></pre>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="fu">file.path</span>(tmp_dir, <span class="st">"person_with_metadata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `open_dataset()`:
-! Invalid: Error creating dataset. Could not read schema from '/home/runner/work/book/book/PUMS_smol/transient_data/person_with_metadata/year=2021/data_info.txt'. Is this a 'parquet' file?: Could not open Parquet input source '/home/runner/work/book/book/PUMS_smol/transient_data/person_with_metadata/year=2021/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
+! Invalid: Error creating dataset. Could not read schema from './data/transient_data/person_with_metadata/year=2021/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
 ℹ Did you mean to specify a 'format' other than the default (parquet)?</code></pre>
 </div>
 </div>
