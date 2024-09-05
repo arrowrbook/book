@@ -6,7 +6,7 @@
 redact <- function(x) {
   stringr::str_replace_all(
     x,
-    "/(Users|home)/(jkeane|npr|nic).*/(PUMS_smol|PUMS cleaned)/",
+    "/(Users|home)/(jkeane|npr|nic|runner).*/(PUMS_smol|PUMS cleaned)/",
     "./data/"
   )
 }
