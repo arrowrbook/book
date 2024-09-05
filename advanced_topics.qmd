@@ -70,7 +70,7 @@ Generally, we don't have to worry about the details of these query plans, though
 
 In [Chapter @sec-datamanipulation], we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we're going to dive into that a little deeper.
 
-Acero has a large number of functions implemented for performing calculations on data.
+Acero has a large number of functions implemented for performing calculations and transformations on data.
 The complete list can be found in the [project documentation](https://arrow.apache.org/docs/cpp/compute.html#available-functions).
 
 Some of these functions have the same names are the R equivalent.
