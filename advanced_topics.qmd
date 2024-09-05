@@ -36,7 +36,7 @@ It typically has multiple steps, which could include things like:
 * re-ordering and optimising the query in order to run it in the most efficient way[^optimizer]
 * actually running the query
 
-[^optimizer]: Acero doesn't have a logical query optimizer, but as we have seen, it does support optimizations like predicated pushdown: this is what makes filtering on partitioned datasets fast. To take advantage of these optimzations, there is code in the R package that reorders queries before passing it to Acero.
+[^optimizer]: Acero doesn't have a logical query optimizer, but as we have seen, it does support optimizations like predicated pushdown: this is what makes filtering on partitioned datasets fast. To take advantage of these optimzations, there is code in the R package that reorders queries before passing it to Acero for most common workflows.
 
 When you call dplyr functions on Arrow tabular objects like tables and datasets, the code in the R package translates this into execution plan---directed graphs that express what operations need to take place.
 These operations are represented by nodes.
