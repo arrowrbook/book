@@ -430,6 +430,13 @@ Use `schema()` to see entire schema</code></pre>
 <section id="functions-for-reading-and-writing-datasets" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="functions-for-reading-and-writing-datasets"><span class="header-section-number">6.3</span> Functions for reading and writing datasets</h2>
 <p>We’ve already looked at some examples using the <code>open_dataset()</code> function. The previous examples used Arrow and Parquet datasets, but Arrow supports the same formats for datasets that it does for working with individual files: CSV and similar text-delimited formats, Parquet, Arrow IPC format, and line-delimited JSON.</p>
+<p>The different functions for reading and writing datasets are shown in <a href="#tbl-dataset-funcs" class="quarto-xref">Table&nbsp;<span>6.1</span></a> below.</p>
+<div id="tbl-dataset-funcs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dataset-funcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.1: Functions for reading and writing datasets
+</figcaption>
+<div aria-describedby="tbl-dataset-funcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 24%">
@@ -462,6 +469,9 @@ Use `schema()` to see entire schema</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>The convenience functions <code>open_csv_dataset()</code> and <code>open_delim_dataset()</code> are wrappers around <code>open_dataset(..., format = "csv")</code> but using arguments which match <code>read_csv_arrow()</code> and <code>read_delim_arrow()</code> to make it easier to switch between working with individual files and multifile datasets by just changing the function call.</p>
 <p>In this chapter we’ll focus on the practicalities of working with different formats in the context of Arrow Datasets, but if you want a reminder of the general advantages and disadvantages of working with the different file formats, see <a href="files_and_formats.html" class="quarto-xref">Chapter&nbsp;<span>5</span></a>. As a reminder, we recommend working with Parquet format if you can. Parquet files are already smaller and faster to work with than text-based, delimited files, but there are further advantages of using Parquet when working with multifile datasets. Because Parquet files contain metadata, Arrow can make use of this information when working with datasets. This metadata contains information about rows and columns, which means that when using data pipelines using <code>dplyr::filter()</code> or <code>dplyr::select()</code>, Arrow can use the metadata to work out which data to scan instead of having to check the values in every single file or smaller component. This can significantly speed up analyses of larger datasets.</p>
 </section>
@@ -735,7 +745,13 @@ Use `schema()` to see entire schema</code></pre>
 <span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(tmp_dir, <span class="st">"person_year_location_age"</span>)</span>
 <span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The table below shows how many files in each dataset, as well as the minimum, maximum, and median file size.</p>
+<p><a href="#tbl-file-size" class="quarto-xref">Table&nbsp;<span>6.2</span></a> shows how many files in each dataset, as well as the minimum, maximum, and median file size.</p>
+<div id="tbl-file-size" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-file-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.2: Summary statistics around file sizes of partitioned datasets
+</figcaption>
+<div aria-describedby="tbl-file-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 26%">
@@ -796,6 +812,9 @@ Use `schema()` to see entire schema</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <section id="querying-across-all-data" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="querying-across-all-data"><span class="header-section-number">6.5.1</span> Querying across all data</h3>
 <p>First, let’s try running query which just requires filtering the data by one of the partition variables, year, to only include the data from 2018 onwards, and then calculate a summary based on the variable <code>JWMNP</code>, which contains data about commute times, and isn’t a partition variable.</p>
@@ -808,7 +827,13 @@ Use `schema()` to see entire schema</code></pre>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here’s the results of running that query on Nic’s laptop, with the datasets we created earlier.</p>
+<p><a href="#tbl-partition-query" class="quarto-xref">Table&nbsp;<span>6.3</span></a> shows the results of running that query on Nic’s laptop, with the datasets we created earlier.</p>
+<div id="tbl-partition-query" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.3: Time taken to run a query unrelated to dataset partitions, with different partitioning structures
+</figcaption>
+<div aria-describedby="tbl-partition-query-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -835,6 +860,9 @@ Use `schema()` to see entire schema</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>In this case, the fastest query time was on the dataset which was partitioned solely by year, the only partition column used in the query. In the case of storing the data in one big file, Arrow has to open the file and use the metadata to work out which of the contents to use in the analysis. Partitioning by year means that Arrow can entirely disregard the partitions containing years that aren’t relevant here. When we say “entirely disregard”, we mean that it doesn’t even read any part of the Parquet file at all during the query—not even the header.</p>
 <p>We can also see from this that having additional unnecessary partitions will slow things down: the dataset partitioned by all of year, location, and age, was by far the slowest.</p>
 </section>
@@ -861,7 +889,13 @@ Use `schema()` to see entire schema</code></pre>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We ran it again on Nic’s laptop, and these were the results.</p>
+<p>We ran it again on Nic’s laptop, and the results are shown in <a href="#tbl-partition-query-2" class="quarto-xref">Table&nbsp;<span>6.4</span></a>.</p>
+<div id="tbl-partition-query-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.4: Time taken to run a query relating to dataset partitions, with different partitioning structures
+</figcaption>
+<div aria-describedby="tbl-partition-query-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -888,6 +922,9 @@ Use `schema()` to see entire schema</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>The final query was tested without the call to <code>mutate()</code> as the column already existed as a partition, but this made little difference to the overall time—too many partitions create an overhead because Arrow has to open too many different files. There’s a relatively fixed cost to opening and reading any Parquet file, no matter how big that file is. When we have many small files, we have to spend more time reading in the relatively fixed size of the Parquet header data and metadata, on top of the time spent reading the actual data. When thinking about how we organize our partitions, there is a balance to be struck between how many files there are to read in, and avoiding reading in more of the data than we need to.</p>
 <p>The specific contents of the query we want to run on the data is also important here. One key difference between this query and the previous one is that the partition variable were all used in calls to <code>group_by()</code> and not <code>filter()</code>.</p>
 </section>
@@ -919,6 +956,12 @@ Use `schema()` to see entire schema</code></pre>
 <span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once again, we removed the call to <code>mutate()</code> for the dataset which already had the <code>age_group</code> partition variable.</p>
+<div id="tbl-partition-query-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.5: Time taken to run a query which filters on dataset partitions, with different partitioning structures
+</figcaption>
+<div aria-describedby="tbl-partition-query-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -945,7 +988,10 @@ Use `schema()` to see entire schema</code></pre>
 </tr>
 </tbody>
 </table>
-<p>This time the differences were a lot more marked! As you can see in the table above, it’s the variables most commonly used for filtering which partitions have the most impact on.</p>
+</div>
+</figure>
+</div>
+<p>This time the differences were a lot more marked! As you can see in <a href="#tbl-partition-query-3" class="quarto-xref">Table&nbsp;<span>6.5</span></a>, it’s the variables most commonly used for filtering which partitions have the most impact on.</p>
 <p>We don’t recommend repartitioning your data every time you want to run a query on your dataset, as the overhead of time spent rewriting the data to disk means it probably won’t be worth it. What we’d recommend instead is thinking about which variables you use most frequently in calls to <code>filter()</code> in your analyses, and store your data in partitions based on these variables.</p>
 <p>As we saw above, reading only the data from disk that is important for a query is the fastest way to process that data. What this means is that if we know that specific Parquet files only include rows that we don’t care about—because they don’t match the conditions in the filter—then skipping over them entirely is best. Partitioning based on common filters means that arrow can skip over files entirely when they are in partitioned like this.</p>
 <p>That said, it’s important not to create too many files, because for each Parquet file read in from disk, there is a relatively fixed amount of metadata that must be read alongside the data. This metadata includes things like the schema of the data and other statistics about the data in the file. The more Parquet files you have, the more of this fixed, extra information has to be read in. Having files smaller than 20MB will typically mean considerably more reading of that metadata compared to reading actual data itself. Equally, having files larger than 2GB means that you’re no longer able to take advantage of Arrow’s ability to read multiple files in parallel.</p>

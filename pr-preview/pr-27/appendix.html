@@ -547,7 +547,13 @@ See $.data for the source Arrow object</code></pre>
 </section>
 <section id="sec-types-r-arrow" class="level4" data-number="A.2.2.3">
 <h4 data-number="A.2.2.3" class="anchored" data-anchor-id="sec-types-r-arrow"><span class="header-section-number">A.2.2.3</span> Translations from R to Arrow</h4>
-<p>The following chart is slightly modified from <a href="https://arrow.apache.org/docs/r/">the Arrow project documentation</a>, but clearly marks the mappings between R types and Arrow types.</p>
+<p><a href="#tbl-r-arrow-types" class="quarto-xref">Table&nbsp;<span>A.1</span></a> is slightly modified from <a href="https://arrow.apache.org/docs/r/">the Arrow project documentation</a>, but clearly marks the mappings between R types and Arrow types.</p>
+<div id="tbl-r-arrow-types" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-r-arrow-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;A.1: R data types and their equivalent Arrow data types
+</figcaption>
+<div aria-describedby="tbl-r-arrow-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -614,12 +620,22 @@ See $.data for the source Arrow object</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p><sup>1</sup>: The two types <code>float64</code> and <code>double</code> are the same in Arrow C++; however, only <code>float64()</code> is used in arrow since the function <code>double()</code> already exists in base R.</p>
 <p><sup>2</sup>: If the character vector is exceptionally large—over 2GB of strings—it will be converted to a <code>large_utf8</code> Arrow type.</p>
 <p><sup>3</sup>: Only lists where all elements are the same type are able to be translated to Arrow list type (which is a “list of” some type). Arrow has a heterogeneous list type, but that is not exposed in the arrow R package.</p>
 </section>
 <section id="sec-types-arrow-r" class="level4" data-number="A.2.2.4">
 <h4 data-number="A.2.2.4" class="anchored" data-anchor-id="sec-types-arrow-r"><span class="header-section-number">A.2.2.4</span> Converting from Arrow to R</h4>
+<p><a href="#tbl-arrow-r-types" class="quarto-xref">Table&nbsp;<span>A.2</span></a> shows Arrow types and the R types they are translated to.</p>
+<div id="tbl-arrow-r-types" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-arrow-r-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;A.2: Arrow data types and their equivalent R data types
+</figcaption>
+<div aria-describedby="tbl-arrow-r-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -758,6 +774,9 @@ See $.data for the source Arrow object</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p><sup>1</sup>: These integer types may contain values that exceed the range of R’s <code>integer</code> type (32 bit signed integer). When they do, <code>uint32</code> and <code>uint64</code> are converted to <code>double</code> (“numeric”) and <code>int64</code> is converted to <code>bit64::integer64</code>. This conversion can be disabled (so that <code>int64</code> always yields a <code>bit64::integer64</code> vector) by setting <code>options(arrow.int64_downcast = FALSE)</code>.</p>
 <p><sup>2</sup>: Some Arrow data types do not currently have an R equivalent and will raise an error if cast to or mapped to via a schema.</p>
 <p><sup>3</sup>: <code>arrow*_binary</code> classes are implemented as lists of raw vectors.</p>
