@@ -133,7 +133,7 @@ For developers, this is costly.
 We need special adapter code to map the data structures from one project to the other.
 And you have to do that special for every project you want to exchange with.
 
-![Without something like Arrow, you need an interconnections between each data systems](images/excalidraw/intro_copy_and_convert.png)
+![Without something like Arrow, you need an interconnecting component between each data systems](images/excalidraw/intro_copy_and_convert.png)
 
 Even once those technical challenges are solved, there are performance costs at runtime.
 Converting data between formats takes processing time, and it can lose some details in translation.
