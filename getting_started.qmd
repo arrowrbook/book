@@ -1,5 +1,7 @@
 # Getting Started {#sec-getting-started}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)

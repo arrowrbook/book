@@ -1,5 +1,7 @@
 # Data Manipulation {#sec-datamanipulation}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)

@@ -1,0 +1,49 @@
+```{r}
+#| echo: false
+
+
+  # Remove personal directories
+redact <- function(x) {
+  stringr::str_replace_all(
+    x,
+    "/(Users|home)/(jkeane|npr|nic|runner).*/(PUMS_smol|PUMS cleaned)/",
+    "./data/"
+  )
+}
+
+default_hook_output <- knitr::knit_hooks$get("output")
+
+custom_hook_output <- function(x, options) {
+  x <- redact(x)
+  n_lines <- options$height_limit
+  if(!is.null(n_lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n_lines) {
+      x <- c(head(x, n_lines), "...\n")
+    } 
+    x <- paste(x, collapse = "\n")
+  }
+
+  n_chars <- options$width_limit
+  if(!is.null(n_chars)) {
+    x <- xfun::split_lines(x)
+    x <- lapply(
+      x,
+      function(line) { 
+        if (nchar(line) > n_chars) {
+          line <- paste0(strtrim(line, n_chars),  "...")
+        } 
+        line
+      }
+    )
+    x <- paste(x, collapse = "\n")
+  }
+  default_hook_output(x, options)
+}
+
+knitr::knit_hooks$set(output = custom_hook_output)
+
+default_hook_error <- knitr::knit_hooks$get("error")
+
+knitr::knit_hooks$set(error = function(x, options) default_hook_error(redact(x), options))
+```

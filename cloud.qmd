@@ -1,5 +1,7 @@
 # Cloud {#sec-cloud}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)
