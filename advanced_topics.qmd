@@ -77,7 +77,9 @@ Some of these functions have the same names are the R equivalent.
 For example, both Acero and R have a `min()` function which can be used to find the lowest value in an vector or array of values.
 Other functions have slightly different names.
 While in R we use the `-` operator to subtract one value from another, in Acero, there are functions `subtract()` and `subtract_checked()`.
-The latter function is more commonly used as it accounts for overflow and raises an error if the value returned is beyond the minimum or maximum value for that data type.
+The latter function is more commonly used as it accounts for overflow[^overflow] and raises an error if the value returned is beyond the minimum or maximum value for that data type.
+
+[^overflow]: Overflow is when a numeric value is larger than the type can support. For example, unsigned 8 bit integers can represent numbers 0-255. So if we add 250 + 10 we would have a value that is 260, which is not able to be represented with 8 bits. The checked variants of arithmetic calculations will raise an error in this case, which is almost always what we want in these circumstances.  
 
 Let's take a closer look at an example.
 
