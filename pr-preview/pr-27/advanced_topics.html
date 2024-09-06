@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>8&nbsp; Advanced Topics – Scaling Up With R and Arrow</title>
+<title>7&nbsp; Advanced Topics – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4JT42QR6DV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
-</script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -126,7 +118,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced_topics.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced_topics.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,13 +134,6 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -167,55 +152,55 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Foreword</span></span></a>
+ <span class="menu-text">Foreword</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -251,28 +236,28 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#acero" id="toc-acero" class="nav-link active" data-scroll-target="#acero"><span class="header-section-number">8.1</span> Acero</a></li>
-  <li><a href="#acero-function-bindings" id="toc-acero-function-bindings" class="nav-link" data-scroll-target="#acero-function-bindings"><span class="header-section-number">8.2</span> Acero function bindings</a>
+  <li><a href="#acero" id="toc-acero" class="nav-link active" data-scroll-target="#acero"><span class="header-section-number">7.1</span> Acero</a></li>
+  <li><a href="#acero-function-bindings" id="toc-acero-function-bindings" class="nav-link" data-scroll-target="#acero-function-bindings"><span class="header-section-number">7.2</span> Acero function bindings</a>
   <ul class="collapse">
-  <li><a href="#a-simple-acero-binding" id="toc-a-simple-acero-binding" class="nav-link" data-scroll-target="#a-simple-acero-binding"><span class="header-section-number">8.2.1</span> A simple Acero binding</a></li>
-  <li><a href="#bindings-for-more-complex-functions" id="toc-bindings-for-more-complex-functions" class="nav-link" data-scroll-target="#bindings-for-more-complex-functions"><span class="header-section-number">8.2.2</span> Bindings for more complex functions</a></li>
-  <li><a href="#bindings-for-aggregation-functions" id="toc-bindings-for-aggregation-functions" class="nav-link" data-scroll-target="#bindings-for-aggregation-functions"><span class="header-section-number">8.2.3</span> Bindings for aggregation functions</a></li>
-  <li><a href="#using-acero-functions-directly" id="toc-using-acero-functions-directly" class="nav-link" data-scroll-target="#using-acero-functions-directly"><span class="header-section-number">8.2.4</span> Using Acero functions directly</a></li>
+  <li><a href="#a-simple-acero-binding" id="toc-a-simple-acero-binding" class="nav-link" data-scroll-target="#a-simple-acero-binding"><span class="header-section-number">7.2.1</span> A simple Acero binding</a></li>
+  <li><a href="#bindings-for-more-complex-functions" id="toc-bindings-for-more-complex-functions" class="nav-link" data-scroll-target="#bindings-for-more-complex-functions"><span class="header-section-number">7.2.2</span> Bindings for more complex functions</a></li>
+  <li><a href="#bindings-for-aggregation-functions" id="toc-bindings-for-aggregation-functions" class="nav-link" data-scroll-target="#bindings-for-aggregation-functions"><span class="header-section-number">7.2.3</span> Bindings for aggregation functions</a></li>
+  <li><a href="#using-acero-functions-directly" id="toc-using-acero-functions-directly" class="nav-link" data-scroll-target="#using-acero-functions-directly"><span class="header-section-number">7.2.4</span> Using Acero functions directly</a></li>
   </ul></li>
-  <li><a href="#sec-UDF" id="toc-sec-UDF" class="nav-link" data-scroll-target="#sec-UDF"><span class="header-section-number">8.3</span> User-defined functions</a>
+  <li><a href="#sec-UDF" id="toc-sec-UDF" class="nav-link" data-scroll-target="#sec-UDF"><span class="header-section-number">7.3</span> User-defined functions</a>
   <ul class="collapse">
-  <li><a href="#how-do-udfs-work-under-the-hood" id="toc-how-do-udfs-work-under-the-hood" class="nav-link" data-scroll-target="#how-do-udfs-work-under-the-hood"><span class="header-section-number">8.3.1</span> How do UDFs work under the hood?</a></li>
+  <li><a href="#how-do-udfs-work-under-the-hood" id="toc-how-do-udfs-work-under-the-hood" class="nav-link" data-scroll-target="#how-do-udfs-work-under-the-hood"><span class="header-section-number">7.3.1</span> How do UDFs work under the hood?</a></li>
   </ul></li>
-  <li><a href="#sec-duckdb-practical" id="toc-sec-duckdb-practical" class="nav-link" data-scroll-target="#sec-duckdb-practical"><span class="header-section-number">8.4</span> DuckDB</a></li>
-  <li><a href="#sec-geo" id="toc-sec-geo" class="nav-link" data-scroll-target="#sec-geo"><span class="header-section-number">8.5</span> Extending Arrow and Geospatial Data</a>
+  <li><a href="#sec-duckdb-practical" id="toc-sec-duckdb-practical" class="nav-link" data-scroll-target="#sec-duckdb-practical"><span class="header-section-number">7.4</span> DuckDB</a></li>
+  <li><a href="#sec-geo" id="toc-sec-geo" class="nav-link" data-scroll-target="#sec-geo"><span class="header-section-number">7.5</span> Extending Arrow and Geospatial Data</a>
   <ul class="collapse">
-  <li><a href="#extension-types" id="toc-extension-types" class="nav-link" data-scroll-target="#extension-types"><span class="header-section-number">8.5.1</span> Extension Types</a></li>
-  <li><a href="#arrow-format-with-existing-storage-formats" id="toc-arrow-format-with-existing-storage-formats" class="nav-link" data-scroll-target="#arrow-format-with-existing-storage-formats"><span class="header-section-number">8.5.2</span> Arrow format with existing storage formats</a></li>
-  <li><a href="#geoparquet" id="toc-geoparquet" class="nav-link" data-scroll-target="#geoparquet"><span class="header-section-number">8.5.3</span> GeoParquet</a></li>
-  <li><a href="#connecting-the-pieces" id="toc-connecting-the-pieces" class="nav-link" data-scroll-target="#connecting-the-pieces"><span class="header-section-number">8.5.4</span> Connecting the pieces</a></li>
-  <li><a href="#sec-pums-pumas" id="toc-sec-pums-pumas" class="nav-link" data-scroll-target="#sec-pums-pumas"><span class="header-section-number">8.5.5</span> Enhancing PUMS data with GeoParquet PUMAs data</a></li>
+  <li><a href="#extension-types" id="toc-extension-types" class="nav-link" data-scroll-target="#extension-types"><span class="header-section-number">7.5.1</span> Extension Types</a></li>
+  <li><a href="#arrow-format-with-existing-storage-formats" id="toc-arrow-format-with-existing-storage-formats" class="nav-link" data-scroll-target="#arrow-format-with-existing-storage-formats"><span class="header-section-number">7.5.2</span> Arrow format with existing storage formats</a></li>
+  <li><a href="#geoparquet" id="toc-geoparquet" class="nav-link" data-scroll-target="#geoparquet"><span class="header-section-number">7.5.3</span> GeoParquet</a></li>
+  <li><a href="#connecting-the-pieces" id="toc-connecting-the-pieces" class="nav-link" data-scroll-target="#connecting-the-pieces"><span class="header-section-number">7.5.4</span> Connecting the pieces</a></li>
+  <li><a href="#sec-pums-pumas" id="toc-sec-pums-pumas" class="nav-link" data-scroll-target="#sec-pums-pumas"><span class="header-section-number">7.5.5</span> Enhancing PUMS data with GeoParquet PUMAs data</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.6</span> Summary</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.6</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -281,13 +266,20 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-adv-topics" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></h1>
+<h1 class="title"><span id="sec-adv-topics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></h1>
+<p class="subtitle lead">Bigger Data, Easier Workflows</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nic Crane, Jonathan Keane, and Neal Richardson </p>
+          </div>
+  </div>
     
   
     
@@ -300,8 +292,8 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <p>In this chapter we’re going to dive into some more advanced topics. As we’ve shown in the previous chapters, the arrow R package includes support for hundreds of functions in R and has a rich type system. These empower you to solve most common data analysis problems. However, if you ever need to extend that set of functionality, there are several options.</p>
 <p>To start, we’ll look in more detail at how bindings from R functions to Acero, the Arrow C++ query engine, work. We’ll also explore the converse of this: functions that exist in Acero and don’t have R equivalents, and how you can access these in your arrow pipelines. Then, we’re going to show how you can call back from Acero into R to do calculations where functions you want to use inside don’t have a corresponding Acero function. For other cases, we’ll show how the Arrow format’s focus on interoperability lets you stream data to and from other query engines, such as DuckDB, to access different functionality they have. Finally, we’ll look at a practical case of extending Arrow’s type system to work with geospatial data.</p>
-<section id="acero" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="acero"><span class="header-section-number">8.1</span> Acero</h2>
+<section id="acero" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="acero"><span class="header-section-number">7.1</span> Acero</h2>
 <p>Acero is the Arrow C++ library’s query execution engine. A query execution engine is a library which allows users to perform queries against a data source. It takes input data and the operations to be performed on the data, combines them, and returns the output from this process.</p>
 <p>It typically has multiple steps, which could include things like:</p>
 <ul>
@@ -343,14 +335,14 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 </div>
 <p>Generally, we don’t have to worry about the details of these query plans, though they can be useful to get a closer look at exactly what is being run in Acero.</p>
 </section>
-<section id="acero-function-bindings" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="acero-function-bindings"><span class="header-section-number">8.2</span> Acero function bindings</h2>
-<p>In <a href="data_manipulation.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>, we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we’re going to dive into that a little deeper.</p>
+<section id="acero-function-bindings" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="acero-function-bindings"><span class="header-section-number">7.2</span> Acero function bindings</h2>
+<p>In <a href="data_manipulation.html" class="quarto-xref">Chapter&nbsp;<span>3</span></a>, we mentioned that the arrow R package transforms dplyr syntax into Arrow Expressions which can be understood by Acero, and here we’re going to dive into that a little deeper.</p>
 <p>Acero has a large number of functions implemented for performing calculations and transformations on data. The complete list can be found in the <a href="https://arrow.apache.org/docs/cpp/compute.html#available-functions">project documentation</a>.</p>
 <p>Some of these functions have the same names are the R equivalent. For example, both Acero and R have a <code>min()</code> function which can be used to find the lowest value in an vector or array of values. Other functions have slightly different names. While in R we use the <code>-</code> operator to subtract one value from another, in Acero, there are functions <code>subtract()</code> and <code>subtract_checked()</code>. The latter function is more commonly used as it accounts for overflow<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and raises an error if the value returned is beyond the minimum or maximum value for that data type.</p>
 <p>Let’s take a closer look at an example.</p>
-<section id="a-simple-acero-binding" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="a-simple-acero-binding"><span class="header-section-number">8.2.1</span> A simple Acero binding</h3>
+<section id="a-simple-acero-binding" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="a-simple-acero-binding"><span class="header-section-number">7.2.1</span> A simple Acero binding</h3>
 <p>The query below calculates a new column, the age of the respondents in the previous year, by deducting 1 from the value in the <code>AGEP</code> column. There is already a mapping between the <code>-</code> operator in R and <code>subtract_checked()</code> in Acero, and we can see this by creating our query but not actually executing it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"data/person/"</span>) <span class="sc">|&gt;</span></span>
@@ -364,8 +356,8 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>When we print the query, the output shows that new column <code>age_previous_year</code> is calculated by calling the Acero function <code>subtract_checked()</code> and passing in a reference to the <code>AGEP</code> column and the number <code>1</code>.</p>
 </section>
-<section id="bindings-for-more-complex-functions" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="bindings-for-more-complex-functions"><span class="header-section-number">8.2.2</span> Bindings for more complex functions</h3>
+<section id="bindings-for-more-complex-functions" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="bindings-for-more-complex-functions"><span class="header-section-number">7.2.2</span> Bindings for more complex functions</h3>
 <p>Mappings also exist for slightly more complex functions that have additional parameters.</p>
 <p>Say we wanted to only return data for states whose names start with the letter “w”. We can take our dataset and use <code>dplyr::filter()</code> to return this subset, but we need to pick a function to pass to <code>dplyr::filter()</code> to actually <em>do</em> the filtering.</p>
 <p>Let’s start first by looking at the Acero function we want Arrow to use. To be clear: we wouldn’t usually have to do this when working with arrow. This is just to illustrate how this all works.</p>
@@ -427,8 +419,8 @@ See $.data for the source Arrow object</code></pre>
 <p>The information about the Acero mapping is shown here in the line which starts with “* Filter”. This contains a human-readable representation of the Arrow Expression created.</p>
 <p>It shows that that <code>startsWith()</code> has been translated to the Acero function <code>starts_with()</code>. The options for the Acero function have been set based on the values which were passed in via the R expression. We set the <code>startsWith()</code> argument <code>prefix</code> to “w”, and that was passed to the Acero <code>starts_with()</code> option called <code>pattern</code>. As <code>startsWith()</code> is always case-sensitive, the Acero <code>starts_with()</code> option <code>ignore_case</code> has been set to <code>false</code>.</p>
 </section>
-<section id="bindings-for-aggregation-functions" class="level3" data-number="8.2.3">
-<h3 data-number="8.2.3" class="anchored" data-anchor-id="bindings-for-aggregation-functions"><span class="header-section-number">8.2.3</span> Bindings for aggregation functions</h3>
+<section id="bindings-for-aggregation-functions" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="bindings-for-aggregation-functions"><span class="header-section-number">7.2.3</span> Bindings for aggregation functions</h3>
 <p>The arrow R package also has bindings for aggregation functions which take multiple rows of data and calculate a single values. For example, whereas R has <code>sd()</code> for calculating the standard deviation of a vector, Acero has <code>stddev()</code>.</p>
 <table class="caption-top table">
 <colgroup>
@@ -505,8 +497,8 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>We can see in the output above a references to the Acero <code>stddev()</code> function, as well as the values of the parameters passed to it.</p>
 </section>
-<section id="using-acero-functions-directly" class="level3" data-number="8.2.4">
-<h3 data-number="8.2.4" class="anchored" data-anchor-id="using-acero-functions-directly"><span class="header-section-number">8.2.4</span> Using Acero functions directly</h3>
+<section id="using-acero-functions-directly" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="using-acero-functions-directly"><span class="header-section-number">7.2.4</span> Using Acero functions directly</h3>
 <p>We don’t have to know anything at all about about Acero functions in the typical case, where we know the R function we want to use, as arrow automatically translates it to the relevant Acero function if a binding does exist. But, what about if we want to use an Acero function which doesn’t have an R equivalent to start from?</p>
 <p>We can view the full list of Acero functions available to use in arrow by calling <code>list_compute_functions()</code>. At the time of writing there were 262 Acero functions available to use in R - the first 20 are shown below.</p>
 <div class="cell">
@@ -547,8 +539,8 @@ See $.data for the source Arrow object</code></pre>
 </div>
 </section>
 </section>
-<section id="sec-UDF" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="sec-UDF"><span class="header-section-number">8.3</span> User-defined functions</h2>
+<section id="sec-UDF" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-UDF"><span class="header-section-number">7.3</span> User-defined functions</h2>
 <p>Most functions you want to use exist both in R and in Acero, and the arrow package has bindings that map the R syntax to the Acero functions. The previous section showed how to use Acero functions that don’t exist in R. But what if you want to use a R function which doesn’t have an Acero equivalent?</p>
 <p>In this case, you can create a <strong>user-defined function</strong> (UDF). User-defined functions allow arrow to use functions that don’t have Acero bindings by calculating the results in your R session instead.</p>
 <p>There is some additional processing overhead here because some of the calculation is being done by your R session and not by Acero, but it’s a helpful tool to have in these circumstances.</p>
@@ -584,8 +576,8 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>UDFs only work on scalar functions—functions which take one row of data as input and return one row of data as output. Acero does not currently support user-defined aggregation functions. For example, you could create a UDF which calculates the square of a number, but you can’t create one which calculates the median value in a column of data. These functions also cannot depend on other values, so you can’t write a UDF which implements <code>lag()</code> or <code>lead()</code> which calculate a value based on the previous or next row in the data.</p>
 <p>Because the UDF code is run in your R session, you won’t be able to take advantage of some of the features of arrow, such as being able to run code on multiple CPU cores, or the faster speed of executing C++ code. You’ll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation must be run one at a time instead of allowing parallelisation.</p>
-<section id="how-do-udfs-work-under-the-hood" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="how-do-udfs-work-under-the-hood"><span class="header-section-number">8.3.1</span> How do UDFs work under the hood?</h3>
+<section id="how-do-udfs-work-under-the-hood" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="how-do-udfs-work-under-the-hood"><span class="header-section-number">7.3.1</span> How do UDFs work under the hood?</h3>
 <p>The workflow for writing and using UDFs can feel a bit clunky, as it’s pretty different to how we typically work with data in R; for example, we don’t normally have to specify input and output types, or just work on 1 row of data at a time.</p>
 <p><img src="images/excalidraw/adv_normal.png" class="img-fluid" alt="How Acero bindings work"> The extra steps needed are because we are working more directly with Acero, the part of the Arrow C++ library that runs the data manipulation queries, and as Acero is written in C++ we have to make sure we are giving it the correct information to work with.</p>
 <p>C++ is strongly typed, which means that when a variable is created, you also have to declare its type, which cannot be changed later. This is quite different to R, where, for example, you can create an integer variable which later becomes a double. In Acero, the fact that C++ variables require a type declaration means that Acero functions can only run on data where the data types in the columns perfectly match the data types specified for the function parameters when the function is being defined. What this means is that when we write a UDF, we need to specify the input and output types, so that the code under the hood can properly create the correct C++ function that can run on those data types.</p>
@@ -599,8 +591,8 @@ See $.data for the source Arrow object</code></pre>
 <p>Most of the time you don’t need to worry about these internal details of Acero! However, when working with UDFs, we’re working a lot closer to Acero’s internals, and need to step into these deeper waters.</p>
 </section>
 </section>
-<section id="sec-duckdb-practical" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="sec-duckdb-practical"><span class="header-section-number">8.4</span> DuckDB</h2>
+<section id="sec-duckdb-practical" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-duckdb-practical"><span class="header-section-number">7.4</span> DuckDB</h2>
 <p>Although arrow implements a lot of the dplyr API, you may want to work with functions from other packages which haven’t been implemented in arrow or can’t be written as UDFs. For example, if you want to change the shape of your data, you might want to use <code>tidyr::pivot_longer()</code>, but this is not yet supported in arrow.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -632,17 +624,17 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"az","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ak","2":"max_commute","3":"194"},{"1":"ar","2":"max_commute","3":"186"},{"1":"wy","2":"max_commute","3":"176"},{"1":"al","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ar","2":"max_commute","3":"186"},{"1":"az","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wy","2":"max_commute","3":"176"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ak","2":"max_commute","3":"194"},{"1":"al","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>We start off with an Arrow Dataset, which is turned into a dataset query when we call <code>summarize()</code>. We’re still using lazy evaluation here, and no calculations have been run on our data.</p>
 <p>When we call <code>to_duckdb()</code>, this function creates a virtual DuckDB table whose data points to the Arrow object. We then call <code>pivot_longer()</code>, which runs in duckdb.</p>
-<p>Only when <code>collect()</code> is called at the end does the data pipeline run. Because we are passing a pointer to where the data is stored in memory, the data has been passed rapidly between Arrow and DuckDB without the need for serialization and deserialization resulting in copying things back and forth, and slowing things down. We’ll look under the hood in <a href="processes.html" class="quarto-xref">Chapter&nbsp;<span>9</span></a> to show how Arrow enables this form of efficient communication between different projects.</p>
+<p>Only when <code>collect()</code> is called at the end does the data pipeline run. Because we are passing a pointer to where the data is stored in memory, the data has been passed rapidly between Arrow and DuckDB without the need for serialization and deserialization resulting in copying things back and forth, and slowing things down. We’ll look under the hood in <a href="processes.html" class="quarto-xref">Chapter&nbsp;<span>8</span></a> to show how Arrow enables this form of efficient communication between different projects.</p>
 <p>The arrow and duckdb R packages have a lot of overlapping functionality, and both have features and functions the other doesn’t. We choose to focus on the complementarities of the two packages, both for practical and personal reasons. Since Arrow is focused on improving interoperability, we tend to take a “yes, and…” approach to solutions. We also have enjoyed collaborating with the DuckDB maintainers over the years and appreciate the work they do.</p>
 <p>In any case, it would be hard to make a clear, simple statement like “use arrow for X and duckdb for Y,” if for no other reason than that both projects are in active development, and any claim would quickly become outdated. For example, arrow has historically had better dplyr support than duckdb because duckdb relied on dbplyr to translate dplyr verbs into SQL, while the arrow developers invested heavily in mapping R functions to Acero functions for a higher fidelity translation. On the other hand, Acero does not currently have a SQL interface. But there is no technical limitations preventing duckdb from improving dplyr support—and by the time you are reading this, they very well may have!<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>—nor from there being a SQL interface to arrow.</p>
-<p>For most applications, you could use either arrow or duckdb just fine. But, if you do encounter cases where one package supports something the other doesn’t, the smooth integration between arrow and duckdb means can leverage the best of both. For example, suppose you want to use SQL to query a bucket of Parquet files in Google Cloud Storage, as in our example in <a href="cloud.html" class="quarto-xref">Chapter&nbsp;<span>7</span></a>. At the time of writing, the arrow R package doesn’t support SQL, and DuckDB doesn’t support GCS. You could use arrow to connect to GCS and read the Parquet files, and then duckdb to run the SQL.</p>
+<p>For most applications, you could use either arrow or duckdb just fine. But, if you do encounter cases where one package supports something the other doesn’t, the smooth integration between arrow and duckdb means can leverage the best of both. For example, suppose you want to use SQL to query a bucket of Parquet files in Google Cloud Storage, as in our example in <a href="cloud.html" class="quarto-xref">Chapter&nbsp;<span>6</span></a>. At the time of writing, the arrow R package doesn’t support SQL, and DuckDB doesn’t support GCS. You could use arrow to connect to GCS and read the Parquet files, and then duckdb to run the SQL.</p>
 <p>To run SQL, we need to specify a <code>table_name</code> in <code>to_duckdb()</code> so that we can reference it in our SQL statement. Then we use <code>dbplyr::remote_con()</code> to pull out the duckdb connection, followed by <code>DBI::dbGetQuery()</code> to send the query and return the result. Something like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/"</span>) <span class="sc">|&gt;</span></span>
@@ -657,11 +649,11 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>To reiterate: for most workloads of the nature we’ve been focusing on in this book—analytic queries on larger-than-memory datasets—either package would be a great choice. We like both, and we are excited to watch them become even better going forward. Your choice is a matter of preference more than anything. You may observe subtle differences in the user interface (the functions and arguments), or the documentation, or user and developer communities, that may lead you to prefer one or the other. And as we have shown, you can easily complement one with the other when you need, so it isn’t a choice that locks you into one world or another.</p>
 </section>
-<section id="sec-geo" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="sec-geo"><span class="header-section-number">8.5</span> Extending Arrow and Geospatial Data</h2>
+<section id="sec-geo" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-geo"><span class="header-section-number">7.5</span> Extending Arrow and Geospatial Data</h2>
 <p>At this point, we’ve seen that the Arrow specification covers a wide range of data types which are commonly encountered in data storage systems, to maximize interoperability. That said, there are always going to be more data types out there for specialist uses.</p>
-<section id="extension-types" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="extension-types"><span class="header-section-number">8.5.1</span> Extension Types</h3>
+<section id="extension-types" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="extension-types"><span class="header-section-number">7.5.1</span> Extension Types</h3>
 <p>One example of specialist data types is geospatial data.</p>
 <p>Accurate representations of metadata are important with geospatial data. There are different coordinate reference systems (CRS) which can be used to represent geospatial data, and knowing which one has been used is crucial when combining data from multiple sources.</p>
 <div class="cell">
@@ -676,23 +668,23 @@ See $.data for the source Arrow object</code></pre>
 <p>Saving geospatial data to Arrow format isn’t as simple as taking the data and mapping values to the equivalent Arrow data types. Many geospatial applications have custom data types used to describe the location and shape being represented in the data. These are known as geometries, and can be defined using points, lines, polygons, and other things. These geometries are often stored along with their associated attributes, descriptive information relating to them.</p>
 <p>Although these non-standard data types don’t have direct Arrow equivalents, they can be implemented using extension types. Extension types allow you to create custom predefined data types. For example, you could have a <code>location</code> data type for which each value consists of a <code>latitude</code> and <code>longitude</code> float value. That said, there’s a huge range of possibilities for representing geospatial data, and using standardized formats can speed things up when sharing data between platforms.</p>
 </section>
-<section id="arrow-format-with-existing-storage-formats" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="arrow-format-with-existing-storage-formats"><span class="header-section-number">8.5.2</span> Arrow format with existing storage formats</h3>
+<section id="arrow-format-with-existing-storage-formats" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="arrow-format-with-existing-storage-formats"><span class="header-section-number">7.5.2</span> Arrow format with existing storage formats</h3>
 <p>There are a multitude of different systems for working with geospatial data. Many of the challenges of geospatial data mirror the challenges found working with larger datasets in general: the need for efficient interchange between systems, performance issues on large, complex, or multi-file datasets, and different implementations of overlapping ideas.</p>
 </section>
-<section id="geoparquet" class="level3" data-number="8.5.3">
-<h3 data-number="8.5.3" class="anchored" data-anchor-id="geoparquet"><span class="header-section-number">8.5.3</span> GeoParquet</h3>
+<section id="geoparquet" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="geoparquet"><span class="header-section-number">7.5.3</span> GeoParquet</h3>
 <p>GeoParquet was designed to address these issues. GeoParquet provides a standard format for storing geospatial data on disk and can be used with arrow to then represent geospatial data in-memory. The GeoParquet format allows geospatial data to be stored in Parquet files. While it was already possible to store data in Parquet files and have lossless roundtripping between R and Parquet, GeoParquet has the added advantage of being a standardized format for this in the form of a file-level metadata specification.</p>
 <p>Working with data in GeoParquet format allows people to take advantage of the same benefits that come with working with any data in Parquet format; the row and column chunk metadata which is an inherent part of Parquet means that filtering on this data can be done without needing to read all data into memory. Parquet’s encoding and compression means that GeoParquet files tend to take up less space on disk than similar formats.</p>
 <p>Arrow can read GeoParquet files and perserve the metadata necesary to work with geospatial data efficiently. At the time of writing, there is also a nascent project called GeoArrow designed to make interroperation even easier and more efficient. GeoArrow aims to use the formats and approach of GeoParquet, so should be very similar.</p>
-<section id="geoparquet-data" class="level4" data-number="8.5.3.1">
-<h4 data-number="8.5.3.1" class="anchored" data-anchor-id="geoparquet-data"><span class="header-section-number">8.5.3.1</span> GeoParquet data</h4>
+<section id="geoparquet-data" class="level4" data-number="7.5.3.1">
+<h4 data-number="7.5.3.1" class="anchored" data-anchor-id="geoparquet-data"><span class="header-section-number">7.5.3.1</span> GeoParquet data</h4>
 <p>The GeoParquet specification has 2 components: the format of the metadata and then the format of the data itself. There are two levels of metadata:</p>
 <ol type="1">
 <li>file-level metadata which contains information about the version of the GeoParquet specification that the saved data conforms to and which column is the primary geometry column</li>
 <li>column-level metadata about the individual geometry columns</li>
 </ol>
-<p>To make this concrete, we will use geospatial definitions for PUMAs (we will discuss what these are in more detail in <a href="#sec-pums-pumas" class="quarto-xref">Section&nbsp;<span>8.5.5</span></a>). This Parquet file has a number of standard columns along with one column, <code>geometry</code>, that includes the geospatial specifications: in this case, polygons and multipolygons, which are the shapes of the PUMAs.</p>
+<p>To make this concrete, we will use geospatial definitions for PUMAs (we will discuss what these are in more detail in <a href="#sec-pums-pumas" class="quarto-xref">Section&nbsp;<span>7.5.5</span></a>). This Parquet file has a number of standard columns along with one column, <code>geometry</code>, that includes the geospatial specifications: in this case, polygons and multipolygons, which are the shapes of the PUMAs.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in the puma geoparquet, mark it as such with SF</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>PUMA <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(</span>
@@ -701,16 +693,16 @@ See $.data for the source Arrow object</code></pre>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="column-level-metadata" class="level4" data-number="8.5.3.2">
-<h4 data-number="8.5.3.2" class="anchored" data-anchor-id="column-level-metadata"><span class="header-section-number">8.5.3.2</span> Column-level Metadata</h4>
+<section id="column-level-metadata" class="level4" data-number="7.5.3.2">
+<h4 data-number="7.5.3.2" class="anchored" data-anchor-id="column-level-metadata"><span class="header-section-number">7.5.3.2</span> Column-level Metadata</h4>
 <p>The column-level GeoParquet metadata stores 2 different types of information:</p>
 <ol type="1">
 <li>What kind of geometry is represented in the column, e.g.&nbsp;point, polygon, linestring etc</li>
 <li>Further metadata about that column, for example the CRS.</li>
 </ol>
 </section>
-<section id="data-format" class="level4" data-number="8.5.3.3">
-<h4 data-number="8.5.3.3" class="anchored" data-anchor-id="data-format"><span class="header-section-number">8.5.3.3</span> Data format</h4>
+<section id="data-format" class="level4" data-number="7.5.3.3">
+<h4 data-number="7.5.3.3" class="anchored" data-anchor-id="data-format"><span class="header-section-number">7.5.3.3</span> Data format</h4>
 <p>GeoParquet specifies 2 different ways of representing geometry data: serialized encoding and native encodings. Native encodings are where this data is stored in Arrow data structures. Serialized encodings are where data is stored in existing geospatial formats. Well-known binary (WKB) data is converted into Arrow Binary and LargeBinary data and Well-known Text (WKT) as Arrow Utf8 or LargeUtf8. This is part of the GeoParquet specification to ensure that this metadata can be preserved without needing to fully convert to the native encoding; however, it can be slower to work with.</p>
 <p>Native encoding allows people to full take advantage of working with Arrow data types and capabilities. It provides concrete Arrow data structure to store geometry data in. For example, co-ordinates are stored in one of two Arrow structures. The “separated” approach saves coordinate values in separate Arrow Arrays; one for <code>x</code> values, and one for <code>y</code> values. The “interleaved” approach saves co-ordinate values in a FixedSizeList, and allows <code>x</code> and <code>y</code> values to be stored in an alternating pattern. Other types of geometries are stored in Arrow Arrays or nested ListArrays with a given structure.</p>
 <p>For our example, most of the columns are standard types we’ve seen already. But the <code>geometry</code> column is the type <code>binary</code> and specifically the WKB type. Though this looks complicated, it’s very similar to other types: the column is an array of values, effectively a vector in R. The difference is that instead of containing data that are one string per row (that is: UTF8 encoded bytes), this data is one chunk of binary data per row. This binary data is WKB data, which packages like <code>sf</code> can understand.</p>
@@ -845,8 +837,8 @@ $creator$version
 <p>And from this we can see that the CRS for our PUMAs is NAD83. We will use this later when we plot the data.</p>
 </section>
 </section>
-<section id="connecting-the-pieces" class="level3" data-number="8.5.4">
-<h3 data-number="8.5.4" class="anchored" data-anchor-id="connecting-the-pieces"><span class="header-section-number">8.5.4</span> Connecting the pieces</h3>
+<section id="connecting-the-pieces" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="connecting-the-pieces"><span class="header-section-number">7.5.4</span> Connecting the pieces</h3>
 <p>We’ve already read in our geospatial data, and have our PUMS dataset to analyze and plot, and now we need to follow a few more steps to make sure that R plotting libraries like <code>ggplot2</code> can work with this data.</p>
 <p>When this book was being written, there were already nascent projects to make this smoother. <a href="https://github.com/wcjochem/sfarrow"><code>sfarrow</code></a> has tools for reading and writing geospatial data using arrow and <a href="https://github.com/geoarrow/geoarrow-r">the r package <code>geoarrow</code></a> is under development to make it easier to load data that conforms to GeoParquet and GeoArrow standards.</p>
 <p>Today, however, we need to do a couple more things before we can work with it further and use <code>sf</code> and <code>ggplot2</code> to plot this: make sure that our CRS is set correctly and pulling the data into R. To do both of these, we create a helper function. This helper function ensures that we use the CRS we saw the data had above. It also sets the bounding box and center so that the entirety of the United States is laid out correctly.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Finally, we pull the data into R and set the correct geometry column to use.</p>
@@ -878,8 +870,8 @@ $creator$version
 <span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sec-pums-pumas" class="level3" data-number="8.5.5">
-<h3 data-number="8.5.5" class="anchored" data-anchor-id="sec-pums-pumas"><span class="header-section-number">8.5.5</span> Enhancing PUMS data with GeoParquet PUMAs data</h3>
+<section id="sec-pums-pumas" class="level3" data-number="7.5.5">
+<h3 data-number="7.5.5" class="anchored" data-anchor-id="sec-pums-pumas"><span class="header-section-number">7.5.5</span> Enhancing PUMS data with GeoParquet PUMAs data</h3>
 <p>Putting this all together, let’s try making a plot<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> showing different languages spoken throughout the United States. The analysis we will build up is the percentage of speakers for languages spoken in the US. We will then plot this data, subsetting to a few interesting languages depending on what region we are plotting. In the PUMS dataset, the smallest geographic area is called a <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html">PUMA (Public Use Microdata Areas)</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state.</p>
 <p>As always, we start with our PUMS dataset. We build up a <code>dplyr</code> query to clean some data inconsistencies (varying capitalization), group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA. We can see that this returns a dataframe with one row per PUMA and language, with the number of speakers and the proportion of speakers compared to the overall population.</p>
 <div class="cell">
@@ -910,7 +902,7 @@ $creator$version
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"az","2":"00400","3":"2018","4":"english","5":"109171","6":"0.7628787"},{"1":"az","2":"00300","3":"2018","4":"navajo","5":"55285","6":"0.3031491"},{"1":"az","2":"00104","3":"2018","4":"english","5":"93013","6":"0.7741793"},{"1":"az","2":"00600","3":"2018","4":"english","5":"204459","6":"0.8938606"},{"1":"az","2":"00500","3":"2018","4":"english","5":"207356","6":"0.8939184"},{"1":"az","2":"00126","3":"2018","4":"english","5":"105728","6":"0.8220183"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"01600","3":"2018","4":"english","5":"110112","6":"0.91920094"},{"1":"al","2":"01900","3":"2018","4":"english","5":"152765","6":"0.93420538"},{"1":"al","2":"02000","3":"2018","4":"spanish","5":"5714","6":"0.02923226"},{"1":"al","2":"02400","3":"2018","4":"english","5":"137051","6":"0.94777425"},{"1":"al","2":"02701","3":"2018","4":"english","5":"96000","6":"0.96942279"},{"1":"al","2":"00400","3":"2018","4":"english","5":"114661","6":"0.93123416"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1064,8 +1056,8 @@ Tip
 </div>
 </section>
 </section>
-<section id="summary" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.6</span> Summary</h2>
+<section id="summary" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.6</span> Summary</h2>
 <p>This chapter explored advanced topics for working with the arrow R package. We began talking about user-defined functions (UDFs), explaining how to create and utilize them to handle functions not natively supported by Arrow. We also looked at the interoperability between Arrow and DuckDB, showing how to use DuckDB for tasks not natively supported in Arrow. Finally, we took a look at extending arrow, with a focus on geospatial data, introducing the concept of GeoParquet for on-disk geospatial data representation that can quickly and easily be turned into an in-memory representation.</p>
 
 
@@ -1546,29 +1538,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./cloud.html" class="pagination-link" aria-label="Cloud">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./processes.html" class="pagination-link" aria-label="Sharing Data and Interoperability">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane, and Neal Richardson.</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
-</div>
-  </div>
-</footer>
 
 
 
