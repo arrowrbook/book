@@ -49,3 +49,7 @@ If you would like to store this elsewhere, you can symlink to this folder and ev
 
 Get the PUMS dataset from S3: `aws s3 sync s3://scaling-arrow-pums {some path where you can hold this data}`
 _hand waved for now_: get the raw PUMS CSVs and extract them to `{some path where you can hold this data}/raw_csvs` (you can copy this from the [Subset data above for now](https://github.com/thisisnic/scaling_up_with_r_and_arrow/tree/CI_data/PUMS_smol/raw_csvs/person))
+
+## Editing images
+
+For all images, there is an excalidraw file, a png and an svg file.  To make changes to images, open the excalidraw file at <https://excalidraw.com/>, make changes there, and then export the results in all three formats, overwriting the existing images in the repo.
