@@ -8,7 +8,7 @@
 
 <meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>3&nbsp; Data Manipulation</title>
+<title>3&nbsp; Data Manipulation – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_manipulation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_manipulation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,6 +131,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Scaling Up With R and Arrow</a> 
+    </div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -141,67 +146,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Up With R and Arrow</span></a>
+ <span class="menu-text">Acknowledgements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Up With R and Arrow</span></a>
+ <span class="menu-text">Foreword</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Up With R and Arrow</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -216,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
   </div>
 </li>
       </ul>
@@ -297,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"39.00219"},{"1":"2018","2":"38.57472"},{"1":"2005","2":"36.49880"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2021","2":"39.00219"},{"1":"2018","2":"38.57472"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -335,7 +340,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"Yes, born in the US"},{"1":"Not a citizen"},{"1":"Yes, naturalized"},{"1":"Yes, born in Puerto Rico, etc."},{"1":"Yes, born abroad of American parent(s)"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"Yes, born in the US"},{"1":"Yes, naturalized"},{"1":"Not a citizen"},{"1":"Yes, born abroad of American parent(s)"},{"1":"Yes, born in Puerto Rico, etc."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -378,7 +383,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"Not a U.S. citizen"},{"1":"U.S. citizen by naturalization"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"U.S. citizen by naturalization"},{"1":"Not a U.S. citizen"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -492,7 +497,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS"},{"1":"EDU-POSTSECONDARY TEACHERS"},{"1":"NA"},{"1":"UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS**"},{"1":"EAT-DISHWASHERS"},{"1":"MED-REGISTERED NURSES"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"OFF-STOCK CLERKS AND ORDER FILLERS"},{"1":"NA"},{"1":"SAL-CASHIERS"},{"1":"CON-CONSTRUCTION LABORERS"},{"1":"SAL-REAL ESTATE BROKERS AND SALES AGENTS"},{"1":"MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -532,7 +537,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wi","2":"2005","3":"10.211859"},{"1":"wa","2":"2005","3":"11.211869"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -622,7 +627,7 @@ See $metadata for additional Schema metadata</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"NA","3":"9.964303"},{"1":"NA","2":"NA","3":"9.964303"},{"1":"-30.0357","2":"40","3":"9.964303"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"5","3":"NA"},{"1":"NA","2":"15","3":"NA"},{"1":"NA","2":"NA","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1081,13 +1086,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./getting_started.html" class="pagination-link" aria-label="Scaling Up With R and Arrow">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span>
+      <a href="./getting_started.html" class="pagination-link" aria-label="Getting Started">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./files_and_formats.html" class="pagination-link" aria-label="Scaling Up With R and Arrow">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scaling Up With R and Arrow</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./files_and_formats.html" class="pagination-link" aria-label="Files and Formats">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
