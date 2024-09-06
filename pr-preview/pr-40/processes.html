@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>9&nbsp; Sharing Data and Interoperability – Scaling Up With R and Arrow</title>
+<title>8&nbsp; Sharing Data and Interoperability – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4JT42QR6DV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
-</script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -126,7 +118,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./processes.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./processes.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,13 +134,6 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -167,55 +152,55 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Foreword</span></span></a>
+ <span class="menu-text">Foreword</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -251,15 +236,15 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sharing-within-a-process" id="toc-sharing-within-a-process" class="nav-link active" data-scroll-target="#sharing-within-a-process"><span class="header-section-number">9.1</span> Sharing within a process</a>
+  <li><a href="#sharing-within-a-process" id="toc-sharing-within-a-process" class="nav-link active" data-scroll-target="#sharing-within-a-process"><span class="header-section-number">8.1</span> Sharing within a process</a>
   <ul class="collapse">
-  <li><a href="#the-c-data-interface" id="toc-the-c-data-interface" class="nav-link" data-scroll-target="#the-c-data-interface"><span class="header-section-number">9.1.1</span> The C data interface</a></li>
-  <li><a href="#between-r-and-python" id="toc-between-r-and-python" class="nav-link" data-scroll-target="#between-r-and-python"><span class="header-section-number">9.1.2</span> Between R and Python</a></li>
-  <li><a href="#sec-duckdb" id="toc-sec-duckdb" class="nav-link" data-scroll-target="#sec-duckdb"><span class="header-section-number">9.1.3</span> DuckDB</a></li>
+  <li><a href="#the-c-data-interface" id="toc-the-c-data-interface" class="nav-link" data-scroll-target="#the-c-data-interface"><span class="header-section-number">8.1.1</span> The C data interface</a></li>
+  <li><a href="#between-r-and-python" id="toc-between-r-and-python" class="nav-link" data-scroll-target="#between-r-and-python"><span class="header-section-number">8.1.2</span> Between R and Python</a></li>
+  <li><a href="#sec-duckdb" id="toc-sec-duckdb" class="nav-link" data-scroll-target="#sec-duckdb"><span class="header-section-number">8.1.3</span> DuckDB</a></li>
   </ul></li>
-  <li><a href="#apache-spark-integration-sharing-across-processes" id="toc-apache-spark-integration-sharing-across-processes" class="nav-link" data-scroll-target="#apache-spark-integration-sharing-across-processes"><span class="header-section-number">9.2</span> Apache Spark integration: sharing across processes</a></li>
-  <li><a href="#nanoarrow" id="toc-nanoarrow" class="nav-link" data-scroll-target="#nanoarrow"><span class="header-section-number">9.3</span> nanoarrow</a></li>
-  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">9.4</span> Looking ahead</a></li>
+  <li><a href="#apache-spark-integration-sharing-across-processes" id="toc-apache-spark-integration-sharing-across-processes" class="nav-link" data-scroll-target="#apache-spark-integration-sharing-across-processes"><span class="header-section-number">8.2</span> Apache Spark integration: sharing across processes</a></li>
+  <li><a href="#nanoarrow" id="toc-nanoarrow" class="nav-link" data-scroll-target="#nanoarrow"><span class="header-section-number">8.3</span> nanoarrow</a></li>
+  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">8.4</span> Looking ahead</a></li>
   </ul>
 </nav>
     </div>
@@ -268,13 +253,20 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-processes" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></h1>
+<h1 class="title"><span id="sec-processes" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></h1>
+<p class="subtitle lead">Bigger Data, Easier Workflows</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nic Crane, Jonathan Keane, and Neal Richardson </p>
+          </div>
+  </div>
     
   
     
@@ -288,19 +280,19 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>One of the benefits of Arrow as a standard is that data can be easily shared between different applications or libraries that understand the format. By not having to convert to an intermediate format, and by avoiding serialization and deserialization costs, moving data from one tool to another is fast and efficient. As a library developer, it also reduces maintenance burden and the surface area for bugs because you don’t have to write and manage adapters for many formats: you just implement the Arrow connector.</p>
 <p>As a result, many projects have adopted the Arrow format as the way to connect with other projects in the ecosystem. In this chapter, we’ll show some examples where Arrow is used as the means of exchanging data, and how that results in major speedups for users. In some cases, Arrow is being used behind the scenes, and you benefit without needing to write any additional code.</p>
 <p>Along the way, we’ll highlight the different ways in which these different tools communicate—within the same process, across processes on the same system, or over the network between systems—and provide some context for how Arrow works in those modalities. Some of those details will be most relevant if you’re trying to write a new library using Arrow, such as a new R package wrapping an Arrow-native project. But, even if you’re not writing packages, developing an understanding of how arrow is communicating with other tools is useful for having an intuition about how it will perform in different contexts.</p>
-<section id="sharing-within-a-process" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="sharing-within-a-process"><span class="header-section-number">9.1</span> Sharing within a process</h2>
-<p>We’ve shown in <a href="advanced_topics.html#sec-duckdb-practical" class="quarto-xref">Chapter&nbsp;<span>8.2</span></a> how you can pass data from the arrow query engine to duckdb and back. Let’s explore a little more deeply how that works in order to understand what’s happening and how the Arrow standard makes that basically free in terms of data copying costs.</p>
+<section id="sharing-within-a-process" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sharing-within-a-process"><span class="header-section-number">8.1</span> Sharing within a process</h2>
+<p>We’ve shown in <a href="advanced_topics.html#sec-duckdb-practical" class="quarto-xref">Chapter&nbsp;<span>7.2</span></a> how you can pass data from the arrow query engine to duckdb and back. Let’s explore a little more deeply how that works in order to understand what’s happening and how the Arrow standard makes that basically free in terms of data copying costs.</p>
 <p>Processes work on data by allocating memory and loading data into it. By allocating the memory, they ask the operating system to grant it ownership over a block of memory. Code running within a process can reference memory that the process has allocated, but other processes are not allowed to access it.</p>
 <p>The integration between arrow and duckdb takes advantage of the fact that both are running in the same process. In your R session, arrow and duckdb are R packages that wrap C++ libraries. When you load the R packages, the C++ libraries are also loaded into the running R process. That means that a pointer to a block of memory that a function from the arrow library has created can be accessed by a function in the duckdb library just where it is: no need to copy or move anything, just read it from where it is.</p>
 <p>However, we can’t just pass C++ objects around. C++ objects are complex and include methods—methods that require code in the C++ library to execute. In order for DuckDB to work with an Arrow C++ object, it would have to depend on the Arrow C++ library, and vice versa. This is not desirable, and <a href="https://en.wikipedia.org/wiki/Name_mangling#C++">some features of C++</a> make this particularly challenging. Instead, we just want to pass the data buffer inside the C++ object. We only need a basic way to communicate where the data is and what its shape is. This is where the C data interface comes in.</p>
-<section id="the-c-data-interface" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="the-c-data-interface"><span class="header-section-number">9.1.1</span> The C data interface</h3>
+<section id="the-c-data-interface" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="the-c-data-interface"><span class="header-section-number">8.1.1</span> The C data interface</h3>
 <p>The <strong>Arrow C data interface</strong> defines a simple means for referencing Arrow data in memory, allowing different libraries to consume the same data without depending on each other. It defines just 2 structures: one for an array of data and another for a schema. It is a small amount of C code—29 lines in total—so any programming language that is compatible with C can use it by copying this code into their codebase.</p>
 <p>This can be a huge advantage to projects which utilize Arrow’s format and data structures. For one, it’s very small, so there’s little cost to adding it. It avoids the need to bring in all of the dependencies of the Arrow C++ library, which may not be needed when you just want to exchange data in the Arrow format. Finally, the C data interface is stable. While the Arrow C++ library is under active development, the Arrow C data interface is guaranteed to remain unchanged.</p>
 </section>
-<section id="between-r-and-python" class="level3" data-number="9.1.2">
-<h3 data-number="9.1.2" class="anchored" data-anchor-id="between-r-and-python"><span class="header-section-number">9.1.2</span> Between R and Python</h3>
+<section id="between-r-and-python" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="between-r-and-python"><span class="header-section-number">8.1.2</span> Between R and Python</h3>
 <p>Before we explain how arrow and duckdb share data between the query engines, let’s start with a simpler case that also uses the C data interface: sharing Arrow memory between R and Python with the <strong>reticulate</strong> package.</p>
 <p>If you’re working on a polyglot team which has people working both in R and in Python, or a project with both R and Python components, different components of your analysis pipeline might be in different languages. Passing data back and forth between the two—serialization and deserialization—can take time and resources, and so it’s desirable to be able to avoid this if possible.</p>
 <p>The reticulate R package already provides a way of passing data between R and Python in the same process, but it is not as efficient as using arrow. Let’s take a look at two examples of passing data from R to Python and then returning it to R. In the first example, we’ll work with use the standard method of passing data between these processes, and in our second example, we’ll see how using Arrow speeds things up.</p>
@@ -343,8 +335,8 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>This time it only took 0.2 seconds, which was a huge speed-up! How does this work?</p>
 <p>Unlike in the first case, where data in R had to be copied and translated into a pandas DataFrame, here we used the Arrow C data interface to pass to Python the pointer to where the Arrow Table is stored in memory, and Python can use this to work with the table directly. The result in Python is a pyarrow Table. Naturally, the same happens when the data is passed back from Python to R. So, there is no conversion of data and copying data around: there is only a handoff of ownership.</p>
 </section>
-<section id="sec-duckdb" class="level3" data-number="9.1.3">
-<h3 data-number="9.1.3" class="anchored" data-anchor-id="sec-duckdb"><span class="header-section-number">9.1.3</span> DuckDB</h3>
+<section id="sec-duckdb" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="sec-duckdb"><span class="header-section-number">8.1.3</span> DuckDB</h3>
 <p>The integration between arrow and duckdb builds on this machinery to share data between the query engines. Both DuckDB and Acero, the Arrow C++ query engine, operate on chunks of data at a time. This allows them to parallelize across multiple threads and efficiently stream results from one stage in the query evaluation to the next. Each stage, or node, including the data source node, behaves like an iterator: the next node of the query requests a batch of data from the previous one, and when it finishes processing it, it requests the next batch, until there are no more batches left.</p>
 <p>In the Arrow C++ library, and thus also in R, this iterator is represented as a <code>RecordBatchReader</code>. To integrate with DuckDB, we deal in RecordBatchReaders: <code>to_duckdb()</code> hands off a reader to duckdb, and <code>to_arrow()</code> receives one back from duckdb. This works using an extension to the Arrow C data interface, the C data stream. The C object contains a reference to a callback function, which the consumer calls to request the next batch of data. As a result, batches of data can flow from one query engine to the other, almost as if they were a single engine.</p>
 <p>Let’s take a look at how this would work. The example below is a variation on the one we started the book with: we are finding the mean commute time by year, though this time we want this in hours instead of minutes and we aren’t breaking it down by mode of transport.</p>
@@ -386,8 +378,8 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>This example is contrived specifically to show the low overhead of passing data back and forth. In the real world, there would be no reason to pass data to duckdb when you can do the computation in arrow and vice versa. But this is extremely helpful if you’re working in arrow and duckdb—or another library that can speak arrow—has a function that arrow doesn’t.</p>
 </section>
 </section>
-<section id="apache-spark-integration-sharing-across-processes" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="apache-spark-integration-sharing-across-processes"><span class="header-section-number">9.2</span> Apache Spark integration: sharing across processes</h2>
+<section id="apache-spark-integration-sharing-across-processes" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="apache-spark-integration-sharing-across-processes"><span class="header-section-number">8.2</span> Apache Spark integration: sharing across processes</h2>
 <p>In the previous section, we talked about sharing data within an individual system process, but what about if we want to share between separate processes? Different processes can’t share memory: they have to allocate their own memory and share data with each other by sending messages. This introduces overhead, both in having to allocate memory for the copy of the data, and in encoding and decoding the message: our friends serialization and deserialization again.</p>
 <p>As you may expect by now, Arrow provides a means to minimize that overhead. A great example of the benefits of using Arrow to communicate across systems is with Apache Spark. Speeding up data access with Spark was one of the initial use cases that demonstrated the value of Arrow. The <a href="https://arrow.apache.org/blog/2017/07/26/spark-arrow/">first blog post</a> illustrating the benefits, focused on PySpark, is from 2017; an <a href="https://arrow.apache.org/blog/2019/01/25/r-spark-improvements/">R version with <strong>sparklyr</strong></a> came out in 2019. Both examples show speedups on the order of 20-40x, depending on the workflow.</p>
 <p>Without Arrow, Spark had to send data one row at a time, serialized to a less efficient format, and then on the receiving side, pandas or R would have to reconstruct the data frame from the records. Sending data back to Spark did the same thing in reverse. As the benchmarks demonstrate, switching between row and column layouts is costly. With Arrow, data can stay in a columnar format, with less copying and transformation.</p>
@@ -395,15 +387,15 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>Similar to the C data interface for intraprocess communication, the IPC format is almost exactly the shape of the data in memory, so the serialization cost is near-zero. But unlike communicating within the same process, there is some cost to sending or receiving: you need to read it from disk or send it over the network, and allocate the memory to hold it.</p>
 <p>A nice feature of the sparklyr integration in R is that you as the user don’t need to change your analysis code to take advantage of it. All you have to do is load <code>library(arrow)</code>. If the arrow R package is loaded, sparkylr will use arrow for data transfer automatically.</p>
 </section>
-<section id="nanoarrow" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="nanoarrow"><span class="header-section-number">9.3</span> nanoarrow</h2>
+<section id="nanoarrow" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="nanoarrow"><span class="header-section-number">8.3</span> nanoarrow</h2>
 <p>Since Arrow has become the standard for columnar data, it is easier to integrate databases and data products with R. Rather than having to implement an adapter for the product’s custom format, you can just use Arrow to connect with it. However, as this book shows, the arrow R package does a lot of things. If you just need to bring Arrow data into an R data frame, you don’t need all of arrow’s cloud file systems, its Parquet reader, the query engine, and other features.</p>
 <p>This is where <a href="https://arrow.apache.org/nanoarrow/latest/"><strong>nanoarrow</strong></a> comes in. The nanoarrow R package wraps just the C data interface and the IPC file format. It has packaged versions in R, Python, C, and C++. The R package supports translating Arrow data to and from R data frames, and that’s about it. While it lacks a lot of the features of the full arrow R package, this is exactly the point: to create a minimal interface which allows users to be able to work with Arrow data structures in a small library.</p>
 <p>While nanoarrow is relatively new, some R packages already use it. The <a href="https://pola-rs.github.io/r-polars/"><strong>polars</strong></a> package, for example, uses nanoarrow to bring Arrow format data into R from the Polars data frame library—which is built on an implementation of Arrow in Rust. Similarly, <a href="https://tiledb-inc.github.io/TileDB-R/"><strong>tiledb</strong></a> uses nanoarrow to bring Arrow data into R without require a dependency on the full arrow R package.</p>
 <p>The nanoarrow project is a great example of how Arrow improves the experience of working with data. We have focused in this book on the arrow R package and the many ways it can be useful. But the Apache Arrow project and mission of improving the foundations for data analysis is much bigger than one package. Even when you aren’t using the arrow R package itself, Arrow may be there behind the scenes, making your life easier.</p>
 </section>
-<section id="looking-ahead" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">9.4</span> Looking ahead</h2>
+<section id="looking-ahead" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">8.4</span> Looking ahead</h2>
 <p>The list of examples of using Arrow to speed up data interchage is large, and it’s still growing. Particularly as Arrow becomes more central to the internal workings of databases and query engines, we expect to see more projects using Arrow in R in more ways.</p>
 <p>One promising direction is in getting data out of databases. For decades, the predominant standard in communicating with databases has been ODBC, which specifies how database drivers should receive SQL queries and return data. Both ODBC and JDBC, a similar standard that is implemented in Java, are row-oriented APIs, which as we have seen in previous chapters, means that there is a conversion step required to get into R’s column-oriented data structures. This is further costly when the database that you are querying is also columnar—data is converted from columns to rows and then back to columns.</p>
 <p>The Arrow project has defined a new standard called <a href="https://arrow.apache.org/blog/2023/01/05/introducing-arrow-adbc/"><strong>ADBC</strong></a>. It is an API for communicating with databases that sends and receives Arrow-formatted data. By writing database drivers that conform to the ADBC interface, getting data in and out of databases can be made more efficient and easier to work with on the client side. At the time of writing this book, ADBC has only begun to see adoption, but it has the potential to greatly improve the performance of querying databases.</p>
@@ -836,7 +828,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./advanced_topics.html" class="pagination-link" aria-label="Advanced Topics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -846,19 +838,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane, and Neal Richardson.</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
-</div>
-  </div>
-</footer>
 
 
 

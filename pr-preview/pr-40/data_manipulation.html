@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>4&nbsp; Data Manipulation – Scaling Up With R and Arrow</title>
+<title>3&nbsp; Data Manipulation – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4JT42QR6DV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
-</script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -126,7 +118,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_manipulation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_manipulation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,13 +134,6 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -167,55 +152,55 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Foreword</span></span></a>
+ <span class="menu-text">Foreword</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -251,19 +236,19 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#building-queries" id="toc-building-queries" class="nav-link active" data-scroll-target="#building-queries"><span class="header-section-number">4.1</span> Building queries</a></li>
-  <li><a href="#a-few-more-cleaning-tasks" id="toc-a-few-more-cleaning-tasks" class="nav-link" data-scroll-target="#a-few-more-cleaning-tasks"><span class="header-section-number">4.2</span> A few more cleaning tasks</a>
+  <li><a href="#building-queries" id="toc-building-queries" class="nav-link active" data-scroll-target="#building-queries"><span class="header-section-number">3.1</span> Building queries</a></li>
+  <li><a href="#a-few-more-cleaning-tasks" id="toc-a-few-more-cleaning-tasks" class="nav-link" data-scroll-target="#a-few-more-cleaning-tasks"><span class="header-section-number">3.2</span> A few more cleaning tasks</a>
   <ul class="collapse">
-  <li><a href="#relabeling-values" id="toc-relabeling-values" class="nav-link" data-scroll-target="#relabeling-values"><span class="header-section-number">4.2.1</span> Relabeling values</a></li>
+  <li><a href="#relabeling-values" id="toc-relabeling-values" class="nav-link" data-scroll-target="#relabeling-values"><span class="header-section-number">3.2.1</span> Relabeling values</a></li>
   </ul></li>
-  <li><a href="#workflows-for-larger-datasets" id="toc-workflows-for-larger-datasets" class="nav-link" data-scroll-target="#workflows-for-larger-datasets"><span class="header-section-number">4.3</span> Workflows for larger datasets</a></li>
-  <li><a href="#sec-dplyr-use-funcs" id="toc-sec-dplyr-use-funcs" class="nav-link" data-scroll-target="#sec-dplyr-use-funcs"><span class="header-section-number">4.4</span> Using functions inside dplyr pipelines</a></li>
-  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins"><span class="header-section-number">4.5</span> Joins</a>
+  <li><a href="#workflows-for-larger-datasets" id="toc-workflows-for-larger-datasets" class="nav-link" data-scroll-target="#workflows-for-larger-datasets"><span class="header-section-number">3.3</span> Workflows for larger datasets</a></li>
+  <li><a href="#sec-dplyr-use-funcs" id="toc-sec-dplyr-use-funcs" class="nav-link" data-scroll-target="#sec-dplyr-use-funcs"><span class="header-section-number">3.4</span> Using functions inside dplyr pipelines</a></li>
+  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins"><span class="header-section-number">3.5</span> Joins</a>
   <ul class="collapse">
-  <li><a href="#join-keys" id="toc-join-keys" class="nav-link" data-scroll-target="#join-keys"><span class="header-section-number">4.5.1</span> Join keys</a></li>
+  <li><a href="#join-keys" id="toc-join-keys" class="nav-link" data-scroll-target="#join-keys"><span class="header-section-number">3.5.1</span> Join keys</a></li>
   </ul></li>
-  <li><a href="#sec-dplyr-generics" id="toc-sec-dplyr-generics" class="nav-link" data-scroll-target="#sec-dplyr-generics"><span class="header-section-number">4.6</span> How does all of this work? Verbs, functions, and arrow objects</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.7</span> Conclusion</a></li>
+  <li><a href="#sec-dplyr-generics" id="toc-sec-dplyr-generics" class="nav-link" data-scroll-target="#sec-dplyr-generics"><span class="header-section-number">3.6</span> How does all of this work? Verbs, functions, and arrow objects</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.7</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -272,13 +257,20 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-datamanipulation" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></h1>
+<h1 class="title"><span id="sec-datamanipulation" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></h1>
+<p class="subtitle lead">Bigger Data, Easier Workflows</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nic Crane, Jonathan Keane, and Neal Richardson </p>
+          </div>
+  </div>
     
   
     
@@ -291,10 +283,10 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <p>In the previous chapter, we took a look at an overall view of working with Arrow, but now we’re going to take a closer look at how to use Arrow to efficiently transform and manipulate data using familiar dplyr syntax and approaches borrowed from the <strong>tidyverse</strong>. We’re not going to go into too much detail about how to use dplyr in this book, but if you want to learn more or need a refresher, we recommend taking a look at <a href="https://dplyr.tidyverse.org">the dplyr documentation</a>, or <a href="https://r4ds.had.co.nz">R for Data Science</a>.</p>
 <p>When we introduced the PUMS dataset in the previous chapter, we saw that in its raw CSV form it takes up almost 90GB of space on disk. As is common in data science, the raw data we start with needs some cleaning before we can do meaningful analysis.</p>
-<p>If you want to see a walkthough of how we cleaned the raw dataset, you can find some key examples that are useful to know about in <a href="files_and_formats.html#sec-cleaning-pums" class="quarto-xref">Section&nbsp;<span>5.4</span></a>, and the the rest of the (somewhat repetitive) initial steps can be found in a script in this book’s repository, so it doesn’t distract from the task of learning about data manipulation in arrow. We include some examples of the final stages in this chapter to give you a taste of how this can be done.</p>
+<p>If you want to see a walkthough of how we cleaned the raw dataset, you can find some key examples that are useful to know about in <a href="files_and_formats.html#sec-cleaning-pums" class="quarto-xref">Section&nbsp;<span>4.4</span></a>, and the the rest of the (somewhat repetitive) initial steps can be found in a script in this book’s repository, so it doesn’t distract from the task of learning about data manipulation in arrow. We include some examples of the final stages in this chapter to give you a taste of how this can be done.</p>
 <p>In this chapter, we’ll focus on data manipulation with the cleaned up version of the data. You’ll learn what approaches to take when manipulating larger-than-memory datasets, and how arrow creates queries to run against the data instead of pulling everything into the R session.</p>
-<section id="building-queries" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="building-queries"><span class="header-section-number">4.1</span> Building queries</h2>
+<section id="building-queries" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="building-queries"><span class="header-section-number">3.1</span> Building queries</h2>
 <p>We can point at all of the files and query them together as a single dataset made up of multiple Parquet files.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(<span class="st">"./data/person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -310,7 +302,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2018","2":"38.57472"},{"1":"2021","2":"39.00219"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"38.57472"},{"1":"2021","2":"39.00219"},{"1":"2005","2":"36.49880"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -334,11 +326,11 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>The output above shows that this object is a query on a dataset. It shows the schema of the dataset, and which columns the data is being filtered and sorted on, as well as the sort direction. At this point, no calculations have been made and won’t be until we run <code>collect()</code> to execute the query and pull the results back into R.</p>
 </section>
-<section id="a-few-more-cleaning-tasks" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="a-few-more-cleaning-tasks"><span class="header-section-number">4.2</span> A few more cleaning tasks</h2>
+<section id="a-few-more-cleaning-tasks" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="a-few-more-cleaning-tasks"><span class="header-section-number">3.2</span> A few more cleaning tasks</h2>
 <p>There are still a number of cleaning tasks that we should do on the dataset. With the additional processing power provided by arrow, it’s possible to do these even at analysis time — which is helpful for cases where we might want to preserve the values from the underlying dataset (e.g.&nbsp;if we want to analyze the different wording of values over time), but when we run aggregations and queries, we want to collapse those and just run our analyses on the transformed data.</p>
-<section id="relabeling-values" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="relabeling-values"><span class="header-section-number">4.2.1</span> Relabeling values</h3>
+<section id="relabeling-values" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="relabeling-values"><span class="header-section-number">3.2.1</span> Relabeling values</h3>
 <p>It’s not unusual for large datasets like PUMS, which have been collected over many years, to contain inconsistencies between how variables are reported in different partitions. One example of this is the <code>CIT</code> column, which contains data about survey respondents’ US citizenship. If we compare the unique values in this column from the first year in our dataset, 2005, and a later year in the data, 2021, we can see that some of the reported labels have changed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
@@ -418,8 +410,8 @@ See $.data for the source Arrow object</code></pre>
 <p>Now we’ve seen that we can work with familiar dplyr and tidyverse syntax on this large dataset using arrow, we’re going to talk more about exactly how this works.</p>
 </section>
 </section>
-<section id="workflows-for-larger-datasets" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="workflows-for-larger-datasets"><span class="header-section-number">4.3</span> Workflows for larger datasets</h2>
+<section id="workflows-for-larger-datasets" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="workflows-for-larger-datasets"><span class="header-section-number">3.3</span> Workflows for larger datasets</h2>
 <p>Why does arrow avoid computing on the data until you explicitly tell it to? While you can work with Arrow data in memory, the biggest benefits of arrow come from its ability to work with data that is too big to fit into memory. After all, if the data were small enough to fit into memory, you would have many more tools available to you, both in R itself and in other packages. Since arrow is designed to work with larger-than-memory datasets, and calculations on such large data may be slow to complete, you should be clear about when you want to run such a query. The package doesn’t want to surprise you by crashing your session by running out of memory.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -456,15 +448,15 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>FileSystemDataset with 27 Parquet files (query)
 1,552,876 rows x 2 columns
-$ SCHL           &lt;string&gt; "High school graduate", "10th Grade", "High school gra…
-$ higher_education &lt;bool&gt; FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TR…
+$ SCHL           &lt;string&gt; "Bachelor's degree", "Doctorate degree", "High school …
+$ higher_education &lt;bool&gt; TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE…
 Call `print()` for query details</code></pre>
 </div>
 </div>
 </section>
-<section id="sec-dplyr-use-funcs" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-dplyr-use-funcs"><span class="header-section-number">4.4</span> Using functions inside dplyr pipelines</h2>
-<p>A number of dplyr functions allow you to embed other functions in them. <code>mutate()</code> is a prime example of this, where we are changing some data in the data frame using other functions from base R or other packages. Many tidyverse functions will simply work out of the box with arrow queries. For example, as arrow has code that works just like the stringr function <code>str_detect()</code>—which works out if a string is present in a column or not—we can use it in an arrow dplyr pipeline just like we would a standard dplyr pipeline. For more details about how this works, see <a href="#sec-dplyr-generics" class="quarto-xref"><span>Section 4.6</span></a> below.</p>
+<section id="sec-dplyr-use-funcs" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-dplyr-use-funcs"><span class="header-section-number">3.4</span> Using functions inside dplyr pipelines</h2>
+<p>A number of dplyr functions allow you to embed other functions in them. <code>mutate()</code> is a prime example of this, where we are changing some data in the data frame using other functions from base R or other packages. Many tidyverse functions will simply work out of the box with arrow queries. For example, as arrow has code that works just like the stringr function <code>str_detect()</code>—which works out if a string is present in a column or not—we can use it in an arrow dplyr pipeline just like we would a standard dplyr pipeline. For more details about how this works, see <a href="#sec-dplyr-generics" class="quarto-xref"><span>Section 3.6</span></a> below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>higher_ed <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AGEP <span class="sc">&gt;</span> <span class="dv">18</span>) <span class="sc">|&gt;</span></span>
@@ -505,7 +497,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS"},{"1":"EDU-POSTSECONDARY TEACHERS"},{"1":"NA"},{"1":"UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS**"},{"1":"EAT-DISHWASHERS"},{"1":"MED-REGISTERED NURSES"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"NA"},{"1":"TRN-TRANSPORTATION INSPECTORS"},{"1":"PRT-BAILIFFS, CORRECTIONAL OFFICERS, AND JAILERS"},{"1":"CON-CARPENTERS"},{"1":"SAL-CASHIERS"},{"1":"MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -525,10 +517,10 @@ Call `print()` for query details</code></pre>
 </div>
 </div>
 <p>The error message shows that this expression is not supported in Arrow. This is because there is no Arrow C++ function that is the equivalent of <code>stringr::str_to_sentence()</code> and so it is not supported in the arrow R package. So what should you do if you encounter this?</p>
-<p>If the resulting data in your pipeline is small enough, you could pull the data back into R, and then continue your analysis. This isn’t always an option though, so what should you do if your data is still too large to return to R memory? Find out more about this in a few sections when we talk about user-defined functions (<a href="advanced_topics.html#sec-UDF" class="quarto-xref"><span>Section 8.1</span></a>).</p>
+<p>If the resulting data in your pipeline is small enough, you could pull the data back into R, and then continue your analysis. This isn’t always an option though, so what should you do if your data is still too large to return to R memory? Find out more about this in a few sections when we talk about user-defined functions (<a href="advanced_topics.html#sec-UDF" class="quarto-xref"><span>Section 7.1</span></a>).</p>
 </section>
-<section id="joins" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="joins"><span class="header-section-number">4.5</span> Joins</h2>
+<section id="joins" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="joins"><span class="header-section-number">3.5</span> Joins</h2>
 <p><strong>Joins</strong> are used to combine data from 2 or more sources, based on columns that these sources have in common. The columns that we want to use to match our data sources are sometimes referred to as <strong>join keys</strong>.</p>
 <p>Let’s say for example, we want to compare the commute time of each person in the dataset to the mean commute time for their state.</p>
 <p>We start by creating a reference table of mean commute time by state and year.</p>
@@ -545,13 +537,19 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"al","2":"2005","3":"9.964303"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wa","2":"2005","3":"11.211869"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wa","2":"2005","3":"11.211869"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>We can then perform a left join to combine this information with the information in the original datasets.</p>
-<p><img src="images/excalidraw/data_manip_join.png" class="img-fluid" alt="Joining data"> The code to accomplish this looks something like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/excalidraw/data_manip_join.png" class="img-fluid figure-img"></p>
+<figcaption>Example tables for joining data</figcaption>
+</figure>
+</div>
+<p>The code to accomplish this looks something like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
@@ -571,8 +569,8 @@ Call `print()` for query details</code></pre>
 </div>
 </div>
 </div>
-<section id="join-keys" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="join-keys"><span class="header-section-number">4.5.1</span> Join keys</h3>
+<section id="join-keys" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="join-keys"><span class="header-section-number">3.5.1</span> Join keys</h3>
 <p>One important thing to know about doing joins in arrow is that the data types of the join key columns must match. Let’s say we decided that we want to change the data type of the <code>year</code> column from a 32-bit integer to an 16-bit integer. We can change the column type using <code>cast()</code>, but if we then try to join our reference table, we get an error.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
@@ -635,15 +633,15 @@ See $metadata for additional Schema metadata</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.668406","2":"5","3":"8.668406"},{"1":"3.182648","2":"5","3":"8.182648"},{"1":"-6.331594","2":"15","3":"8.668406"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"5","3":"NA"},{"1":"NA","2":"15","3":"NA"},{"1":"NA","2":"NA","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="sec-dplyr-generics" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="sec-dplyr-generics"><span class="header-section-number">4.6</span> How does all of this work? Verbs, functions, and arrow objects</h2>
+<section id="sec-dplyr-generics" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-dplyr-generics"><span class="header-section-number">3.6</span> How does all of this work? Verbs, functions, and arrow objects</h2>
 <p>The arrow R package contains a <strong>dplyr backend</strong>, an implementation of dplyr methods and functions that allows you to work with data using the same dplyr functionality you may be accustomed to using with regular R data frames.</p>
 <p>How can you write dplyr code that looks like what you’d use when exploring an in-memory data frame and have it automatically be translated to run on a larger-than-memory arrow Dataset? The arrow R package makes use of two defining features of R: S3 methods and non-standard evaluation.</p>
 <p>We refer to the various functions in dplyr that operate on one or more data frames—things like <code>select()</code>, <code>filter()</code>, <code>summarize()</code>—as <strong>verbs</strong>, as they all do actions to the data. In dplyr, these are implemented as <strong>generics</strong>, which means that they are open to extension by other packages. The dbplyr package, for example, defines methods for <code>select()</code> and the other verbs that operate on different databases. In arrow, there are methods defined for arrow Datasets and Tables, so that when you call <code>dplyr::select(Dataset, ...)</code>, the version of <code>select()</code> that is defined for <code>arrow::Dataset</code> is called.</p>
@@ -656,8 +654,8 @@ See $metadata for additional Schema metadata</code></pre>
 </div>
 <p>We refer to these alternative versions of R functions that return Expressions as <strong>bindings</strong>. The arrow R package contains bindings for hundreds of functions, many from base R packages, as well as from tidyverse packages, notably lubridate, stringr, and tidyselect. For a full list of what dplyr verbs and functions have arrow bindings, see <code>?acero</code> in the package.</p>
 </section>
-<section id="conclusion" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.7</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.7</span> Conclusion</h2>
 <p>In this chapter we covered manipulating data with data that is larger than memory by using Arrow Datasets. This allowed us to run analyses on datasets that in total are larger than can fit into memory but between clever partitioning and some parts of the way that Arrow executes queries, we can efficiently manipulate this data without needing to get a larger computer or write the piece-meal processing code ourselves. The next chapter will go into more details about how and why datasets work in Arrow for a deeper understanding of the capabilities, caveats, and best practices.</p>
 
 
@@ -1095,29 +1093,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./getting_started.html" class="pagination-link" aria-label="Getting Started">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting Started</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./files_and_formats.html" class="pagination-link" aria-label="Files and Formats">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Files and Formats</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane, and Neal Richardson.</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
-</div>
-  </div>
-</footer>
 
 
 
