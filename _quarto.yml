@@ -3,6 +3,9 @@ project:
   output-dir: _book
 
 book:
+  # we may need to comment the title out when rendering final version to pdf
+  # but it breaks the chapter titles in sidebar in the html if we move it to that section
+  title: "Scaling Up With R and Arrow"
   chapters:
     - index.qmd
     - foreword.qmd
@@ -26,7 +29,6 @@ format:
     df-print: paged
     fig-width: 8
     fig-height: 6
-    title: "Scaling Up With R and Arrow"
     subtitle: "Bigger Data, Easier Workflows"
     author: "Nic Crane, Jonathan Keane, and Neal Richardson"
     reader-mode: true
