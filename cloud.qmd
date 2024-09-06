@@ -70,8 +70,10 @@ To open a file or dataset saved in cloud storage, instead of passing in a path t
 #| label: open_parquet_s3
 #| eval: false
 read_parquet(
-  paste0("s3://scaling-arrow-pums/person/year=2005/",
-         "location=ak/part-0.parquet")
+  paste0(
+    "s3://scaling-arrow-pums/person/year=2005/",
+    "location=ak/part-0.parquet"
+  )
 )
 open_dataset("s3://scaling-arrow-pums/person/")
 ```
@@ -83,9 +85,10 @@ The equivalent of the above commands for GCS---these won't run here as these buc
 #| label: open_parquet_gcs
 #| eval: false
 read_parquet(
-  paste0("gs://anonymous@scaling-arrow-pums/person/year=2005/",
-         "location=ak/part-0.parquet"
-        )
+  paste0(
+    "gs://anonymous@scaling-arrow-pums/person/year=2005/",
+    "location=ak/part-0.parquet"
+  )
 )
 open_dataset("gs://anonymous@scaling-arrow-pums/person/")
 ```

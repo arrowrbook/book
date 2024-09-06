@@ -286,10 +286,7 @@ You can see here on the first few rows, the `PUMA` values are `"00101"`, `"00101
 ```{r}
 #| label: pums-puma-readlines
 #| width_limit: 72
-readLines(
-  "./data/raw_csvs/person/2021/ak/psam_p02.csv",
-  n = 5
-)
+readLines("./data/raw_csvs/person/2021/ak/psam_p02.csv", n = 5)
 ```
 
 However, if we read in our CSV subset without providing a schema, despite the leading zeroes being present in the data, the data type of this column is inferred to be an integer.
@@ -353,9 +350,7 @@ One option is to supply column types for a subset of columns, by providing a par
 # Read CSV file and specify a partial schema
 read_csv_arrow(
   "./data/raw_csvs/person/2021/ak/psam_p02.csv",
-  col_types = schema(
-    PUMA = string()
-  )
+  col_types = schema(PUMA = string())
 )
 ```
 
@@ -410,8 +405,7 @@ In real use, call `one_state_schema$code()` to use the whole schema.
 # Print the code needed to create this schema
 one_state_schema[
   c("RT", "SERIALNO", "DIVISION", "SPORDER",
-    "PUMA", "REGION", "ST")
-]$code()
+    "PUMA", "REGION", "ST")]$code()
 ```
 
 The last bit of schema manipulation which is useful to know about is how to add or remove items from a schema.
@@ -452,10 +446,7 @@ You can write CSV files to disk using `write_csv_arrow()`.
 #| label: write-csv
 #| eval: false
 # Save `pums_subset` to CSV file
-write_csv_arrow(
-  pums_subset,
-  file.path(tmp_dir, "new_pums.csv")
-)
+write_csv_arrow(pums_subset, file.path(tmp_dir, "new_pums.csv"))
 ```
 
 If you're working with large CSV files, you may want to compress them to reduce the amount of space they take up on disk.
@@ -711,10 +702,7 @@ First, let's look at the file size of the Parquet file for Washington in 2021, w
 
 ```{r}
 #| label: pums-subset-size
-wa_21_path <- paste0(
-  "./data/person/year=2021/location=wa/",
-  "part-0.parquet"
-)
+wa_21_path <- "./data/person/year=2021/location=wa/part-0.parquet"
 fs::file_size(wa_21_path)
 ```
 
@@ -742,10 +730,7 @@ Let's take a look at the `MAR` column in the PUMS person dataset subset, represe
 
 ```{r}
 #| label: mar-values
-pums_subset_mar <- read_parquet(
-  wa_21_path,
-  col_select = MAR
-)
+pums_subset_mar <- read_parquet(wa_21_path, col_select = MAR)
 
 count(pums_subset_mar, MAR)
 ```
@@ -853,10 +838,7 @@ nested_data <- tibble::tibble(
 
 ```{r}
 #| label: nested-col-roundtrip
-write_parquet(
-  nested_data,
-  "./data/transient_data/nested_data.parquet"
-)
+write_parquet(nested_data, "./data/transient_data/nested_data.parquet")
 
 read_parquet("./data/transient_data/nested_data.parquet")
 ```

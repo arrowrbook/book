@@ -150,9 +150,7 @@ First, we'll create a couple of lists we can use in our pipeline.
 ```{r}
 #| label: pums-data-manip-agg-prep
 private_transport <- c("Car, motorcycle", "Bicycle", "Walked")
-public_transport <- c(
-  "Bus", "Subway, light rail", "Commuter rail, train"
-)
+public_transport <- c("Bus", "Subway, light rail", "Commuter rail, train")
 ```
 
 And now we can use them in our data pipeline.
@@ -215,7 +213,7 @@ to_plot <- commute_by_mode |>
   left_join(baseline) |>
   mutate(
     transit_type = mode_of_transit,
-    mean_commute_time_relative =
+    mean_commute_time_relative = 
       (mean_commute_time - time_baseline) / time_baseline,
     n_commuters_relative =
       (n_commuters - n_baseline) / n_baseline
@@ -231,18 +229,11 @@ Now we can use the data in `to_plot` that we just pulled in to R to make a plot 
 latest_year <- max(to_plot$year)
 
 plot <- ggplot(to_plot) +
-  aes(
-    x = year,
-    y = n_commuters_relative,
-    color = transit_type
-  ) +
+  aes(x = year, y = n_commuters_relative, color = transit_type) +
   geom_line() +
   facet_wrap(
     vars(
-      factor(
-        public_private,
-        levels = c("Public", "Private", "Other")
-      )
+      factor(public_private, levels = c("Public", "Private", "Other"))
     ),
     ncol = 1,
     scales = "free_y"
@@ -329,8 +320,7 @@ plot <- to_plot |>
   aes(x = year, y = mean_commute_time, color = transit_type) +
   geom_line() +
   facet_wrap(
-    vars(factor(
-      public_private,
+    vars(factor(public_private,
       levels = c("Public", "Private", "Other")
     )),
     ncol = 1,
