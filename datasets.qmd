@@ -146,7 +146,7 @@ This can significantly speed up analyses of larger datasets.
 We have already been working with partitioned data: the data in the PUMS person dataset has been partitioned based on the "year" and "location" columns.
 
 ::: {.content-hidden when-format="pdf"}
-![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){height=50%}
+![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){width=70%}
 :::
 ::: {.content-hidden when-format="html"}
 ![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){height=70%}
