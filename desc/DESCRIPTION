@@ -18,4 +18,5 @@ Imports:
   sf,
   stringr,
   tibble,
-  tidyr
+  tidyr,
+  xfun

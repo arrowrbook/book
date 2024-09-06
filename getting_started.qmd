@@ -1,5 +1,7 @@
 # Getting Started {#sec-getting-started}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)
@@ -307,6 +309,7 @@ plot
 #| label: pums-data-manip-agg-plot-n_commuters-pdf
 #| echo: false
 #| fig-height: 9
+#| fig-cap: "Percent change in modes of transport for individuals by year with a baseline of 2005"
 print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::
@@ -393,6 +396,7 @@ plot
 #| label: pums-data-manip-agg-plot-commute_time-pdf
 #| echo: false
 #| fig-height: 9
+#| fig-cap: "Duration of commute for different modes of transport by year"
 print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::

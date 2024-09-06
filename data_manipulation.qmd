@@ -1,5 +1,7 @@
 # Data Manipulation {#sec-datamanipulation}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| include: FALSE
 library(arrow)
@@ -292,7 +294,9 @@ head(mean_commute_time, 5)
 
 We can then perform a left join to combine this information with the information in the original datasets.
 
-![Joining data](images/excalidraw/data_manip_join.png) The code to accomplish this looks something like this:
+![Example tables for joining data](images/excalidraw/data_manip_join.png) 
+
+The code to accomplish this looks something like this:
 
 ```{r}
 #| label: join-ref-table

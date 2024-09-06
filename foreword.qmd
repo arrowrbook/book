@@ -1,4 +1,4 @@
-# Foreword
+# Foreword {.unnumbered .unlisted}
 
 **Foreword by Wes McKinney**
 
@@ -31,3 +31,9 @@ These questions led us to create the Apache Arrow open-source project, a new kin
 This book teaches you how to use the R Arrow library, which is a product of all of this work that started almost a decade ago. In addition to providing you with fast, scalable computing capabilities, it is also a foundation for using other Arrow-powered data processing tools like DuckDB or DataFusion and any others that may be developed in the future. Arrow for R builds on top of a common C++-based library foundation also used in Python and Ruby, as well as many other open-source and proprietary systems that incorporate the Arrow C++ library. The authors of this book are some of the leading developers of the Arrow R library: they have spent several years creating a thoughtful and intuitive experience to help R developers level up their data processing capabilities. 
 
 As a co-creator of Arrow, I am excited for books like this to be written and to showcase the benefits of the work done by the Arrow open-source community. The tools within will serve you well and expand your use of R to work with large-scale datasets efficiently. 
+
+```{=latex}
+\pagenumbering{arabic}
+\mainmatter
+\setcounter{chapter}{0}
+```

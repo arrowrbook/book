@@ -3,20 +3,9 @@ project:
   output-dir: _book
 
 book:
+  # we may need to comment the title out when rendering final version to pdf
+  # but it breaks the chapter titles in sidebar in the html if we move it to that section
   title: "Scaling Up With R and Arrow"
-  subtitle: "Bigger Data, Easier Workflows"
-  author: "Nic Crane, Jonathan Keane, and Neal Richardson"
-  reader-mode: true
-  google-analytics: "G-4JT42QR6DV"
-
-
-  page-footer:
-    left: |
-      Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane,
-      and Neal Richardson.
-    right: |
-      This book was built with <a href="https://quarto.org/">Quarto</a>.
-
   chapters:
     - index.qmd
     - foreword.qmd
@@ -40,6 +29,16 @@ format:
     df-print: paged
     fig-width: 8
     fig-height: 6
+    subtitle: "Bigger Data, Easier Workflows"
+    author: "Nic Crane, Jonathan Keane, and Neal Richardson"
+    reader-mode: true
+    google-analytics: "G-4JT42QR6DV"
+    page-footer:
+      left: |
+        Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane,
+        and Neal Richardson.
+      right: |
+        This book was built with <a href="https://quarto.org/">Quarto</a>.
   pdf:
     toc: false
     toc-title: "Contents"
@@ -64,15 +63,9 @@ format:
       text: |
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-    include-before-body:
-      text: |
-        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
-          showspaces = false,
-          showtabs = false,
-          breaksymbolleft={},
-          breaklines
-          % Note: setting commandchars=\\\{\} here will cause an error 
-        }
+        \frontmatter
+    include-before-body: latex/before_body.tex
+        
     # highlight-style: grayscale-custom.theme
     # include-in-header: latex/preamble.tex
     # include-before-body: latex/before_body.tex

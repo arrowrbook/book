@@ -1,5 +1,7 @@
 # Datasets {#sec-datasets}
 
+{{< include _knitr_hooks.qmd >}}
+
 ```{r}
 #| label: datasets-setup
 #| include: FALSE
@@ -24,7 +26,7 @@ Datasets don't represent data loaded into memory, but instead contains informati
 -   what format the files are in
 -   what the schema of those files is---the column names and types
 
-![Dataset components](images/excalidraw/datasets_dataset.png){width="1250"}
+![Dataset components](images/excalidraw/datasets_dataset.png){width="100%"}
 
 If we take a look at the PUMS person dataset, we can see that it contains a total of 832 files, which are in Parquet format.
 
@@ -143,7 +145,8 @@ This can significantly speed up analyses of larger datasets.
 
 We have already been working with partitioned data: the data in the PUMS person dataset has been partitioned based on the "year" and "location" columns.
 
-![](images/excalidraw/datasets_pums.png)
+![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png)
+
 Partitioning is where groups of rows of data have been saved to separate files.
 These separate files are saved in directories, where each directory represents the rows of the data where a particular column has a particular value.
 
