@@ -146,10 +146,11 @@ This can significantly speed up analyses of larger datasets.
 We have already been working with partitioned data: the data in the PUMS person dataset has been partitioned based on the "year" and "location" columns.
 
 ::: {.content-hidden when-format="pdf"}
-![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){width=70%}
+![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){width="70%"}
 :::
+
 ::: {.content-hidden when-format="html"}
-![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){height=70%}
+![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){height="70%"}
 :::
 
 Partitioning is where groups of rows of data have been saved to separate files.
@@ -324,9 +325,9 @@ fs::dir_ls(
 In all of the examples so far, we've been writing data to different directories each time.
 If we were to use existing directories, there are different values which can be specified to the `existing_data_behavior` option which change how how Arrow behaves when it encounters data already present in those directories:
 
-* `"overwrite"`: the default value; replaces any files with the same name as files to be written but leave any extra files there
-* `"delete_matching"`: entirely deletes any data in any partitions which are going to be written to
-* `"error"`: raise an error message if existing data is found
+-   `"overwrite"`: the default value; replaces any files with the same name as files to be written but leave any extra files there
+-   `"delete_matching"`: entirely deletes any data in any partitions which are going to be written to
+-   `"error"`: raise an error message if existing data is found
 
 Depending on your data and what you're trying to do, it's important to consider which of these options is the best fit for you if writing to directories which already contain data.
 If you are expecting to be replacing all of the data in a directory which currently has 3 Parquet files in it, but you only write the first one this time, you will have extra rows in your dataset from the second and third Parquet files added back to your dataset when you read it.
@@ -515,23 +516,33 @@ pums_by_year_location_age <- open_dataset(
 @tbl-file-size shows how many files in each dataset, as well as the minimum, maximum, and median file size.
 
 ::: {.content-visible when-format="html"}
-| Dataset                   | \# of Files | Min size  | 1st Quartile | Median size | 3rd Quartile | Max size  |
-|---------------------------|------------:|----------:|-------------:|------------:|-------------:|----------:|
-| pums_one_big_file         | 1           | 7786.3 MB | 7786.3 MB    | 7786.3 MB   | 7786.3 MB    | 7786.3 MB |
-| pums_by_year              | 34          | 0.1 MB    | 0.1 MB       | 211.8 MB    | 459.9 MB     | 493 MB    |
-| pums_by_year_location     | 1785        | 0.1 MB    | 0.1 MB       | 0.1 MB      | 6.02 MB      | 56.1 MB   |
-| pums_by_year_location_age | 14124       | 0.1 MB    | 0.1 MB       | 0.4 MB      | 1.09 MB      | 17.6 MB   |
++---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
+| Dataset                   | \# of Files | Min size (MB)  | 1st Quartile (MB) | Median size (MB) | 3rd Quartile (MB) | Max size (MB) |
++===========================+============:+==========:+=============:+============:+=============:+==========:+
+| pums_one_big_file         | 1           | 7786.3  | 7786.3     | 7786.3    | 7786.3   | 7786.3  |
++---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
+| pums_by_year              | 34          | 0.1     | 0.1        | 211.8     | 459.9      | 493     |
++---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
+| pums_by_year_location     | 1785        | 0.1     | 0.1        | 0.1       | 6.02       | 56.1    |
++---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
+| pums_by_year_location_age | 14124       | 0.1     | 0.1        | 0.4       | 1.09       | 17.6    |
++---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
 
 : Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
 
 ::: {.content-visible when-format="pdf"}
-| Dataset                   | \# of Files | Min size  | Median size | Max size  |
-|---------------------------|------------:|----------:|------------:|----------:|
-| pums_one_big_file         | 1           | 7786.3 MB | 7786.3 MB   | 7786.3 MB |
-| pums_by_year              | 34          | 0.1 MB    | 211.8 MB    | 493 MB    |
-| pums_by_year_location     | 1785        | 0.1 MB    | 0.1 MB      | 56.1 MB   |
-| pums_by_year_location_age | 14124       | 0.1 MB    | 0.4 MB      | 17.6 MB   |
++---------------------------+-------------+-----------+-------------+-----------+
+| Dataset                   | \# of Files | Min size (MB)  | Median size (MB) | Max size (MB)  |
++===========================+============:+==========:+============:+==========:+
+| pums_one_big_file         | 1           | 7786.3  | 7786.3    | 7786.3  |
++---------------------------+-------------+-----------+-------------+-----------+
+| pums_by_year              | 34          | 0.1     | 211.8     | 493     |
++---------------------------+-------------+-----------+-------------+-----------+
+| pums_by_year_location     | 1785        | 0.1    | 0.1       | 56.1    |
++---------------------------+-------------+-----------+-------------+-----------+
+| pums_by_year_location_age | 14124       | 0.1    | 0.4       | 17.6    |
++---------------------------+-------------+-----------+-------------+-----------+
 
 : Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
@@ -571,11 +582,11 @@ open_dataset("<path/to/data>") |>
 @tbl-partition-query shows the results of running that query on Nic's laptop, with the datasets we created earlier.
 
 | Dataset                   | Query Completion Time (s) |
-|---------------------------|---------------------------|
-| pums_one_big_file         | 2.2                       |
-| pums_by_year              | 1.0                       |
-| pums_by_year_location     | 1.8                       |
-| pums_by_year_location_age | 6.5                       |
+|---------------------------|--------------------------:|
+| pums_one_big_file         |                       2.2 |
+| pums_by_year              |                       1.0 |
+| pums_by_year_location     |                       1.8 |
+| pums_by_year_location_age |                       6.5 |
 
 : Time taken to run a query unrelated to dataset partitions, with different partitioning structures {#tbl-partition-query}
 
@@ -618,7 +629,7 @@ open_dataset("<path/to/data>") |>
 We ran it again on Nic's laptop, and the results are shown in @tbl-partition-query-2.
 
 | Dataset                   | Query Completion Time (s) |
-|---------------------------|---------------------------|
+|---------------------------|--------------------------:|
 | pums_one_big_file         | 4.6                       |
 | pums_by_year              | 3.2                       |
 | pums_by_year_location     | 3.3                       |
@@ -668,7 +679,7 @@ open_dataset("<path/to/data>") |>
 Once again, we removed the call to `mutate()` for the dataset which already had the `age_group` partition variable.
 
 | Dataset                   | Query Completion Time (s) |
-|---------------------------|---------------------------|
+|---------------------------|--------------------------:|
 | pums_one_big_file         | 3.6                       |
 | pums_by_year              | 2.5                       |
 | pums_by_year_location     | 2.2                       |
@@ -692,7 +703,7 @@ The more Parquet files you have, the more of this fixed, extra information has t
 Having files smaller than 20MB will typically mean considerably more reading of that metadata compared to reading actual data itself.
 Equally, having files larger than 2GB means that you're no longer able to take advantage of Arrow's ability to read multiple files in parallel.
 
-The number of levels of partitioning is also important
+The number of levels of partitioning is also important.
 While writing this book, we tried to test out an example which used an extra level of partitioning as well as `year`, `location`, and `age_group`, as well as partitioning on the `PUMA` (Public use microdata area code) column, which has thousands of unique values.
 However, it took over 3 hours to write to disk, produced around 800,000 files, and took up 81GB on disk.
 The sheer quantity of files which needed writing, and the overhead in terms of storage size (and also query time if analyzed later) caused by the associated file headers and metadata, meant that it just wasn't feasible to include this, even as an example!
