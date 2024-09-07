@@ -714,14 +714,11 @@ We can clearly see some patterns of migration: French is spoken in parts of nort
 #| label: pums-langauge-all-US
 #| eval: false
 puma_by_langauge |>
-  filter(
-    language %in% c("english", "spanish", "french", "navajo")
-  ) |>
+  filter(language %in% c("english", "spanish", "french", "navajo")) |>
   fill_pumas() |>
   inner_join(
     PUMA,
-    by = c("year" = "YEAR", "location" = "location",
-           "PUMA" = "PUMA")
+    by = c("year" = "YEAR", "location" = "location", "PUMA" = "PUMA")
   ) |>
   correct_projection() |>
   ggplot() +

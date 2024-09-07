@@ -363,12 +363,11 @@ You can extract the schema using the `schema()` function.
 #| label: get-schema
 #| eval: TRUE
 # Read in the file as an Arrow Table and get its schema
-one_state_schema <- schema(
-  read_csv_arrow(
-    "./data/raw_csvs/person/2021/ak/psam_p02.csv",
-    as_data_frame = FALSE
-  )
+pums_csv_one_state <- read_csv_arrow(
+  "./data/raw_csvs/person/2021/ak/psam_p02.csv"
 )
+
+one_state_schema <- schema(pums_csv_one_state)
 ```
 
 Schemas can be interacted with like lists in R, and so if we want to look more closely at one of these column name to data type mappings, we can extract it using the `[[` or `$` operator.
@@ -403,9 +402,10 @@ In real use, call `one_state_schema$code()` to use the whole schema.
 ```{r}
 #| label: schema-code
 # Print the code needed to create this schema
-one_state_schema[
-  c("RT", "SERIALNO", "DIVISION", "SPORDER",
-    "PUMA", "REGION", "ST")]$code()
+subset_cols <- c("RT", "SERIALNO", "DIVISION", "SPORDER", 
+                 "PUMA", "REGION", "ST")
+
+one_state_schema[subset_cols]$code()
 ```
 
 The last bit of schema manipulation which is useful to know about is how to add or remove items from a schema.
@@ -415,10 +415,11 @@ You can add a new item by assigning a data type to a new item in the schema.
 ```{r}
 #| label: add_to_schema
 one_state_schema[["new_var"]] <- float64()
-one_state_schema[
-  c("RT", "SERIALNO", "DIVISION", "SPORDER",
-    "PUMA", "REGION", "ST", "new_var")
-]
+
+subset_cols <- c("RT", "SERIALNO", "DIVISION", "SPORDER",
+                 "PUMA", "REGION", "ST", "new_var")
+
+one_state_schema[subset_cols]
 ```
 
 To remove items from a schema or select a subset, you can create a new schema containing a vector of the names of the desired fields.

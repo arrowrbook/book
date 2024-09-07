@@ -185,9 +185,7 @@ commute_by_mode <- pums_person |>
   filter(!is.na(mode_of_transit)) |>
   group_by(year, mode_of_transit, public_private) |>
   summarize(
-    mean_commute_time = sum(JWMNP * PWGTP,
-      na.rm = TRUE
-    ) / sum(PWGTP),
+    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP),
     n_commuters = sum(PWGTP)
   )
 
