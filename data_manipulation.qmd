@@ -339,8 +339,12 @@ To be able to perform the join, we must update one or both of the datasets so th
 The simplest thing to do in our case is update the data type of the lookup table.
 
 In the example earlier, we called `collect()` to pull our `mean_commute_time` reference table into our R session, and so it is a tibble.
-When we perform joins to data.frame or tibble objects, arrow converts these objects into Arrow Tables, with the data type of each column automatically being converted into its Arrow equivalent.
-For the most part, this automatic conversion is fine, but in some circumstances like joining tables, we might want to manually specify the data types to convert to instead.
+When we perform joins to data.frame or tibble object (we'll just call these "data frames" from here on), arrow converts this object into an **Arrow Table**.
+
+An Arrow Table is equivalent to an R data frame.
+The key difference here is that the columns types are Arrow data types instead of R data types. 
+When an Arrow Table is created from an R data frame, the data type of each column is automatically converted into its Arrow equivalent.
+For the most part, this automatic conversion is fine to ignore, but in some circumstances, like joining tables, we might want to manually specify the data types to convert to instead.
 
 We can manually set the schema of the reference table by converting it to an Arrow Table ourselves and setting the schema at the same time.
 
