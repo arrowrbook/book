@@ -630,7 +630,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"wa","2":"max_commute","3":"152"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wv","2":"max_commute","3":"193"},{"1":"ak","2":"max_commute","3":"194"},{"1":"ar","2":"max_commute","3":"186"},{"1":"az","2":"max_commute","3":"184"},{"1":"wi","2":"max_commute","3":"177"},{"1":"wy","2":"max_commute","3":"176"},{"1":"al","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ak","2":"max_commute","3":"194"},{"1":"az","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ar","2":"max_commute","3":"186"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wy","2":"max_commute","3":"176"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"al","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -908,7 +908,7 @@ $creator$version
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"00101","3":"2018","4":"english","5":"109629","6":"0.824954286"},{"1":"ak","2":"00101","3":"2018","4":"spanish","5":"5478","6":"0.041221753"},{"1":"ak","2":"00300","3":"2018","4":"english","5":"148423","6":"0.895198403"},{"1":"ak","2":"00300","3":"2018","4":"vietnamese","5":"90","6":"0.000542826"},{"1":"ak","2":"00400","3":"2018","4":"english","5":"77749","6":"0.683303452"},{"1":"ak","2":"00200","3":"2018","4":"english","5":"158153","6":"0.951113169"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"az","2":"00400","3":"2018","4":"english","5":"109171","6":"0.7628787"},{"1":"az","2":"00300","3":"2018","4":"navajo","5":"55285","6":"0.3031491"},{"1":"az","2":"00104","3":"2018","4":"english","5":"93013","6":"0.7741793"},{"1":"az","2":"00600","3":"2018","4":"english","5":"204459","6":"0.8938606"},{"1":"az","2":"00500","3":"2018","4":"english","5":"207356","6":"0.8939184"},{"1":"az","2":"00126","3":"2018","4":"english","5":"105728","6":"0.8220183"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -916,30 +916,27 @@ $creator$version
 <p>And then we can take that data, join it to our arrow table of PUMAs and plot it using <code>ggplot2</code>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>puma_by_langauge <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"english"</span>, <span class="st">"spanish"</span>, <span class="st">"french"</span>, <span class="st">"navajo"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill_pumas</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    PUMA,</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="st">"YEAR"</span>, <span class="st">"location"</span> <span class="ot">=</span> <span class="st">"location"</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">"PUMA"</span> <span class="ot">=</span> <span class="st">"PUMA"</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correct_projection</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">geometry =</span> geometry, <span class="at">fill =</span> prop_speaker),</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=laea +lon_0=-98 +lat_0=39.5"</span>) <span class="sc">+</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(language), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greys"</span>,</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"proportion of speakers"</span>) <span class="sc">+</span></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion of speakers by language"</span>,</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"across the US by PUMA"</span></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"english"</span>, <span class="st">"spanish"</span>, <span class="st">"french"</span>, <span class="st">"navajo"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill_pumas</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    PUMA,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="st">"YEAR"</span>, <span class="st">"location"</span> <span class="ot">=</span> <span class="st">"location"</span>, <span class="st">"PUMA"</span> <span class="ot">=</span> <span class="st">"PUMA"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correct_projection</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">geometry =</span> geometry, <span class="at">fill =</span> prop_speaker),</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=laea +lon_0=-98 +lat_0=39.5"</span>) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(language), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greys"</span>,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"proportion of speakers"</span>) <span class="sc">+</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion of speakers by language"</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"across the US by PUMA"</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
