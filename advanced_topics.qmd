@@ -263,15 +263,59 @@ pums_person |>
   collect()
 ```
 
+Another example is where you've created a model based on a subset of your data and you want to use it to make predictions.
+Let's say we've created a linear model, using age and employment status to predict commute time for respondents in California in 2005.
+
+```{r}
+#| label: predict-commute-time
+model_data <- open_dataset("data/person/") |>
+  filter(year==2005, location=="ca") |>
+  transmute(
+    commute_time = JWMNP,
+    age = AGEP,
+    self_employed = stringr::str_detect(as.character(COW), "Self-employed")
+  ) |>
+  collect()
+
+my_model <- lm(commute_time ~ age + self_employed, data = model_data)
+summary(my_model)
+```
+
+Let's say we want to use this model to predict commute times in California in 2021.
+We can create a UDF which calls `predict()` to add the predicted commute time value to the data.
+
+```{r}
+#| label: predict-commute-time
+register_scalar_function(
+  "predict_commute_time",
+  function(context, age, self_employed) {
+    predict(my_model, newdata = data.frame(age, self_employed))
+  },
+  in_type = schema(age = int32(), self_employed = boolean()),
+  out_type = float64(),
+  auto_convert = TRUE
+)
+
+open_dataset("data/person/") |>
+  filter(year==2021, location=="ca") |>
+  transmute(
+    age = AGEP,
+    self_employed = stringr::str_detect(as.character(COW), "Self-employed"),
+    commute_time_predicted = predict_commute_time(age, self_employed)
+  ) |>
+  collect() |>
+  head()
+```
+
+### How do UDFs work under the hood?
+
 UDFs only work on scalar functions---functions which take one row of data as input and return one row of data as output.
 Acero does not currently support user-defined aggregation functions.
 For example, you could create a UDF which calculates the square of a number, but you can't create one which calculates the median value in a column of data.
 These functions also cannot depend on other values, so you can't write a UDF which implements `lag()` or `lead()` which calculate a value based on the previous or next row in the data.
 
 Because the UDF code is run in your R session, you won't be able to take advantage of some of the features of arrow, such as being able to run code on multiple CPU cores, or the faster speed of executing C++ code.
-You'll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation must be run one at a time instead of allowing parallelisation.
-
-### How do UDFs work under the hood?
+You'll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation must be run one at a time instead of allowing parallelization.
 
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
