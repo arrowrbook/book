@@ -120,7 +120,7 @@ The different functions for reading and writing datasets are shown in @tbl-datas
 
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | Format                      | Reading                                                | Writing                            |
-+:===========================:+:======================================================:+:==================================:+
++:===========================+:======================================================+:==================================+
 | Parquet                     | open_dataset()                                         | write_dataset()                    |
 +-----------------------------+--------------------------------------------------------+------------------------------------+
 | CSV or other delimited file | open_dataset(..., format = "csv"), open_csv_dataset(), | write_dataset(..., format = "csv") |
@@ -516,33 +516,24 @@ pums_by_year_location_age <- open_dataset(
 @tbl-file-size shows how many files in each dataset, as well as the minimum, maximum, and median file size.
 
 ::: {.content-visible when-format="html"}
-+---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
-| Dataset                   | \# of Files | Min size (MB)  | 1st Quartile (MB) | Median size (MB) | 3rd Quartile (MB) | Max size (MB) |
-+===========================+============:+==========:+=============:+============:+=============:+==========:+
-| pums_one_big_file         | 1           | 7786.3  | 7786.3     | 7786.3    | 7786.3   | 7786.3  |
-+---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
-| pums_by_year              | 34          | 0.1     | 0.1        | 211.8     | 459.9      | 493     |
-+---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
-| pums_by_year_location     | 1785        | 0.1     | 0.1        | 0.1       | 6.02       | 56.1    |
-+---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
-| pums_by_year_location_age | 14124       | 0.1     | 0.1        | 0.4       | 1.09       | 17.6    |
-+---------------------------+-------------+-----------+--------------+-------------+--------------+-----------+
+| Dataset                   | # of Files | Min size (MB) | 1st Quartile (MB) | Median size (MB) | 3rd Quartile (MB) | Max size (MB) |
+|---------------------------|-----------:|--------------:|------------------:|-----------------:|------------------:|--------------:|
+| pums_one_big_file          |          1 |        7786.3 |            7786.3 |           7786.3 |            7786.3 |        7786.3 |
+| pums_by_year               |         34 |           0.1 |               0.1 |            211.8 |             459.9 |          493  |
+| pums_by_year_location      |       1785 |           0.1 |               0.1 |              0.1 |              6.02 |         56.1  |
+| pums_by_year_location_age  |      14124 |           0.1 |               0.1 |              0.4 |              1.09 |         17.6  |
+
 
 : Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
 
 ::: {.content-visible when-format="pdf"}
-+---------------------------+-------------+-----------+-------------+-----------+
-| Dataset                   | \# of Files | Min size (MB)  | Median size (MB) | Max size (MB)  |
-+===========================+============:+==========:+============:+==========:+
-| pums_one_big_file         | 1           | 7786.3  | 7786.3    | 7786.3  |
-+---------------------------+-------------+-----------+-------------+-----------+
-| pums_by_year              | 34          | 0.1     | 211.8     | 493     |
-+---------------------------+-------------+-----------+-------------+-----------+
-| pums_by_year_location     | 1785        | 0.1    | 0.1       | 56.1    |
-+---------------------------+-------------+-----------+-------------+-----------+
-| pums_by_year_location_age | 14124       | 0.1    | 0.4       | 17.6    |
-+---------------------------+-------------+-----------+-------------+-----------+
+| Dataset                   | # of Files | Min size (MB) | Median size (MB) | Max size (MB) |
+|---------------------------|-----------:|--------------:|-----------------:|--------------:|
+| pums_one_big_file          |          1 |        7786.3 |           7786.3 |        7786.3 |
+| pums_by_year               |         34 |           0.1 |            211.8 |          493  |
+| pums_by_year_location      |       1785 |           0.1 |              0.1 |         56.1  |
+| pums_by_year_location_age  |      14124 |           0.1 |              0.4 |         17.6  |
 
 : Summary statistics around file sizes of partitioned datasets {#tbl-file-size}
 :::
@@ -630,10 +621,10 @@ We ran it again on Nic's laptop, and the results are shown in @tbl-partition-que
 
 | Dataset                   | Query Completion Time (s) |
 |---------------------------|--------------------------:|
-| pums_one_big_file         | 4.6                       |
-| pums_by_year              | 3.2                       |
-| pums_by_year_location     | 3.3                       |
-| pums_by_year_location_age | 11.5                      |
+| pums_one_big_file         |                       4.6 |
+| pums_by_year              |                       3.2 |
+| pums_by_year_location     |                       3.3 |
+| pums_by_year_location_age |                      11.5 |
 
 : Time taken to run a query relating to dataset partitions, with different partitioning structures {#tbl-partition-query-2}
 
@@ -680,10 +671,10 @@ Once again, we removed the call to `mutate()` for the dataset which already had 
 
 | Dataset                   | Query Completion Time (s) |
 |---------------------------|--------------------------:|
-| pums_one_big_file         | 3.6                       |
-| pums_by_year              | 2.5                       |
-| pums_by_year_location     | 2.2                       |
-| pums_by_year_location_age | 0.8                       |
+| pums_one_big_file         |                       3.6 |
+| pums_by_year              |                       2.5 |
+| pums_by_year_location     |                       2.2 |
+| pums_by_year_location_age |                       0.8 |
 
 : Time taken to run a query which filters on dataset partitions, with different partitioning structures {#tbl-partition-query-3}
 
