@@ -337,7 +337,12 @@ schema(mean_commute_time)
 
 To be able to perform the join, we must update one or both of the datasets so that the types match.
 The simplest thing to do in our case is update the data type of the lookup table.
-We can manually set the schema of the table by converting it to an Arrow Table and setting the schema at the same time.
+
+In the example earlier, we called `collect()` to pull our `mean_commute_time` reference table into our R session, and so it is a tibble.
+When we perform joins to data.frame or tibble objects, arrow converts these objects into Arrow Tables, with the data type of each column automatically being converted into its Arrow equivalent.
+For the most part, this automatic conversion is fine, but in some circumstances like joining tables, we might want to manually specify the data types to convert to instead.
+
+We can manually set the schema of the reference table by converting it to an Arrow Table ourselves and setting the schema at the same time.
 
 ```{r}
 #| label: join-lookup-schema
