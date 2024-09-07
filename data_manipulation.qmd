@@ -284,8 +284,7 @@ We start by creating a reference table of mean commute time by state and year.
 mean_commute_time <- pums_person |>
   group_by(location, year) |>
   summarize(
-    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   collect()
 
@@ -369,19 +368,19 @@ pums_person <- open_dataset("./data/person")
 ```{r}
 #| label: fix-lookup-join
 pums_person |>
-  mutate(year = cast(year, int16())) |>
-  left_join(
-    mean_commute_time_arrow,
-    by = c("location", "year")
-  )|>
-  mutate(commute_diff = mean_commute_time - JWMNP) |>
-  select(
-    commute_diff,
-    commute_time = JWMNP,
-    mean_commute_time
-  ) |>
-  head(3) |>
-  collect()
+ mutate(year = cast(year, int16())) |>
+ left_join(
+   mean_commute_time_arrow,
+   by = c("location", "year")
+ )|>
+ mutate(commute_diff = mean_commute_time - JWMNP) |>
+ select(
+   commute_diff,
+   commute_time = JWMNP,
+   mean_commute_time
+ ) |>
+ head(3) |>
+ collect()
 ```
 
 ## How does all of this work? Verbs, functions, and arrow objects {#sec-dplyr-generics}

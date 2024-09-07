@@ -77,9 +77,7 @@ We'll talk more on how to pick a strategy later in the chapter.
 ```{r}
 #| label: csv-to-parquet
 #| eval: false
-my_dataset <- open_csv_dataset(
-  path = "./data/my-oversized-csv.csv"
-)
+my_dataset <- open_csv_dataset(path = "./data/my-oversized-csv.csv")
 
 my_dataset |>
   mutate(year = year(datetime), month = month(datetime)) |>
@@ -102,8 +100,7 @@ open_dataset("./data/person") |>
   filter(location == "wa") |>
   group_by(year) |>
   summarize(
-    avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    avg_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   arrange(desc(year)) |>
   collect()
@@ -289,9 +286,7 @@ open_dataset("./data/person") |>
       TRUE ~ "65+"
     )
   ) |>
-  write_dataset(
-    path = file.path(tmp_dir, "person-age-partitions")
-  )
+  write_dataset(path = file.path(tmp_dir, "person-age-partitions"))
 ```
 
 ### Custom filenames
@@ -562,8 +557,7 @@ First, let's try running query which just requires filtering the data by one of 
 open_dataset("<path/to/data>") |>
   filter(year >= 2018) |>
   summarise(
-    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   collect()
 ```
@@ -609,8 +603,7 @@ open_dataset("<path/to/data>") |>
   ) |>
   group_by(year, age_group, location) |>
   summarise(
-    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   collect()
 ```
@@ -659,8 +652,7 @@ open_dataset("<path/to/data>") |>
   ) |>
   group_by(year, location, age_group) |>
   summarise(
-    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    mean_commute = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   collect()
 ```
@@ -940,10 +932,7 @@ Let's say you have a directory containing your dataset, but also containing meta
 
 ```{r}
 #| label: view-metadata-dir
-fs::dir_ls(
-  file.path(tmp_dir, "person_with_metadata"),
-  recurse = TRUE
-)
+fs::dir_ls(file.path(tmp_dir, "person_with_metadata"), recurse = TRUE)
 ```
 
 If you call `open_dataset()` on this directory, you'll get an error message as arrow will try (and fail) to read in the `data_info.txt` files as Parquet files.
@@ -1038,8 +1027,7 @@ We can now query this dataset as if it was a single dataset.
 combined_data |>
   group_by(year) |>
   summarise(
-    mean_age = sum(JWMNP * PWGTP, na.rm = TRUE) /
-      sum(PWGTP)
+    mean_age = sum(JWMNP * PWGTP, na.rm = TRUE) / sum(PWGTP)
   ) |>
   collect()
 ```
