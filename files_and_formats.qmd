@@ -942,7 +942,7 @@ wa_2005 |>
 ```
 
 We see values like 1, 6, 1, 3 etc.
-We ultimately want these to match up to the labels "Private for profit", "Self-employed not incorporated", "Private for profit", " Local government", etc.
+We ultimately want these to match up to the labels "Private for profit", "Self-employed not incorporated", "Private for profit", "Local government", etc.
 One way that we can do this is by using a join, matching on the value codes in the codebook to pull in the value labels:
 
 ```{r}
