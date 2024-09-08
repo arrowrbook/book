@@ -267,7 +267,7 @@ Another example is where you've created a model based on a subset of your data a
 Let's say we've created a linear model, using age and employment status to predict commute time for respondents in California in 2005.
 
 ```{r}
-#| label: predict-commute-time
+#| label: model-commute-time
 model_data <- open_dataset("data/person/") |>
   filter(year==2005, location=="ca") |>
   transmute(
@@ -296,16 +296,30 @@ register_scalar_function(
   auto_convert = TRUE
 )
 
-open_dataset("data/person/") |>
+modelled_data <- open_dataset("data/person/") |>
   filter(year==2021, location=="ca") |>
   transmute(
     age = AGEP,
     self_employed = stringr::str_detect(as.character(COW), "Self-employed"),
-    commute_time_predicted = predict_commute_time(age, self_employed)
+    predicted_commute_time = predict_commute_time(age, self_employed),
+    actual_commute_time = JWMNP
   ) |>
-  collect() |>
-  head()
+  collect()
+
+modelled_data |> head()
 ```
+
+And how good were our predictions?
+
+```{r}
+#| label: plot_predictions
+ggplot(modelled_data, aes(x = predicted_commute_time, y = actual_commute_time)) +
+  geom_point() + 
+  geom_abline(intercept = 0, slope = 1, color = "blue")
+
+```
+
+Looks like this model could use a lot more work!
 
 ### How do UDFs work under the hood?
 
