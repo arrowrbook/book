@@ -269,7 +269,7 @@ Let's say we've created a linear model, using age and employment status to predi
 ```{r}
 #| label: model-commute-time
 model_data <- open_dataset("data/person/") |>
-  filter(year==2005, location=="ca") |>
+  filter(year == 2005, location == "ca") |>
   transmute(
     commute_time = JWMNP,
     age = AGEP,
@@ -297,7 +297,7 @@ register_scalar_function(
 )
 
 modelled_data <- open_dataset("data/person/") |>
-  filter(year==2021, location=="ca") |>
+  filter(year == 2021, location == "ca") |>
   transmute(
     age = AGEP,
     self_employed = stringr::str_detect(as.character(COW), "Self-employed"),
