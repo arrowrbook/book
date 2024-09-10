@@ -362,48 +362,50 @@ See $.data for the source Arrow object</code></pre>
 <p>Say we wanted to only return data for states whose names start with the letter “w”. We can take our dataset and use <code>dplyr::filter()</code> to return this subset, but we need to pick a function to pass to <code>dplyr::filter()</code> to actually <em>do</em> the filtering.</p>
 <p>Let’s start first by looking at the Acero function we want Arrow to use. To be clear: we wouldn’t usually have to do this when working with arrow. This is just to illustrate how this all works.</p>
 <p>If we look at the <a href="https://arrow.apache.org/docs/cpp/compute.html#available-functions">Acero compute function docs</a>, we’ll see that there is a function <code>starts_with</code> which does this. It has 2 options: <code>pattern</code>, the substring to match at the start of the string, and <code>ignore_case</code>, whether the matching should be case sensitive.</p>
-<p>So how do we use this from the arrow R package? We start off by considering which R function to use. Let’s go with the base R function <code>startsWith()</code>. The table below shows a comparison with the Acero equivalent.</p>
+<p>So how do we use this from the arrow R package? We start off by considering which R function to use. Let’s go with the base R function <code>startsWith()</code>. <a href="#tbl-startsWith" class="quarto-xref">Table&nbsp;<span>7.1</span></a> shows a comparison with the Acero equivalent.</p>
+<div id="tbl-startsWith" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-startsWith-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.1: Comparing R’s <code>sd</code> with Acero’s <code>stddev</code>
+</figcaption>
+<div aria-describedby="tbl-startsWith-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 32%">
-<col style="width: 43%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 24%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Feature</th>
-<th>R (<code>startsWith()</code>)</th>
-<th>Acero (<code>starts_with()</code>)</th>
+<th></th>
+<th>Function Name</th>
+<th>Function Arguments</th>
+<th>Prefix/Pattern Argument</th>
+<th>Case Sensitivity</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Function Name</strong></td>
+<td>R</td>
 <td><code>startsWith</code></td>
-<td><code>starts_with</code></td>
-</tr>
-<tr class="even">
-<td><strong>Function Arguments</strong></td>
 <td><code>prefix</code></td>
-<td><code>pattern</code>, <code>ignore_case = false</code></td>
-</tr>
-<tr class="odd">
-<td><strong>Purpose</strong></td>
-<td>Checks if a string starts with a specified prefix</td>
-<td>Checks if a string starts with a specified pattern</td>
+<td><code>prefix</code>: The prefix to match</td>
+<td>Always case-sensitive</td>
 </tr>
 <tr class="even">
-<td><strong>Prefix/Pattern Argument</strong></td>
-<td><code>prefix</code>: The prefix to match</td>
+<td>Acero</td>
+<td><code>starts_with</code></td>
+<td><code>pattern</code>, <code>ignore_case</code></td>
 <td><code>pattern</code>: The pattern to match</td>
-</tr>
-<tr class="odd">
-<td><strong>Case Sensitivity</strong></td>
-<td>Always case-sensitive</td>
 <td><code>ignore_case</code>: Boolean, set to <code>false</code> by default</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"data/person/"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(location) <span class="sc">|&gt;</span></span>
@@ -422,52 +424,53 @@ See $.data for the source Arrow object</code></pre>
 <section id="bindings-for-aggregation-functions" class="level3" data-number="7.2.3">
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="bindings-for-aggregation-functions"><span class="header-section-number">7.2.3</span> Bindings for aggregation functions</h3>
 <p>The arrow R package also has bindings for aggregation functions which take multiple rows of data and calculate a single values. For example, whereas R has <code>sd()</code> for calculating the standard deviation of a vector, Acero has <code>stddev()</code>.</p>
+<div id="tbl-sd-stddev" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sd-stddev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.2: Comparing R’s <code>sd</code> with Acero’s <code>stddev</code>
+</figcaption>
+<div aria-describedby="tbl-sd-stddev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 30%">
-<col style="width: 43%">
+<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 17%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Feature</th>
-<th>R (<code>sd</code>)</th>
-<th>Acero (<code>stddev</code>)</th>
+<th></th>
+<th>Function Name</th>
+<th>Function Options</th>
+<th>Handling of Missing Values</th>
+<th>Degrees of Freedom</th>
+<th>Minimum Count</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Function Name</strong></td>
+<td>R</td>
 <td><code>sd</code></td>
-<td><code>stddev</code></td>
-</tr>
-<tr class="even">
-<td><strong>Function Options</strong></td>
-<td><code>na.rm = FALSE</code></td>
-<td><code>ddof = 0</code>, <code>skip_nulls = FALSE</code>, <code>min_count = 1</code></td>
-</tr>
-<tr class="odd">
-<td><strong>Purpose</strong></td>
-<td>Computes standard deviation</td>
-<td>Computes standard deviation</td>
-</tr>
-<tr class="even">
-<td><strong>Handling of Missing Values</strong></td>
+<td><code>na.rm</code></td>
 <td><code>na.rm</code>: Boolean, removes <code>NA</code> values (default <code>FALSE</code>)</td>
-<td><code>skip_nulls</code>: Boolean, removes <code>NULL</code> values (default <code>FALSE</code>)</td>
-</tr>
-<tr class="odd">
-<td><strong>Degrees of Freedom</strong></td>
-<td>Not available</td>
-<td><code>ddof</code>: Integer, denominator degrees of freedom (default <code>0</code>)</td>
+<td>Not implemented</td>
+<td>Not implemented</td>
 </tr>
 <tr class="even">
-<td><strong>Minimum Count</strong></td>
-<td>Not available</td>
+<td>Acero</td>
+<td><code>stddev</code></td>
+<td><code>ddof</code>, <code>skip_nulls</code>, <code>min_count</code></td>
+<td><code>skip_nulls</code>: Boolean, removes <code>NULL</code> values (default <code>FALSE</code>)</td>
+<td><code>ddof</code>: Integer, denominator degrees of freedom (default <code>0</code>)</td>
 <td><code>min_count</code>: Integer, returns <code>NULL</code> if fewer non-null values are present (default <code>1</code>)</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>There are also some differences in the options for these functions; while R’s <code>sd</code> function has arguments <code>x</code>, the value to be passed in and <code>na.rm</code>, whether to remove <code>NA</code> values or not, Acero’s stddev also has <code>ddof</code> - denominator degrees of freedom, <code>skip_nulls</code>, the equivalent of <code>na_rm</code>, and <code>min_count</code> - if there are fewer values than this, return <code>NULL</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"data/person/"</span>) <span class="sc">|&gt;</span></span>
@@ -630,7 +633,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ak","2":"max_commute","3":"194"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wy","2":"max_commute","3":"176"},{"1":"ar","2":"max_commute","3":"186"},{"1":"az","2":"max_commute","3":"184"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"al","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"az","2":"max_commute","3":"184"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ar","2":"max_commute","3":"186"},{"1":"wa","2":"max_commute","3":"152"},{"1":"ak","2":"max_commute","3":"194"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wy","2":"max_commute","3":"176"},{"1":"al","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -908,7 +911,7 @@ $creator$version
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"00101","3":"2018","4":"english","5":"109629","6":"0.824954286"},{"1":"ak","2":"00101","3":"2018","4":"spanish","5":"5478","6":"0.041221753"},{"1":"ak","2":"00300","3":"2018","4":"english","5":"148423","6":"0.895198403"},{"1":"ak","2":"00300","3":"2018","4":"vietnamese","5":"90","6":"0.000542826"},{"1":"ak","2":"00400","3":"2018","4":"english","5":"77749","6":"0.683303452"},{"1":"ak","2":"00200","3":"2018","4":"english","5":"158153","6":"0.951113169"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"wa","2":"10100","3":"2018","4":"english","5":"207941","6":"0.921609907"},{"1":"wa","2":"11502","3":"2018","4":"english","5":"116156","6":"0.903958847"},{"1":"wa","2":"11900","3":"2018","4":"english","5":"102095","6":"0.940959070"},{"1":"wa","2":"11401","3":"2018","4":"german","5":"671","6":"0.003850789"},{"1":"wa","2":"10901","3":"2018","4":"english","5":"88704","6":"0.701644479"},{"1":"wa","2":"11609","3":"2018","4":"english","5":"104996","6":"0.673521884"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -916,30 +919,27 @@ $creator$version
 <p>And then we can take that data, join it to our arrow table of PUMAs and plot it using <code>ggplot2</code>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>puma_by_langauge <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"english"</span>, <span class="st">"spanish"</span>, <span class="st">"french"</span>, <span class="st">"navajo"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill_pumas</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    PUMA,</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="st">"YEAR"</span>, <span class="st">"location"</span> <span class="ot">=</span> <span class="st">"location"</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">"PUMA"</span> <span class="ot">=</span> <span class="st">"PUMA"</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correct_projection</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">geometry =</span> geometry, <span class="at">fill =</span> prop_speaker),</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=laea +lon_0=-98 +lat_0=39.5"</span>) <span class="sc">+</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(language), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greys"</span>,</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"proportion of speakers"</span>) <span class="sc">+</span></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion of speakers by language"</span>,</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"across the US by PUMA"</span></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"english"</span>, <span class="st">"spanish"</span>, <span class="st">"french"</span>, <span class="st">"navajo"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill_pumas</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    PUMA,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="st">"YEAR"</span>, <span class="st">"location"</span> <span class="ot">=</span> <span class="st">"location"</span>, <span class="st">"PUMA"</span> <span class="ot">=</span> <span class="st">"PUMA"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correct_projection</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">geometry =</span> geometry, <span class="at">fill =</span> prop_speaker),</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=laea +lon_0=-98 +lat_0=39.5"</span>) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(language), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greys"</span>,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"proportion of speakers"</span>) <span class="sc">+</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion of speakers by language"</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"across the US by PUMA"</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">

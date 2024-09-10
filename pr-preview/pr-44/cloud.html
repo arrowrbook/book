@@ -324,19 +324,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Working with cloud storage services is similar in many ways to working with data stored in local filesystems, and you can use the same file and dataset opening functions for both tasks. To open a file or dataset saved in cloud storage, instead of passing in a path to a local file to these functions, you can instead pass in the cloud storage path as a URI.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"s3://scaling-arrow-pums/person/year=2005/"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">"location=ak/part-0.parquet"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"s3://scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s3://scaling-arrow-pums/person/year=2005/"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"location=ak/part-0.parquet"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"s3://scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that when working with data stored on GCS, even when working with a publicly accessible bucket, you’ll need to provide a login name of “anonymous”. The equivalent of the above commands for GCS—these won’t run here as these buckets haven’t been set up—would be:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">"location=ak/part-0.parquet"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"location=ak/part-0.parquet"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s take a closer look at running queries in the cloud. If we create a new dataset connecting to the S3 bucket and take a look at the object, we’ll see it looks the same as a local dataset.</p>
 <div class="cell">
@@ -405,17 +408,17 @@ Table&nbsp;6.1: Time taken to run the same query on a local machine and connecti
 <thead>
 <tr class="header">
 <th>Location</th>
-<th>Time (s)</th>
+<th style="text-align: right;">Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Local</td>
-<td>0.2</td>
+<td style="text-align: right;">0.2</td>
 </tr>
 <tr class="even">
 <td>Cloud</td>
-<td>24.1</td>
+<td style="text-align: right;">24.1</td>
 </tr>
 </tbody>
 </table>
@@ -542,24 +545,24 @@ Table&nbsp;6.2: Time taken to run the same query with varying bucket location an
 <tr class="header">
 <th>Bucket Location</th>
 <th>Access Location</th>
-<th>Time (seconds)</th>
+<th style="text-align: right;">Time (seconds)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Virginia, US (us-east-1)</td>
 <td>Manchester, UK</td>
-<td>56</td>
+<td style="text-align: right;">56</td>
 </tr>
 <tr class="even">
 <td>London, UK (eu-west-2)</td>
 <td>Manchester, UK</td>
-<td>50</td>
+<td style="text-align: right;">50</td>
 </tr>
 <tr class="odd">
 <td>Virginia, US (us-east-1)</td>
 <td>Virginia, US (us-east-1)</td>
-<td>24</td>
+<td style="text-align: right;">24</td>
 </tr>
 </tbody>
 </table>

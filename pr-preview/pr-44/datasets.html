@@ -384,16 +384,14 @@ Use `schema()` to see entire schema</code></pre>
 <p>In the context of arrow, you’d typically start with raw data which is larger than memory, potentially modify it, and write it out in a more helpful format with partitions that are useful for analyzing. One important thing to know here is that because arrow writes datasets one piece at a time, you don’t have to worry about your dataset being larger than memory. You can use the same code that works on data in memory—which has quick feedback and you can see if things are going well—as you do for the full dataset that might take many minutes or even hours to process and is impossible to load into memory all at once.</p>
 <p>Partitioning here is not technically critical, but this is the stage where it is easiest to introduce or change a dataset’s partitioning strategy. We’ll talk more on how to pick a strategy later in the chapter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_dataset <span class="ot">&lt;-</span> <span class="fu">open_csv_dataset</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">"./data/my-oversized-csv.csv"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>my_dataset <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(datetime), <span class="at">month =</span> <span class="fu">month</span>(datetime)) <span class="sc">|&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_dataset</span>(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">path =</span> <span class="st">"./data/my-much-nicer-parquet-dataset"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">partitioning =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_dataset <span class="ot">&lt;-</span> <span class="fu">open_csv_dataset</span>(<span class="at">path =</span> <span class="st">"./data/my-oversized-csv.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>my_dataset <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(datetime), <span class="at">month =</span> <span class="fu">month</span>(datetime)) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_dataset</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">path =</span> <span class="st">"./data/my-much-nicer-parquet-dataset"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">partitioning =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="analysis-oriented-workflow" class="level2" data-number="5.2">
@@ -404,11 +402,10 @@ Use `schema()` to see entire schema</code></pre>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">==</span> <span class="st">"wa"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year)) <span class="sc">|&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year)) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -435,29 +432,22 @@ Table&nbsp;5.1: Functions for reading and writing datasets
 <col style="width: 45%">
 <col style="width: 29%">
 </colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Format</th>
-<th style="text-align: center;">Reading</th>
-<th style="text-align: center;">Writing</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">Parquet</td>
-<td style="text-align: center;">open_dataset()</td>
-<td style="text-align: center;">write_dataset()</td>
+<td colspan="3" rowspan="2">Format | Reading | Writing :===========================+:======================================================+:==================================+ Parquet | open_dataset() | write_dataset()</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">CSV or other delimited file</td>
-<td style="text-align: center;"><p>open_dataset(…, format = “csv”), open_csv_dataset(),</p>
-<p>open_delim_dataset()</p></td>
-<td style="text-align: center;">write_dataset(…, format = “csv”)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">Line-delimited JSON</td>
-<td style="text-align: center;">open_dataset(…, format = “json”)</td>
-<td style="text-align: center;">(Not supported)</td>
+<td>CSV or other delimited file</td>
+<td><p>open_dataset(…, format = “csv”), open_csv_dataset(),</p>
+<p>open_delim_dataset()</p></td>
+<td>write_dataset(…, format = “csv”)</td>
+</tr>
+<tr class="even">
+<td>Line-delimited JSON</td>
+<td>open_dataset(…, format = “json”)</td>
+<td>(Not supported)</td>
 </tr>
 </tbody>
 </table>
@@ -554,9 +544,7 @@ Table&nbsp;5.1: Functions for reading and writing datasets
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"65+"</span></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_dataset</span>(</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">path =</span> <span class="fu">file.path</span>(tmp_dir, <span class="st">"person-age-partitions"</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_dataset</span>(<span class="at">path =</span> <span class="fu">file.path</span>(tmp_dir, <span class="st">"person-age-partitions"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="custom-filenames" class="level3" data-number="5.4.4">
@@ -752,61 +740,61 @@ Table&nbsp;5.2: Summary statistics around file sizes of partitioned datasets
 <div aria-describedby="tbl-file-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
+<col style="width: 21%">
+<col style="width: 9%">
 <col style="width: 12%">
-<col style="width: 10%">
-<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 14%">
+<col style="width: 15%">
 <col style="width: 12%">
-<col style="width: 13%">
-<col style="width: 10%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Dataset</th>
 <th style="text-align: right;"># of Files</th>
-<th style="text-align: right;">Min size</th>
-<th style="text-align: right;">1st Quartile</th>
-<th style="text-align: right;">Median size</th>
-<th style="text-align: right;">3rd Quartile</th>
-<th style="text-align: right;">Max size</th>
+<th style="text-align: right;">Min size (MB)</th>
+<th style="text-align: right;">1st Quartile (MB)</th>
+<th style="text-align: right;">Median size (MB)</th>
+<th style="text-align: right;">3rd Quartile (MB)</th>
+<th style="text-align: right;">Max size (MB)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>pums_one_big_file</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">7786.3 MB</td>
-<td style="text-align: right;">7786.3 MB</td>
-<td style="text-align: right;">7786.3 MB</td>
-<td style="text-align: right;">7786.3 MB</td>
-<td style="text-align: right;">7786.3 MB</td>
+<td style="text-align: right;">7786.3</td>
+<td style="text-align: right;">7786.3</td>
+<td style="text-align: right;">7786.3</td>
+<td style="text-align: right;">7786.3</td>
+<td style="text-align: right;">7786.3</td>
 </tr>
 <tr class="even">
 <td>pums_by_year</td>
 <td style="text-align: right;">34</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">211.8 MB</td>
-<td style="text-align: right;">459.9 MB</td>
-<td style="text-align: right;">493 MB</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">211.8</td>
+<td style="text-align: right;">459.9</td>
+<td style="text-align: right;">493</td>
 </tr>
 <tr class="odd">
 <td>pums_by_year_location</td>
 <td style="text-align: right;">1785</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">6.02 MB</td>
-<td style="text-align: right;">56.1 MB</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">6.02</td>
+<td style="text-align: right;">56.1</td>
 </tr>
 <tr class="even">
 <td>pums_by_year_location_age</td>
 <td style="text-align: right;">14124</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">0.1 MB</td>
-<td style="text-align: right;">0.4 MB</td>
-<td style="text-align: right;">1.09 MB</td>
-<td style="text-align: right;">17.6 MB</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">17.6</td>
 </tr>
 </tbody>
 </table>
@@ -820,10 +808,9 @@ Table&nbsp;5.2: Summary statistics around file sizes of partitioned datasets
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"&lt;path/to/data&gt;"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>) <span class="sc">|&gt;</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#tbl-partition-query" class="quarto-xref">Table&nbsp;<span>5.3</span></a> shows the results of running that query on Nic’s laptop, with the datasets we created earlier.</p>
 <div id="tbl-partition-query" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -836,25 +823,25 @@ Table&nbsp;5.3: Time taken to run a query unrelated to dataset partitions, with 
 <thead>
 <tr class="header">
 <th>Dataset</th>
-<th>Query Completion Time (s)</th>
+<th style="text-align: right;">Query Completion Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>pums_one_big_file</td>
-<td>2.2</td>
+<td style="text-align: right;">2.2</td>
 </tr>
 <tr class="even">
 <td>pums_by_year</td>
-<td>1.0</td>
+<td style="text-align: right;">1.0</td>
 </tr>
 <tr class="odd">
 <td>pums_by_year_location</td>
-<td>1.8</td>
+<td style="text-align: right;">1.8</td>
 </tr>
 <tr class="even">
 <td>pums_by_year_location_age</td>
-<td>6.5</td>
+<td style="text-align: right;">6.5</td>
 </tr>
 </tbody>
 </table>
@@ -882,10 +869,9 @@ Table&nbsp;5.3: Time taken to run a query unrelated to dataset partitions, with 
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, age_group, location) <span class="sc">|&gt;</span></span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We ran it again on Nic’s laptop, and the results are shown in <a href="#tbl-partition-query-2" class="quarto-xref">Table&nbsp;<span>5.4</span></a>.</p>
 <div id="tbl-partition-query-2" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -898,25 +884,25 @@ Table&nbsp;5.4: Time taken to run a query relating to dataset partitions, with d
 <thead>
 <tr class="header">
 <th>Dataset</th>
-<th>Query Completion Time (s)</th>
+<th style="text-align: right;">Query Completion Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>pums_one_big_file</td>
-<td>4.6</td>
+<td style="text-align: right;">4.6</td>
 </tr>
 <tr class="even">
 <td>pums_by_year</td>
-<td>3.2</td>
+<td style="text-align: right;">3.2</td>
 </tr>
 <tr class="odd">
 <td>pums_by_year_location</td>
-<td>3.3</td>
+<td style="text-align: right;">3.3</td>
 </tr>
 <tr class="even">
 <td>pums_by_year_location_age</td>
-<td>11.5</td>
+<td style="text-align: right;">11.5</td>
 </tr>
 </tbody>
 </table>
@@ -948,10 +934,9 @@ Table&nbsp;5.4: Time taken to run a query relating to dataset partitions, with d
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, location, age_group) <span class="sc">|&gt;</span></span>
 <span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once again, we removed the call to <code>mutate()</code> for the dataset which already had the <code>age_group</code> partition variable.</p>
 <div id="tbl-partition-query-3" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -964,25 +949,25 @@ Table&nbsp;5.5: Time taken to run a query which filters on dataset partitions, w
 <thead>
 <tr class="header">
 <th>Dataset</th>
-<th>Query Completion Time (s)</th>
+<th style="text-align: right;">Query Completion Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>pums_one_big_file</td>
-<td>3.6</td>
+<td style="text-align: right;">3.6</td>
 </tr>
 <tr class="even">
 <td>pums_by_year</td>
-<td>2.5</td>
+<td style="text-align: right;">2.5</td>
 </tr>
 <tr class="odd">
 <td>pums_by_year_location</td>
-<td>2.2</td>
+<td style="text-align: right;">2.2</td>
 </tr>
 <tr class="even">
 <td>pums_by_year_location_age</td>
-<td>0.8</td>
+<td style="text-align: right;">0.8</td>
 </tr>
 </tbody>
 </table>
@@ -993,7 +978,7 @@ Table&nbsp;5.5: Time taken to run a query which filters on dataset partitions, w
 <p>We don’t recommend repartitioning your data every time you want to run a query on your dataset, as the overhead of time spent rewriting the data to disk means it probably won’t be worth it. What we’d recommend instead is thinking about which variables you use most frequently in calls to <code>filter()</code> in your analyses, and store your data in partitions based on these variables.</p>
 <p>As we saw above, reading only the data from disk that is important for a query is the fastest way to process that data. What this means is that if we know that specific Parquet files only include rows that we don’t care about—because they don’t match the conditions in the filter—then skipping over them entirely is best. Partitioning based on common filters means that arrow can skip over files entirely when they are in partitioned like this.</p>
 <p>That said, it’s important not to create too many files, because for each Parquet file read in from disk, there is a relatively fixed amount of metadata that must be read alongside the data. This metadata includes things like the schema of the data and other statistics about the data in the file. The more Parquet files you have, the more of this fixed, extra information has to be read in. Having files smaller than 20MB will typically mean considerably more reading of that metadata compared to reading actual data itself. Equally, having files larger than 2GB means that you’re no longer able to take advantage of Arrow’s ability to read multiple files in parallel.</p>
-<p>The number of levels of partitioning is also important While writing this book, we tried to test out an example which used an extra level of partitioning as well as <code>year</code>, <code>location</code>, and <code>age_group</code>, as well as partitioning on the <code>PUMA</code> (Public use microdata area code) column, which has thousands of unique values. However, it took over 3 hours to write to disk, produced around 800,000 files, and took up 81GB on disk. The sheer quantity of files which needed writing, and the overhead in terms of storage size (and also query time if analyzed later) caused by the associated file headers and metadata, meant that it just wasn’t feasible to include this, even as an example!</p>
+<p>The number of levels of partitioning is also important. While writing this book, we tried to test out an example which used an extra level of partitioning as well as <code>year</code>, <code>location</code>, and <code>age_group</code>, as well as partitioning on the <code>PUMA</code> (Public use microdata area code) column, which has thousands of unique values. However, it took over 3 hours to write to disk, produced around 800,000 files, and took up 81GB on disk. The sheer quantity of files which needed writing, and the overhead in terms of storage size (and also query time if analyzed later) caused by the associated file headers and metadata, meant that it just wasn’t feasible to include this, even as an example!</p>
 <p>Getting partitioning correct is a balancing act and there is no single configuration that will work for all data and all queries. The unique characteristics of your data and your typical queries will determine the best partitioning for your data.</p>
 </section>
 <section id="tuning-writing-paramaters" class="level3" data-number="5.5.4">
@@ -1151,10 +1136,7 @@ AGEP: int8</code></pre>
 <p>You may have extra files you want to store alongside your dataset files, but they aren’t actually the row and column level data. For example, you might have a text file that includes a data dictionary in each folder next to each Parquet file in your dataset. You don’t want to read in those text files when you are reading in the Parquet files.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> You can specify extra options to <code>open_dataset()</code> to exclude these files from your dataset.</p>
 <p>Let’s say you have a directory containing your dataset, but also containing metadata in each subdirectory.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(tmp_dir, <span class="st">"person_with_metadata"</span>),</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">recurse =</span> <span class="cn">TRUE</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="fu">file.path</span>(tmp_dir, <span class="st">"person_with_metadata"</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>./data/transient_data/person_with_metadata/year=2021
 ./data/transient_data/person_with_metadata/year=2021/data_info.txt
@@ -1208,14 +1190,13 @@ AGEP: int8</code></pre>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="sc">|&gt;</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_age =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_age =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"9.562817"},{"1":"2018","2":"12.220912"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"12.220912"},{"1":"2021","2":"9.562817"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
