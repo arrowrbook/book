@@ -40,6 +40,8 @@ format:
       right: |
         This book was built with <a href="https://quarto.org/">Quarto</a>.
   pdf:
+    template-partials: 
+      - latex/title.tex
     highlight-style: monochrome
     toc: false
     toc-title: "Contents"
