@@ -266,7 +266,6 @@ plot <- ggplot(to_plot) +
     show.legend = FALSE,
   ) +
   guides(color = "none") +
-  scale_color_viridis_d() +
   scale_y_continuous(
     name = NULL,
     labels = scales::percent
@@ -289,7 +288,8 @@ plot <- ggplot(to_plot) +
 ```{r}
 #| label: pums-data-manip-agg-plot-n_commuters-html
 #| echo: false
-plot
+plot +
+  scale_color_viridis_d()
 ```
 :::
 
@@ -299,7 +299,8 @@ plot
 #| echo: false
 #| fig-height: 9
 #| fig-cap: "Percent change in modes of transport for individuals by year with a baseline of 2005"
-print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
+greyscale_plot <- plot + scale_colour_grey()
+print(greyscale_plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::
 
@@ -352,7 +353,6 @@ plot <- to_plot |>
     show.legend = FALSE,
   ) +
   guides(color = "none") +
-  scale_color_viridis_d() +
   scale_y_continuous(
     name = NULL,
     labels = scales::label_timespan(unit = "mins")
@@ -375,7 +375,8 @@ plot <- to_plot |>
 ```{r}
 #| label: pums-data-manip-agg-plot-commute_time-html
 #| echo: false
-plot
+plot +
+  scale_color_viridis_d()
 ```
 :::
 
@@ -385,7 +386,8 @@ plot
 #| echo: false
 #| fig-height: 9
 #| fig-cap: "Duration of commute for different modes of transport by year"
-print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
+greyscale_plot <- plot + scale_colour_grey()
+print(greyscale_plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", angle=90))
 ```
 :::
 
