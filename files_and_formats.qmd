@@ -12,6 +12,7 @@ While CSVs are ubiquitous, Parquet files have a lot of nice features that make t
 In this chapter, we'll explore the different file formats that Arrow can read and write, focusing particularly on the tools you need to ingest data from CSVs and store them in Parquet files with high fidelity.
 
 We'll start off by creating a directory to work with temporary files created in this chapter.
+
 ```{r}
 #| label: faf_setup
 #| include: false
@@ -44,25 +45,25 @@ Arrow supports reading and writing files in multiple formats:
 
 The functions for reading and writing individual files in arrow are shown in @tbl-file-funcs.
 
-+-------------------------------------+-----------------------+----------------------+
-| Format                              | Reading               | Writing              |
-+:===================================:+:=====================:+:====================:+
-| CSV or other delimited file         | read_delim_arrow()    | write_csv_arrow()    |
-|                                     |                       |                      |
-|                                     | read_csv_arrow()      |                      |
-|                                     |                       |                      |
-|                                     | read_csv2_arrow()     |                      |
-|                                     |                       |                      |
-|                                     | read_tsv_arrow()      |                      |
-+-------------------------------------+-----------------------+----------------------+
-| Newline-delimited JSON              | read_json_arrow()     | (Not supported)      |
-+-------------------------------------+-----------------------+----------------------+
-| Parquet                             | read_parquet()        | write_parquet()      |
-+-------------------------------------+-----------------------+----------------------+
-| Arrow IPC Format (formerly Feather) | read_ipc_file()       | write_ipc_file()     |
-|                                     |                       |                      |
-|                                     | read_feather()        | write_feather()      |
-+-------------------------------------+-----------------------+----------------------+
++-------------------------------------+--------------------+-------------------+
+| Format                              | Reading            | Writing           |
++:====================================+:===================+:==================+
+| CSV or other delimited file         | read_delim_arrow() | write_csv_arrow() |
+|                                     |                    |                   |
+|                                     | read_csv_arrow()   |                   |
+|                                     |                    |                   |
+|                                     | read_csv2_arrow()  |                   |
+|                                     |                    |                   |
+|                                     | read_tsv_arrow()   |                   |
++-------------------------------------+--------------------+-------------------+
+| Newline-delimited JSON              | read_json_arrow()  | (Not supported)   |
++-------------------------------------+--------------------+-------------------+
+| Parquet                             | read_parquet()     | write_parquet()   |
++-------------------------------------+--------------------+-------------------+
+| Arrow IPC Format (formerly Feather) | read_ipc_file()    | write_ipc_file()  |
+|                                     |                    |                   |
+|                                     | read_feather()     | write_feather()   |
++-------------------------------------+--------------------+-------------------+
 
 : Functions for reading and writing individual files {#tbl-file-funcs}
 
@@ -92,7 +93,7 @@ It is commonly used for streaming data.
 
 NDJSON files look something like this:
 
-```
+```         
 {"species": "cat", "sounds": ["meow", "purr", "hiss"]}
 {"species": "dog", "sounds": ["woof", "bark", "growl"]}
 {"species": "bird", "sounds": ["tweet", "squawk"]}
@@ -158,7 +159,9 @@ So here are short summaries of each:
 
 **Arrow IPC**: the Arrow in-memory format and layout, written to disk.
 
-**Feather**: Version 1 was a precursor to Arrow and is now deprecated. It is very close to the Arrow format, though doesn't have all of the types. Version 2 is the same thing as Arrow IPC, though that name has fallen out of favor.
+**Feather**: Version 1 was a precursor to Arrow and is now deprecated.
+It is very close to the Arrow format, though doesn't have all of the types.
+Version 2 is the same thing as Arrow IPC, though that name has fallen out of favor.
 
 **Parquet**: A standard, open, modern, column-oriented data storage format.
 
@@ -172,40 +175,37 @@ Like we recommend in this chapter: if you're looking for a format to store data 
 @tbl-formats summarizes the features and tradeoffs of the file formats that arrow works with.
 
 ::: {.content-hidden when-format="pdf"}
-
 |                                 | CSV | ND-JSON | Parquet | Arrow |
-|---------------------------------|-----|---------|---------|-------|
-| Read using Arrow                | ✓   | ✓       | ✓       | ✓     |
-| Write using Arrow               | ✓   |         | ✓       | ✓     |
-| Human-readable                  | ✓   | ✓       |         |       |
-| Fast read/write                 |     |         | ✓       | ✓     |
-| Includes schema                 |     |         | ✓       | ✓     |
-| Metadata                        |     |         | ✓       | ✓     |
-| Nested structures               |     | ✓       | ✓       | ✓     |
-| Compression                     |     |         | ✓       | ✓     |
-| High-fidelity type preservation |     |         | ✓       | ✓     |
-| Widely adopted                  | ✓   |         | ✓       |       |
+|---------------------------------|:---:|:-------:|:-------:|:-----:|
+| Read using Arrow                |  ✓  |    ✓    |    ✓    |   ✓   |
+| Write using Arrow               |  ✓  |         |    ✓    |   ✓   |
+| Human-readable                  |  ✓  |    ✓    |         |       |
+| Fast read/write                 |     |         |    ✓    |   ✓   |
+| Includes schema                 |     |         |    ✓    |   ✓   |
+| Metadata                        |     |         |    ✓    |   ✓   |
+| Nested structures               |     |    ✓    |    ✓    |   ✓   |
+| Compression                     |     |         |    ✓    |   ✓   |
+| High-fidelity type preservation |     |         |    ✓    |   ✓   |
+| Widely adopted                  |  ✓  |         |    ✓    |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
-
 :::
-::: {.content-hidden when-format="html"}
 
+::: {.content-hidden when-format="html"}
 |                                 | CSV | ND-JSON | Parquet | Arrow |
-|---------------------------------|-----|---------|---------|-------|
-| Read using Arrow                | x   | x       | x       | x     |
-| Write using Arrow               | x   |         | x       | x     |
-| Human-readable                  | x   | x       |         |       |
-| Fast read/write                 |     |         | x       | x     |
-| Includes schema                 |     |         | x       | x     |
-| Metadata                        |     |         | x       | x     |
-| Nested structures               |     | x       | x       | x     |
-| Compression                     |     |         | x       | x     |
-| High-fidelity type preservation |     |         | x       | x     |
-| Widely adopted                  | x   |         | x       |       |
+|---------------------------------|:---:|:-------:|:-------:|:-----:|
+| Read using Arrow                |  x  |    x    |    x    |   x   |
+| Write using Arrow               |  x  |         |    x    |   x   |
+| Human-readable                  |  x  |    x    |         |       |
+| Fast read/write                 |     |         |    x    |   x   |
+| Includes schema                 |     |         |    x    |   x   |
+| Metadata                        |     |         |    x    |   x   |
+| Nested structures               |     |    x    |    x    |   x   |
+| Compression                     |     |         |    x    |   x   |
+| High-fidelity type preservation |     |         |    x    |   x   |
+| Widely adopted                  |  x  |         |    x    |       |
 
 : Comparison of formats supported by Arrow {#tbl-formats}
-
 :::
 
 Now that we've surveyed the file formats, we're going to discuss how to read in CSVs effectively since they are both widespread and potentially challenging.
@@ -431,6 +431,7 @@ to_keep <- c("RT", "SERIALNO", "DIVISION", "SPORDER", "PUMA",
 one_state_schema_mini <- one_state_schema[to_keep]
 one_state_schema_mini
 ```
+
 Alternatively, to just remove items, you can assign the value `NULL` to them, again, just as you could with a list.
 
 ```{r}
@@ -439,6 +440,7 @@ Alternatively, to just remove items, you can assign the value `NULL` to them, ag
 one_state_schema_mini[["new_var"]] <- NULL
 one_state_schema_mini
 ```
+
 ### Writing CSVs {#sec-writing-csvs}
 
 You can write CSV files to disk using `write_csv_arrow()`.
@@ -672,10 +674,7 @@ However, you still do have access to that metadata under the `metadata` and then
 
 Another feature of Parquet is that its files are divided into smaller pieces.
 
-![Parquet file components](images/excalidraw/files_formats_parquet.png)
-A Parquet file is made up of groups of rows, known as **row groups**.
-Each of these is divided up into subsections of each column: **column chunks**.
-These column chunks are then further divided into pages.
+![Parquet file components](images/excalidraw/files_formats_parquet.png) A Parquet file is made up of groups of rows, known as **row groups**. Each of these is divided up into subsections of each column: **column chunks**. These column chunks are then further divided into pages.
 Earlier, we mentioned that the schema is stored with the data, but there's a lot more metadata in a Parquet file than this.
 There's also metadata on all of the subcomponents of a Parquet file.
 The metadata contains information on things like how many rows in that particular subcomponent, and summary statistics about the data contained inside.
@@ -740,7 +739,7 @@ There are `r dplyr::n_distinct(count(pums_subset_mar, MAR))` different possible 
 
 In the pseudocode below, we show two different ways we could represent the value "Married" occurring 5 times in a row.
 
-```
+```         
 ["Married ", "Married", "Married", "Married", "Married"]
 ["Married", 5]
 ```
@@ -803,12 +802,17 @@ Let's take a look at the degree of difference between an uncompressed CSV file, 
 We wrote the files to disk, and then read in just the "AGEP", "COW", and "year" columns.
 The results can be see in @tbl-format-bench.
 
-|         Format         |  Size  | Write time | Read time |
-|:----------------------:|:------:|:----------:|-----------|
-|          CSV           | 1.8GB  |  24.052s   | 10.02s    |
-| Parquet - uncompressed | 37.1MB |   14.89s   | 9.215s    |
-|    Parquet - snappy    | 35.8MB |  15.378s   | 10.051s   |
-|     Parquet - zstd     | 30.7MB |  15.203s   | 9.942s    |
++------------------------+----------------+----------------+------------------+
+| Format                 | Size (MB)      | Write time (s) | Read time (s)    |
++:=======================+===============:+===============:+=================:+
+| CSV                    | 1800           | 24.052         | 10.02            |
++------------------------+----------------+----------------+------------------+
+| Parquet - uncompressed | 37.1           | 14.89          | 9.215            |
++------------------------+----------------+----------------+------------------+
+| Parquet - snappy       | 35.8           | 15.378         | 10.051           |
++------------------------+----------------+----------------+------------------+
+| Parquet - zstd         | 30.7           | 15.203         | 9.942            |
++------------------------+----------------+----------------+------------------+
 
 : Comparison of file size, read and write times for CSV and Parquet {#tbl-format-bench}
 
@@ -856,29 +860,29 @@ And when data is already spread across multiple files, it is commonplace to have
 
 The general workflow we'll examine is:
 
-1. `tab <- read_csv_arrow(file, as_data_frame = FALSE)`
+1.  `tab <- read_csv_arrow(file, as_data_frame = FALSE)`
 
-2. Do dplyr transformations on the Arrow Table
+2.  Do dplyr transformations on the Arrow Table
 
-3. `write_parquet(tab, new_file)`
+3.  `write_parquet(tab, new_file)`
 
-That is, we'll keep the data in Arrow memory and never pull it into an R data frame. This saves processing time, and it allows us to avoid type conversions between R and Arrow that might lose fidelity.
+That is, we'll keep the data in Arrow memory and never pull it into an R data frame.
+This saves processing time, and it allows us to avoid type conversions between R and Arrow that might lose fidelity.
 
 Let's look at the PUMS dataset.
 It is a survey, and it has some features commonly found in surveys that need to be cleaned up.
-For one, the actual row-level data in the survey is encoded based on the type of data it represents.[^punchcards]
+For one, the actual row-level data in the survey is encoded based on the type of data it represents.[^files_and_formats-3]
 For columns that are numeric, the data is what is in the data file, but characters, factors, and missing values are recorded as integers.
-<!-- NPR: missing values actually look like empty cells in the CSV, not -1 or whatever -->
-These integers must be mapped to values in the codebook, which is distributed with the data and acts as a lookup for what actual value is represented by the integer in the dataset.
+<!-- NPR: missing values actually look like empty cells in the CSV, not -1 or whatever --> These integers must be mapped to values in the codebook, which is distributed with the data and acts as a lookup for what actual value is represented by the integer in the dataset.
+
+[^files_and_formats-3]: Exploring the reasons for this convention is outside of the scope of this book, but it is partly because, historically, folks working with surveys used tools and frameworks that made working with large amounts of data that *wasn't* numeric difficult.
+    However, with modern data tools like arrow, we can effectively and efficiently work with data of all types!
 
 For another, the survey questions have changed over time, so data from one year may not line up perfectly with data from other years without some adjustment.
 Many columns in this dataset require transformation to create a nice consistent dataset to work with.
 
-[^punchcards]: Exploring the reasons for this convention is outside of the scope of this book, but it is partly because, historically, folks working with surveys used tools and frameworks that made working with large amounts of data that _wasn't_ numeric difficult.
-However, with modern data tools like arrow, we can effectively and efficiently work with data of all types!
-
 Let's start with the `COW` variable, which represents class of worker, categorizing people based on their employment status.
-Using the metadata distributed for PUMS recoding — in the survey world, this is frequently referred to as the _codebook_ — we can see that `COW` can take the values 0–9 with the corresponding meaning for the year 2005:
+Using the metadata distributed for PUMS recoding — in the survey world, this is frequently referred to as the *codebook* — we can see that `COW` can take the values 0–9 with the corresponding meaning for the year 2005:
 
 ```{r}
 #| label: codebook prep
@@ -921,7 +925,7 @@ wa_2005 |>
 ```
 
 We see values like 1, 6, 1, 3 etc.
-We ultimately want these to match up to the labels "Private for profit", "Self-employed not incorporated", "Private for profit", "	Local government", etc.
+We ultimately want these to match up to the labels "Private for profit", "Self-employed not incorporated", "Private for profit", "Local government", etc.
 One way that we can do this is by using a join, matching on the value codes in the codebook to pull in the value labels:
 
 ```{r}

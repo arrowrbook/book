@@ -169,7 +169,7 @@ We compared running the same query from above on the same machine---a Posit Clou
 The results are shown in @tbl-cloud-local.
 
 | Location | Time (s) |
-|----------|----------|
+|----------|---------:|
 | Local    |    0.2   |
 | Cloud    |   24.1   |
 
@@ -364,7 +364,7 @@ We then tried the queried the original S3 bucket again, but from a Posit Cloud i
 The average times across 3 runs are shown in @tbl-cloud-location.
 
 | Bucket Location          | Access Location          | Time (seconds) |
-|--------------------------|--------------------------|----------------|
+|--------------------------|--------------------------|---------------:|
 | Virginia, US (us-east-1) | Manchester, UK           | 56             |
 | London, UK (eu-west-2)   | Manchester, UK           | 50             |
 | Virginia, US (us-east-1) | Virginia, US (us-east-1) | 24             |

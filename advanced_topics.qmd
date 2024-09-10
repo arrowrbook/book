@@ -113,15 +113,14 @@ It has 2 options: `pattern`, the substring to match at the start of the string, 
 So how do we use this from the arrow R package?
 We start off by considering which R function to use.
 Let's go with the base R function `startsWith()`.
-The table below shows a comparison with the Acero equivalent.
+@tbl-startsWith shows a comparison with the Acero equivalent.
 
-| Feature                     | R (`startsWith()`)                                | Acero (`starts_with()`)                            |
-|-----------------|------------------------|--------------------------------|
-| **Function Name**           | `startsWith`                                      | `starts_with`                                      |
-| **Function Arguments**      | `prefix`                                     | `pattern`, `ignore_case = false`              |
-| **Purpose**                 | Checks if a string starts with a specified prefix | Checks if a string starts with a specified pattern |
-| **Prefix/Pattern Argument** | `prefix`: The prefix to match                     | `pattern`: The pattern to match                    |
-| **Case Sensitivity**        | Always case-sensitive                             | `ignore_case`: Boolean, set to `false` by default  |
+|       | Function Name | Function Arguments       | Prefix/Pattern Argument         | Case Sensitivity                                  |
+|--------------|--------------|--------------|--------------|------------------|
+| R     | `startsWith`  | `prefix`                 | `prefix`: The prefix to match   | Always case-sensitive                             |
+| Acero | `starts_with` | `pattern`, `ignore_case` | `pattern`: The pattern to match | `ignore_case`: Boolean, set to `false` by default |
+
+: Comparing R's `sd` with Acero's `stddev` {#tbl-startsWith}
 
 ```{r}
 #| label: startsWith
@@ -143,14 +142,12 @@ As `startsWith()` is always case-sensitive, the Acero `starts_with()` option `ig
 The arrow R package also has bindings for aggregation functions which take multiple rows of data and calculate a single values.
 For example, whereas R has `sd()` for calculating the standard deviation of a vector, Acero has `stddev()`.
 
-| Feature                        | R (`sd`)                                                | Acero (`stddev`)                                                                        |
-|-------------------|----------------------|--------------------------------|
-| **Function Name**              | `sd`                                                    | `stddev`                                                                                |
-| **Function Options**           | `na.rm = FALSE`                                         | `ddof = 0`, `skip_nulls = FALSE`, `min_count = 1`                                       |
-| **Purpose**                    | Computes standard deviation                             | Computes standard deviation                                                             |
-| **Handling of Missing Values** | `na.rm`: Boolean, removes `NA` values (default `FALSE`) | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`)                          |
-| **Degrees of Freedom**         | Not available                                           | `ddof`: Integer, denominator degrees of freedom (default `0`)                           |
-| **Minimum Count**              | Not available                                           | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
+|    | Function Name | Function Options                  | Handling of Missing Values                                     | Degrees of Freedom                                            | Minimum Count                                                                           |
+|------|------------|------------|---------------|------------|------------|
+| R     | `sd`          | `na.rm`                           | `na.rm`: Boolean, removes `NA` values (default `FALSE`)        | Not implemented                                               | Not implemented                                                                         |
+| Acero | `stddev`      | `ddof`, `skip_nulls`, `min_count` | `skip_nulls`: Boolean, removes `NULL` values (default `FALSE`) | `ddof`: Integer, denominator degrees of freedom (default `0`) | `min_count`: Integer, returns `NULL` if fewer non-null values are present (default `1`) |
+
+: Comparing R's `sd` with Acero's `stddev` {#tbl-sd-stddev}
 
 There are also some differences in the options for these functions; while R's `sd` function has arguments `x`, the value to be passed in and `na.rm`, whether to remove `NA` values or not, Acero's stddev also has `ddof` - denominator degrees of freedom, `skip_nulls`, the equivalent of `na_rm`, and `min_count` - if there are fewer values than this, return `NULL`.
 
