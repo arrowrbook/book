@@ -392,6 +392,9 @@ pums_person |>
  collect()
 ```
 
+We'll take a closer look at joins again in [Section @sec-cleaning-pums] in a practical example where we explore combining a dataset with a reference table.
+If you're interested in other methods of combining data from different sources, check out [Section @sec-combining-datasets] where we show an example of querying data in different formats as a single dataset.
+
 ## How does all of this work? Verbs, functions, and arrow objects {#sec-dplyr-generics}
 
 The arrow R package contains a **dplyr backend**, an implementation of dplyr methods and functions that allows you to work with data using the same dplyr functionality you may be accustomed to using with regular R data frames.
