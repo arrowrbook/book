@@ -691,7 +691,7 @@ fill_pumas <- function(query) {
     right_join(pumas_languages) |>
     mutate(
       n_people = coalesce(n_people, 0),
-      prop_speaker = case_when(prop_speaker, 0)
+      prop_speaker = coalesce(prop_speaker, 0)
     )
 }
 ```
