@@ -696,6 +696,8 @@ fill_pumas <- function(query) {
 }
 ```
 
+Note that, as we discussed in [Section @sec-joins], none of the steps in `fill_pumas()` calls `collect()` or `compute()`: they are all adding steps to the query without evaluating it.
+
 _Now_ we're ready to plot.
 
 ```{r}

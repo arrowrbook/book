@@ -270,7 +270,7 @@ If the resulting data in your pipeline is small enough, you could pull the data 
 This isn't always an option though, so what should you do if your data is still too large to return to R memory?
 Find out more about this in a few sections when we talk about user-defined functions (@sec-UDF).
 
-## Joins
+## Joins {#sec-joins}
 
 **Joins** are used to combine data from 2 or more sources, based on columns that these sources have in common.
 The columns that we want to use to match our data sources are sometimes referred to as **join keys**.
