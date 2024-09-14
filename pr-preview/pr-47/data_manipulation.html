@@ -413,12 +413,6 @@ See $.data for the source Arrow object</code></pre>
 <section id="workflows-for-larger-datasets" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="workflows-for-larger-datasets"><span class="header-section-number">3.3</span> Workflows for larger datasets</h2>
 <p>Why does arrow avoid computing on the data until you explicitly tell it to? While you can work with Arrow data in memory, the biggest benefits of arrow come from its ability to work with data that is too big to fit into memory. After all, if the data were small enough to fit into memory, you would have many more tools available to you, both in R itself and in other packages. Since arrow is designed to work with larger-than-memory datasets, and calculations on such large data may be slow to complete, you should be clear about when you want to run such a query. The package doesn’t want to surprise you by crashing your session by running out of memory.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/segfault.png" class="img-fluid figure-img"></p>
-<figcaption>What you may see in RStudio if your R session runs out of memory</figcaption>
-</figure>
-</div>
 <p>If the output of your query is larger-than-memory, you won’t be able to return it to your R session without crashing it, and so this may require a different approach to validating your results.</p>
 <p>Let’s say you want to create a new query which looks at whether individuals over the age of 18 in the data have spent time in higher education or not. You might start off with something like this:</p>
 <div class="cell">
@@ -481,7 +475,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["JWMNP"],"name":[1],"type":["int"],"align":["right"]},{"label":["commute_hours"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"20","2":"0.33"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"30","2":"0.50"},{"1":"NA","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["JWMNP"],"name":[1],"type":["int"],"align":["right"]},{"label":["commute_hours"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"5","2":"0.08"},{"1":"15","2":"0.25"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"50","2":"0.83"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -863,7 +857,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wy","2":"2005","3":"8.873434"},{"1":"ak","2":"2018","3":"8.668406"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wi","2":"2005","3":"10.211859"},{"1":"az","2":"2018","3":"10.626682"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -962,7 +956,7 @@ See $metadata for additional Schema metadata</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.153547","2":"5","3":"8.153547"},{"1":"3.668406","2":"5","3":"8.668406"},{"1":"-6.846453","2":"15","3":"8.153547"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.182648","2":"5","3":"8.182648"},{"1":"-6.817352","2":"15","3":"8.182648"},{"1":"NA","2":"NA","3":"8.182648"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
