@@ -285,7 +285,7 @@ pums_person |>
   mutate(
     commute_diff = JWMNP - sum(JWMNP * PWGTP, na.rm = TRUE) /
       sum(PWGTP)
-  ) |>
+  )
 ```
 
 But, to illustrate some properties of joins, we'll decompose that into a calculation of a mean value, which we'll then join back onto the main dataset.
