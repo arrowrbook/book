@@ -243,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#workflows-for-larger-datasets" id="toc-workflows-for-larger-datasets" class="nav-link" data-scroll-target="#workflows-for-larger-datasets"><span class="header-section-number">3.3</span> Workflows for larger datasets</a></li>
   <li><a href="#sec-dplyr-use-funcs" id="toc-sec-dplyr-use-funcs" class="nav-link" data-scroll-target="#sec-dplyr-use-funcs"><span class="header-section-number">3.4</span> Using functions inside dplyr pipelines</a></li>
-  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins"><span class="header-section-number">3.5</span> Joins</a>
+  <li><a href="#sec-joins" id="toc-sec-joins" class="nav-link" data-scroll-target="#sec-joins"><span class="header-section-number">3.5</span> Joins</a>
   <ul class="collapse">
   <li><a href="#join-keys" id="toc-join-keys" class="nav-link" data-scroll-target="#join-keys"><span class="header-section-number">3.5.1</span> Join keys</a></li>
   </ul></li>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(<span class="st">"./data/person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Although a lot of the cleaning has been done — we’ve recoded all of the character and factor variables, replaced sentinels<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> for missing values with actual missing values, etc. — there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.</p>
+<p>Although a lot of the cleaning has been done—we’ve recoded all of the character and factor variables, replaced sentinels<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> for missing values with actual missing values, etc.—there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.</p>
 <p>You can create data analysis pipelines in arrow similarly to how you would using dplyr. For example, if you wanted to calculate the mean age of individuals from Washington across the years, you could run:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"39.00219"},{"1":"2005","2":"36.49880"},{"1":"2018","2":"38.57472"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2018","2":"38.57472"},{"1":"2021","2":"39.00219"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -328,7 +328,7 @@ See $.data for the source Arrow object</code></pre>
 </section>
 <section id="a-few-more-cleaning-tasks" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="a-few-more-cleaning-tasks"><span class="header-section-number">3.2</span> A few more cleaning tasks</h2>
-<p>There are still a number of cleaning tasks that we should do on the dataset. With the additional processing power provided by arrow, it’s possible to do these even at analysis time — which is helpful for cases where we might want to preserve the values from the underlying dataset (e.g.&nbsp;if we want to analyze the different wording of values over time), but when we run aggregations and queries, we want to collapse those and just run our analyses on the transformed data.</p>
+<p>There are still a number of cleaning tasks that we should do on the dataset. With the additional processing power provided by arrow, it’s possible to do these even at analysis time—which is helpful for cases where we might want to preserve the values from the underlying dataset (e.g.&nbsp;if we want to analyze the different wording of values over time), but when we run aggregations and queries, we want to collapse those and just run our analyses on the transformed data.</p>
 <section id="relabeling-values" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="relabeling-values"><span class="header-section-number">3.2.1</span> Relabeling values</h3>
 <p>It’s not unusual for large datasets like PUMS, which have been collected over many years, to contain inconsistencies between how variables are reported in different partitions. One example of this is the <code>CIT</code> column, which contains data about survey respondents’ US citizenship. If we compare the unique values in this column from the first year in our dataset, 2005, and a later year in the data, 2021, we can see that some of the reported labels have changed.</p>
@@ -383,7 +383,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"Not a U.S. citizen"},{"1":"U.S. citizen by naturalization"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"U.S. citizen by naturalization"},{"1":"Not a U.S. citizen"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -497,7 +497,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"OFF-STOCK CLERKS AND ORDER FILLERS"},{"1":"NA"},{"1":"SAL-CASHIERS"},{"1":"CON-CONSTRUCTION LABORERS"},{"1":"SAL-REAL ESTATE BROKERS AND SALES AGENTS"},{"1":"MGR-MISCELLANEOUS MANAGERS, INCLUDING POSTMASTERS AND MAIL SUPERINTENDENTS"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["SOCP"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"MGR-PROPERTY, REAL ESTATE, AND COMMUNITY ASSOCIATION MANAGERS"},{"1":"EDU-POSTSECONDARY TEACHERS"},{"1":"NA"},{"1":"UNEMPLOYED, WITH NO WORK EXPERIENCE IN THE LAST 5 YEARS**"},{"1":"EAT-DISHWASHERS"},{"1":"MED-REGISTERED NURSES"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -519,24 +519,351 @@ Call `print()` for query details</code></pre>
 <p>The error message shows that this expression is not supported in Arrow. This is because there is no Arrow C++ function that is the equivalent of <code>stringr::str_to_sentence()</code> and so it is not supported in the arrow R package. So what should you do if you encounter this?</p>
 <p>If the resulting data in your pipeline is small enough, you could pull the data back into R, and then continue your analysis. This isn’t always an option though, so what should you do if your data is still too large to return to R memory? Find out more about this in a few sections when we talk about user-defined functions (<a href="advanced_topics.html#sec-UDF" class="quarto-xref"><span>Section 7.3</span></a>).</p>
 </section>
-<section id="joins" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="joins"><span class="header-section-number">3.5</span> Joins</h2>
+<section id="sec-joins" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-joins"><span class="header-section-number">3.5</span> Joins</h2>
 <p><strong>Joins</strong> are used to combine data from 2 or more sources, based on columns that these sources have in common. The columns that we want to use to match our data sources are sometimes referred to as <strong>join keys</strong>.</p>
-<p>Let’s say for example, we want to compare the commute time of each person in the dataset to the mean commute time for their state.</p>
+<p>Let’s say for example, we want to compare the commute time of each person in the dataset to the (weighted) mean commute time for their state. We could express this more concisely using <code>mutate()</code>, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">commute_diff =</span> JWMNP <span class="sc">-</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset (query)
+SPORDER: int32
+RT: dictionary&lt;values=string, indices=int32&gt;
+SERIALNO: string
+PUMA: string
+ST: string
+ADJUST: int32
+PWGTP: int32
+AGEP: int32
+CIT: dictionary&lt;values=string, indices=int32&gt;
+COW: dictionary&lt;values=string, indices=int32&gt;
+DDRS: bool
+DEYE: bool
+DOUT: bool
+DPHY: bool
+DREM: bool
+DWRK: bool
+ENG: dictionary&lt;values=string, indices=int32&gt;
+FER: bool
+GCL: bool
+GCM: dictionary&lt;values=string, indices=int32&gt;
+GCR: bool
+INTP: int32
+JWMNP: int32
+JWRIP: string
+JWTR: string
+LANX: bool
+MAR: dictionary&lt;values=string, indices=int32&gt;
+MIG: bool
+MIL: dictionary&lt;values=string, indices=int32&gt;
+MILY: dictionary&lt;values=string, indices=int32&gt;
+MLPA: bool
+MLPB: bool
+MLPC: bool
+MLPD: bool
+MLPE: bool
+MLPF: bool
+MLPG: bool
+MLPH: bool
+MLPI: bool
+MLPJ: bool
+MLPK: bool
+NWAB: bool
+NWAV: dictionary&lt;values=string, indices=int32&gt;
+NWLA: bool
+NWLK: bool
+NWRE: bool
+OIP: int32
+PAP: int32
+REL: string
+RETP: int32
+SCH: bool
+SCHG: string
+SCHL: string
+SEMP: int32
+SEX: dictionary&lt;values=string, indices=int32&gt;
+SSIP: int32
+SSP: int32
+WAGP: int32
+WKHP: int32
+WKL: dictionary&lt;values=string, indices=int32&gt;
+WKW: dictionary&lt;values=string, indices=int32&gt;
+YOEP: string
+UWRK: bool
+ANC: dictionary&lt;values=string, indices=int32&gt;
+ANC1P: string
+ANC2P: string
+DECADE: dictionary&lt;values=string, indices=int32&gt;
+DRIVESP: dictionary&lt;values=string, indices=int32&gt;
+DS: bool
+ESP: dictionary&lt;values=string, indices=int32&gt;
+ESR: dictionary&lt;values=string, indices=int32&gt;
+HISP: string
+INDP: string
+JWAP: string
+JWDP: string
+LANP: string
+MIGPUMA: dictionary&lt;values=string, indices=int32&gt;
+MIGSP: string
+MSP: dictionary&lt;values=string, indices=int32&gt;
+NAICSP: string
+NATIVITY: dictionary&lt;values=string, indices=int32&gt;
+OC: bool
+OCCP: string
+PAOC: dictionary&lt;values=string, indices=int32&gt;
+PERNP: int32
+PINCP: int32
+POBP: string
+POVPIP: int32
+POWPUMA: dictionary&lt;values=string, indices=int32&gt;
+POWSP: string
+QTRBIR: dictionary&lt;values=string, indices=int32&gt;
+RAC1P: dictionary&lt;values=string, indices=int32&gt;
+RAC2P: string
+RAC3P: string
+RACAIAN: bool
+RACASN: bool
+RACBLK: bool
+RACNHPI: bool
+RACNUM: int32
+RACSOR: bool
+RACWHT: bool
+RC: bool
+SFN: dictionary&lt;values=string, indices=int32&gt;
+SFR: dictionary&lt;values=string, indices=int32&gt;
+SOCP: string
+VPS: string
+WAOB: dictionary&lt;values=string, indices=int32&gt;
+FAGEP: bool
+FANCP: bool
+FCITP: bool
+FCOWP: bool
+FDDRSP: bool
+FDEYEP: bool
+FDOUTP: bool
+FDPHYP: bool
+FDREMP: bool
+FDWRKP: bool
+FENGP: bool
+FESRP: bool
+FFERP: bool
+FGCLP: bool
+FGCMP: bool
+FGCRP: bool
+FHISP: bool
+FINDP: bool
+FINTP: bool
+FJWDP: bool
+FJWMNP: bool
+FJWRIP: bool
+FJWTRP: bool
+FLANP: bool
+FLANXP: bool
+FMARP: bool
+FMIGP: bool
+FMIGSP: bool
+FMILPP: bool
+FMILSP: bool
+FMILYP: bool
+FOCCP: bool
+FOIP: bool
+FPAP: bool
+FPOBP: bool
+FPOWSP: bool
+FRACP: bool
+FRELP: bool
+FRETP: bool
+FSCHGP: bool
+FSCHLP: bool
+FSCHP: bool
+FSEMP: bool
+FSEXP: bool
+FSSIP: bool
+FSSP: bool
+FWAGP: bool
+FWKHP: bool
+FWKLP: bool
+FWKWP: bool
+FYOEP: bool
+PWGTP1: int32
+PWGTP2: int32
+PWGTP3: int32
+PWGTP4: int32
+PWGTP5: int32
+PWGTP6: int32
+PWGTP7: int32
+PWGTP8: int32
+PWGTP9: int32
+PWGTP10: int32
+PWGTP11: int32
+PWGTP12: int32
+PWGTP13: int32
+PWGTP14: int32
+PWGTP15: int32
+PWGTP16: int32
+PWGTP17: int32
+PWGTP18: int32
+PWGTP19: int32
+PWGTP20: int32
+PWGTP21: int32
+PWGTP22: int32
+PWGTP23: int32
+PWGTP24: int32
+PWGTP25: int32
+PWGTP26: int32
+PWGTP27: int32
+PWGTP28: int32
+PWGTP29: int32
+PWGTP30: int32
+PWGTP31: int32
+PWGTP32: int32
+PWGTP33: int32
+PWGTP34: int32
+PWGTP35: int32
+PWGTP36: int32
+PWGTP37: int32
+PWGTP38: int32
+PWGTP39: int32
+PWGTP40: int32
+PWGTP41: int32
+PWGTP42: int32
+PWGTP43: int32
+PWGTP44: int32
+PWGTP45: int32
+PWGTP46: int32
+PWGTP47: int32
+PWGTP48: int32
+PWGTP49: int32
+PWGTP50: int32
+PWGTP51: int32
+PWGTP52: int32
+PWGTP53: int32
+PWGTP54: int32
+PWGTP55: int32
+PWGTP56: int32
+PWGTP57: int32
+PWGTP58: int32
+PWGTP59: int32
+PWGTP60: int32
+PWGTP61: int32
+PWGTP62: int32
+PWGTP63: int32
+PWGTP64: int32
+PWGTP65: int32
+PWGTP66: int32
+PWGTP67: int32
+PWGTP68: int32
+PWGTP69: int32
+PWGTP70: int32
+PWGTP71: int32
+PWGTP72: int32
+PWGTP73: int32
+PWGTP74: int32
+PWGTP75: int32
+PWGTP76: int32
+PWGTP77: int32
+PWGTP78: int32
+PWGTP79: int32
+PWGTP80: int32
+NOP: dictionary&lt;values=string, indices=int32&gt;
+ADJINC: double
+CITWP: string
+DEAR: bool
+DRAT: dictionary&lt;values=string, indices=int32&gt;
+DRATX: bool
+HINS1: bool
+HINS2: bool
+HINS3: bool
+HINS4: bool
+HINS5: bool
+HINS6: bool
+HINS7: bool
+MARHD: bool
+MARHM: bool
+MARHT: dictionary&lt;values=string, indices=int32&gt;
+MARHW: bool
+MARHYP: string
+DIS: bool
+HICOV: bool
+PRIVCOV: bool
+PUBCOV: bool
+FCITWP: bool
+FDEARP: bool
+FDRATP: bool
+FDRATXP: bool
+FHINS1P: bool
+FHINS2P: bool
+FHINS3P: bool
+FHINS4P: bool
+FHINS5P: bool
+FHINS6P: bool
+FHINS7P: bool
+FMARHDP: bool
+FMARHMP: bool
+FMARHTP: bool
+FMARHWP: bool
+FMARHYP: bool
+WRK: bool
+FOD1P: string
+FOD2P: string
+SCIENGP: bool
+SCIENGRLP: bool
+FFODP: bool
+FHINS3C: dictionary&lt;values=string, indices=int32&gt;
+FHINS4C: dictionary&lt;values=string, indices=int32&gt;
+FHINS5C: dictionary&lt;values=string, indices=int32&gt;
+RELP: string
+FWRKP: bool
+FDISP: bool
+FPERNP: bool
+FPINCP: bool
+FPRIVCOVP: bool
+FPUBCOVP: bool
+RACNH: bool
+RACPI: bool
+SSPA: dictionary&lt;values=string, indices=int32&gt;
+MLPCD: bool
+MLPFG: bool
+FHICOVP: bool
+DIVISION: dictionary&lt;values=string, indices=int32&gt;
+REGION: dictionary&lt;values=string, indices=int32&gt;
+HIMRKS: dictionary&lt;values=string, indices=int32&gt;
+JWTRNS: string
+RELSHIPP: string
+WKWN: int32
+FHIMRKSP: bool
+FJWTRNSP: bool
+FRELSHIPP: bool
+FWKWNP: bool
+MLPIK: bool
+year: int32
+location: string
+commute_diff: double (subtract_checked(JWMNP, divide(cast(..temp0, {to_type=double, allow_int_overflow=false, allow_time_truncate=false, allow_time_overflow=false, allow_decimal_truncate=false, allow_float_truncate=false, allow_invalid_utf8=false}), cast(..temp1, {to_type=double, allow_int_overflow=false, allow_time_truncate=false, allow_time_overflow=false, allow_decimal_truncate=false, allow_float_truncate=false, allow_invalid_utf8=false}))))
+
+* Grouped by location, year
+See $.data for the source Arrow object</code></pre>
+</div>
+</div>
+<p>But, to illustrate some properties of joins, we’ll decompose that into a calculation of a mean value, which we’ll then join back onto the main dataset.</p>
 <p>We start by creating a reference table of mean commute time by state and year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mean_commute_time, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mean_commute_time, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"wa","2":"2005","3":"11.211869"},{"1":"wi","2":"2005","3":"10.211859"},{"1":"ca","2":"2005","3":"11.384758"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wy","2":"2005","3":"8.873434"},{"1":"ak","2":"2018","3":"8.668406"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -550,20 +877,20 @@ Call `print()` for query details</code></pre>
 </div>
 <p>The code to accomplish this looks something like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    commute_diff,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">commute_time =</span> JWMNP,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    mean_commute_time</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> JWMNP <span class="sc">-</span> mean_commute_time) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    commute_diff,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">commute_time =</span> JWMNP,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    mean_commute_time</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.182648","2":"5","3":"8.182648"},{"1":"-6.817352","2":"15","3":"8.182648"},{"1":"NA","2":"NA","3":"8.182648"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"-3.182648","2":"5","3":"8.182648"},{"1":"6.817352","2":"15","3":"8.182648"},{"1":"NA","2":"NA","3":"8.182648"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -572,19 +899,19 @@ Call `print()` for query details</code></pre>
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="join-keys"><span class="header-section-number">3.5.1</span> Join keys</h3>
 <p>One important thing to know about doing joins in arrow is that the data types of the join key columns must match. Let’s say we decided that we want to change the data type of the <code>year</code> column from a 32-bit integer to an 16-bit integer. We can change the column type using <code>cast()</code>, but if we then try to join our reference table, we get an error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `compute.arrow_dplyr_query()`:
 ! Invalid: Incompatible data types for corresponding join field keys: FieldRef.Name(year) of type int16 and FieldRef.Name(year) of type int32</code></pre>
 </div>
 </div>
-<p>The source of the error is in the difference in data types for the <code>year</code> column — we updated it in the main dataset to be an <code>int16()</code> but in the reference table, the <code>year</code> column is still an <code>int32()</code>. We can verify this by using the <code>schema()</code> function.</p>
+<p>The source of the error is in the difference in data types for the <code>year</code> column: we updated it in the main dataset to be an <code>int16()</code>, but in the reference table, the <code>year</code> column is still an <code>int32()</code>. We can verify this by using the <code>schema()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Schema
 location: string
@@ -592,18 +919,21 @@ year: int32
 mean_commute_time: double</code></pre>
 </div>
 </div>
-<p>To be able to perform the join, we must update one or both of the datasets so that the types match. The simplest thing to do in our case is update the data type of the lookup table. We can manually set the schema of the table by converting it to an Arrow Table and setting the schema at the same time.</p>
+<p>To be able to perform the join, we must update one or both of the datasets so that the types match. The simplest thing to do in our case is update the data type of the lookup table.</p>
+<p>In this example, we called <code>collect()</code> to pull our <code>mean_commute_time</code> reference table into our R session, and so it is a tibble. When we perform joins to data.frame or tibble object (we’ll just call these “data frames” from here on), arrow converts this object into an <strong>Arrow Table</strong>.</p>
+<p>An Arrow Table is equivalent to an R data frame. The key difference here is that the columns types are Arrow data types instead of R data types. When an Arrow Table is created from an R data frame, the data type of each column is automatically converted into its Arrow equivalent. For the most part, this automatic conversion is fine to ignore, but in some circumstances, like joining tables, we might want to manually specify the data types to convert to instead.</p>
+<p>We can manually set the schema of the reference table by converting it to an Arrow Table ourselves and setting the schema at the same time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time_arrow <span class="ot">&lt;-</span> <span class="fu">arrow_table</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  mean_commute_time,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="fu">schema</span>(</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">string</span>(),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">int16</span>(),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">double</span>()</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time_arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time_arrow <span class="ot">&lt;-</span> <span class="fu">arrow_table</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  mean_commute_time,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">schema =</span> <span class="fu">schema</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">string</span>(),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">int16</span>(),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">double</span>()</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">schema</span>(mean_commute_time_arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Schema
 location: string
@@ -615,20 +945,20 @@ See $metadata for additional Schema metadata</code></pre>
 </div>
 <p>The data type of the join key in the reference table now matches the data type in our original dataset, and now the join will work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>   mean_commute_time_arrow,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a> )<span class="sc">|&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>   commute_diff,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">commute_time =</span> JWMNP,</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>   mean_commute_time</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">cast</span>(year, <span class="fu">int16</span>())) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   mean_commute_time_arrow,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a> )<span class="sc">|&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">commute_diff =</span> mean_commute_time <span class="sc">-</span> JWMNP) <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>   commute_diff,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">commute_time =</span> JWMNP,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>   mean_commute_time</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">|&gt;</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -637,6 +967,339 @@ See $metadata for additional Schema metadata</code></pre>
 </div>
 </div>
 </div>
+<p>Joins are not restricted to data frames or Arrow Tables. You can join across datasets and across queries on datasets.</p>
+<p>We could have instead defined the query for <code>mean_compute_time</code> and not called <code>collect()</code>, and we could use that in the join.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mean_commute_time <span class="ot">&lt;-</span> pums_person <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location, year) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_commute_time =</span> <span class="fu">sum</span>(JWMNP <span class="sc">*</span> PWGTP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(PWGTP)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> JWMNP <span class="sc">-</span> mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset (query)
+SPORDER: int32
+RT: dictionary&lt;values=string, indices=int32&gt;
+SERIALNO: string
+PUMA: string
+ST: string
+ADJUST: int32
+PWGTP: int32
+AGEP: int32
+CIT: dictionary&lt;values=string, indices=int32&gt;
+COW: dictionary&lt;values=string, indices=int32&gt;
+DDRS: bool
+DEYE: bool
+DOUT: bool
+DPHY: bool
+DREM: bool
+DWRK: bool
+ENG: dictionary&lt;values=string, indices=int32&gt;
+FER: bool
+GCL: bool
+GCM: dictionary&lt;values=string, indices=int32&gt;
+GCR: bool
+INTP: int32
+JWMNP: int32
+JWRIP: string
+JWTR: string
+LANX: bool
+MAR: dictionary&lt;values=string, indices=int32&gt;
+MIG: bool
+MIL: dictionary&lt;values=string, indices=int32&gt;
+MILY: dictionary&lt;values=string, indices=int32&gt;
+MLPA: bool
+MLPB: bool
+MLPC: bool
+MLPD: bool
+MLPE: bool
+MLPF: bool
+MLPG: bool
+MLPH: bool
+MLPI: bool
+MLPJ: bool
+MLPK: bool
+NWAB: bool
+NWAV: dictionary&lt;values=string, indices=int32&gt;
+NWLA: bool
+NWLK: bool
+NWRE: bool
+OIP: int32
+PAP: int32
+REL: string
+RETP: int32
+SCH: bool
+SCHG: string
+SCHL: string
+SEMP: int32
+SEX: dictionary&lt;values=string, indices=int32&gt;
+SSIP: int32
+SSP: int32
+WAGP: int32
+WKHP: int32
+WKL: dictionary&lt;values=string, indices=int32&gt;
+WKW: dictionary&lt;values=string, indices=int32&gt;
+YOEP: string
+UWRK: bool
+ANC: dictionary&lt;values=string, indices=int32&gt;
+ANC1P: string
+ANC2P: string
+DECADE: dictionary&lt;values=string, indices=int32&gt;
+DRIVESP: dictionary&lt;values=string, indices=int32&gt;
+DS: bool
+ESP: dictionary&lt;values=string, indices=int32&gt;
+ESR: dictionary&lt;values=string, indices=int32&gt;
+HISP: string
+INDP: string
+JWAP: string
+JWDP: string
+LANP: string
+MIGPUMA: dictionary&lt;values=string, indices=int32&gt;
+MIGSP: string
+MSP: dictionary&lt;values=string, indices=int32&gt;
+NAICSP: string
+NATIVITY: dictionary&lt;values=string, indices=int32&gt;
+OC: bool
+OCCP: string
+PAOC: dictionary&lt;values=string, indices=int32&gt;
+PERNP: int32
+PINCP: int32
+POBP: string
+POVPIP: int32
+POWPUMA: dictionary&lt;values=string, indices=int32&gt;
+POWSP: string
+QTRBIR: dictionary&lt;values=string, indices=int32&gt;
+RAC1P: dictionary&lt;values=string, indices=int32&gt;
+RAC2P: string
+RAC3P: string
+RACAIAN: bool
+RACASN: bool
+RACBLK: bool
+RACNHPI: bool
+RACNUM: int32
+RACSOR: bool
+RACWHT: bool
+RC: bool
+SFN: dictionary&lt;values=string, indices=int32&gt;
+SFR: dictionary&lt;values=string, indices=int32&gt;
+SOCP: string
+VPS: string
+WAOB: dictionary&lt;values=string, indices=int32&gt;
+FAGEP: bool
+FANCP: bool
+FCITP: bool
+FCOWP: bool
+FDDRSP: bool
+FDEYEP: bool
+FDOUTP: bool
+FDPHYP: bool
+FDREMP: bool
+FDWRKP: bool
+FENGP: bool
+FESRP: bool
+FFERP: bool
+FGCLP: bool
+FGCMP: bool
+FGCRP: bool
+FHISP: bool
+FINDP: bool
+FINTP: bool
+FJWDP: bool
+FJWMNP: bool
+FJWRIP: bool
+FJWTRP: bool
+FLANP: bool
+FLANXP: bool
+FMARP: bool
+FMIGP: bool
+FMIGSP: bool
+FMILPP: bool
+FMILSP: bool
+FMILYP: bool
+FOCCP: bool
+FOIP: bool
+FPAP: bool
+FPOBP: bool
+FPOWSP: bool
+FRACP: bool
+FRELP: bool
+FRETP: bool
+FSCHGP: bool
+FSCHLP: bool
+FSCHP: bool
+FSEMP: bool
+FSEXP: bool
+FSSIP: bool
+FSSP: bool
+FWAGP: bool
+FWKHP: bool
+FWKLP: bool
+FWKWP: bool
+FYOEP: bool
+PWGTP1: int32
+PWGTP2: int32
+PWGTP3: int32
+PWGTP4: int32
+PWGTP5: int32
+PWGTP6: int32
+PWGTP7: int32
+PWGTP8: int32
+PWGTP9: int32
+PWGTP10: int32
+PWGTP11: int32
+PWGTP12: int32
+PWGTP13: int32
+PWGTP14: int32
+PWGTP15: int32
+PWGTP16: int32
+PWGTP17: int32
+PWGTP18: int32
+PWGTP19: int32
+PWGTP20: int32
+PWGTP21: int32
+PWGTP22: int32
+PWGTP23: int32
+PWGTP24: int32
+PWGTP25: int32
+PWGTP26: int32
+PWGTP27: int32
+PWGTP28: int32
+PWGTP29: int32
+PWGTP30: int32
+PWGTP31: int32
+PWGTP32: int32
+PWGTP33: int32
+PWGTP34: int32
+PWGTP35: int32
+PWGTP36: int32
+PWGTP37: int32
+PWGTP38: int32
+PWGTP39: int32
+PWGTP40: int32
+PWGTP41: int32
+PWGTP42: int32
+PWGTP43: int32
+PWGTP44: int32
+PWGTP45: int32
+PWGTP46: int32
+PWGTP47: int32
+PWGTP48: int32
+PWGTP49: int32
+PWGTP50: int32
+PWGTP51: int32
+PWGTP52: int32
+PWGTP53: int32
+PWGTP54: int32
+PWGTP55: int32
+PWGTP56: int32
+PWGTP57: int32
+PWGTP58: int32
+PWGTP59: int32
+PWGTP60: int32
+PWGTP61: int32
+PWGTP62: int32
+PWGTP63: int32
+PWGTP64: int32
+PWGTP65: int32
+PWGTP66: int32
+PWGTP67: int32
+PWGTP68: int32
+PWGTP69: int32
+PWGTP70: int32
+PWGTP71: int32
+PWGTP72: int32
+PWGTP73: int32
+PWGTP74: int32
+PWGTP75: int32
+PWGTP76: int32
+PWGTP77: int32
+PWGTP78: int32
+PWGTP79: int32
+PWGTP80: int32
+NOP: dictionary&lt;values=string, indices=int32&gt;
+ADJINC: double
+CITWP: string
+DEAR: bool
+DRAT: dictionary&lt;values=string, indices=int32&gt;
+DRATX: bool
+HINS1: bool
+HINS2: bool
+HINS3: bool
+HINS4: bool
+HINS5: bool
+HINS6: bool
+HINS7: bool
+MARHD: bool
+MARHM: bool
+MARHT: dictionary&lt;values=string, indices=int32&gt;
+MARHW: bool
+MARHYP: string
+DIS: bool
+HICOV: bool
+PRIVCOV: bool
+PUBCOV: bool
+FCITWP: bool
+FDEARP: bool
+FDRATP: bool
+FDRATXP: bool
+FHINS1P: bool
+FHINS2P: bool
+FHINS3P: bool
+FHINS4P: bool
+FHINS5P: bool
+FHINS6P: bool
+FHINS7P: bool
+FMARHDP: bool
+FMARHMP: bool
+FMARHTP: bool
+FMARHWP: bool
+FMARHYP: bool
+WRK: bool
+FOD1P: string
+FOD2P: string
+SCIENGP: bool
+SCIENGRLP: bool
+FFODP: bool
+FHINS3C: dictionary&lt;values=string, indices=int32&gt;
+FHINS4C: dictionary&lt;values=string, indices=int32&gt;
+FHINS5C: dictionary&lt;values=string, indices=int32&gt;
+RELP: string
+FWRKP: bool
+FDISP: bool
+FPERNP: bool
+FPINCP: bool
+FPRIVCOVP: bool
+FPUBCOVP: bool
+RACNH: bool
+RACPI: bool
+SSPA: dictionary&lt;values=string, indices=int32&gt;
+MLPCD: bool
+MLPFG: bool
+FHICOVP: bool
+DIVISION: dictionary&lt;values=string, indices=int32&gt;
+REGION: dictionary&lt;values=string, indices=int32&gt;
+HIMRKS: dictionary&lt;values=string, indices=int32&gt;
+JWTRNS: string
+RELSHIPP: string
+WKWN: int32
+FHIMRKSP: bool
+FJWTRNSP: bool
+FRELSHIPP: bool
+FWKWNP: bool
+MLPIK: bool
+year: int32
+location: string
+mean_commute_time: double
+commute_diff: double (subtract_checked(JWMNP, mean_commute_time))
+
+See $.data for the source Arrow object</code></pre>
+</div>
+</div>
+<p>We’ll take a closer look at joins again in <a href="files_and_formats.html#sec-cleaning-pums" class="quarto-xref">Section&nbsp;<span>4.4</span></a> in a practical example where we explore combining a dataset with a reference table. <a href="advanced_topics.html#sec-pums-pumas" class="quarto-xref">Section&nbsp;<span>7.5.5</span></a> also shows a practical use case of several kinds of joins to prepare sparse data for plotting. If you’re interested in other methods of combining data from different sources, check out <a href="datasets.html#sec-combining-datasets" class="quarto-xref">Section&nbsp;<span>5.7.3</span></a> where we show an example of querying data in different formats as a single dataset.</p>
 </section>
 </section>
 <section id="sec-dplyr-generics" class="level2" data-number="3.6">
@@ -662,7 +1325,7 @@ See $metadata for additional Schema metadata</code></pre>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Sentinel may be an unfamiliar term — you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as <code>-1</code> that means that the data is missing — not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Sentinel may be an unfamiliar term—you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as <code>-1</code> that means that the data is missing—not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note, that we might think we could use <code>summarize(mean_age = mean(AGEP))</code>, but because this dataset has row-level weights, we need to account for that in our analysis to get accurate results.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>The 2022 UseR! conference workshop on arrow, <span>“<a href="https://arrow-user2022.netlify.app/">Larger-Than-Memory Data Workflows with Apache Arrow</a>,” by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including <a href="https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support">datetime functions</a>.</span> We figured everyone had seen enough of the NYC taxi dataset and chose to use U.S. Census data for examples in this book. This means we can show some more interesting queries and results, but unfortunately, there is no interesting datetime data in it!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
