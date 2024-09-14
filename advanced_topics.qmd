@@ -3,13 +3,15 @@
 {{< include _knitr_hooks.qmd >}}
 
 ```{r}
+#| label: setup-advanced-data-manip
 #| include: FALSE
 library(arrow)
 library(dplyr)
-```
-```{r}
-#| label: setup-advanced-data-manip
-#| include: false
+library(vctrs)
+library(ggplot2)
+library(sf)
+library(tidyr)
+
 pums_person <- open_dataset("./data/person")
 ```
 
@@ -462,16 +464,6 @@ You may observe subtle differences in the user interface (the functions and argu
 And as we have shown, you can easily complement one with the other when you need, so it isn't a choice that locks you into one world or another.
 
 ## Extending Arrow and Geospatial Data {#sec-geo}
-
-```{r}
-#| include: FALSE
-library(arrow)
-library(dplyr)
-library(vctrs)
-library(ggplot2)
-library(sf)
-library(tidyr)
-```
 
 At this point, we've seen that the Arrow specification covers a wide range of data types which are commonly encountered in data storage systems, to maximize interoperability.
 That said, there are always going to be more data types out there for specialist uses.
