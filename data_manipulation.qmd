@@ -275,7 +275,20 @@ Find out more about this in a few sections when we talk about user-defined funct
 **Joins** are used to combine data from 2 or more sources, based on columns that these sources have in common.
 The columns that we want to use to match our data sources are sometimes referred to as **join keys**.
 
-Let's say for example, we want to compare the commute time of each person in the dataset to the mean commute time for their state.
+Let's say for example, we want to compare the commute time of each person in the dataset to the (weighted) mean commute time for their state.
+We could express this more concisely using `mutate()`, like this:
+
+```{r}
+#| label: de-meaned-commute
+pums_person |>
+  group_by(location, year) |>
+  mutate(
+    commute_diff = JWMNP - sum(JWMNP * PWGTP, na.rm = TRUE) /
+      sum(PWGTP)
+  ) |>
+```
+
+But, to illustrate some properties of joins, we'll decompose that into a calculation of a mean value, which we'll then join back onto the main dataset.
 
 We start by creating a reference table of mean commute time by state and year.
 
@@ -327,7 +340,7 @@ pums_person |>
   collect()
 ```
 
-The source of the error is in the difference in data types for the `year` column---we updated it in the main dataset to be an `int16()` but in the reference table, the `year` column is still an `int32()`.
+The source of the error is in the difference in data types for the `year` column: we updated it in the main dataset to be an `int16()`, but in the reference table, the `year` column is still an `int32()`.
 We can verify this by using the `schema()` function.
 
 ```{r}
@@ -338,7 +351,7 @@ schema(mean_commute_time)
 To be able to perform the join, we must update one or both of the datasets so that the types match.
 The simplest thing to do in our case is update the data type of the lookup table.
 
-In the example earlier, we called `collect()` to pull our `mean_commute_time` reference table into our R session, and so it is a tibble.
+In this example, we called `collect()` to pull our `mean_commute_time` reference table into our R session, and so it is a tibble.
 When we perform joins to data.frame or tibble object (we'll just call these "data frames" from here on), arrow converts this object into an **Arrow Table**.
 
 An Arrow Table is equivalent to an R data frame.
@@ -392,7 +405,27 @@ pums_person |>
  collect()
 ```
 
+Joins are not restricted to data frames or Arrow Tables.
+You can join across datasets and across queries on datasets.
+
+We could have instead defined the query for `mean_compute_time` and not called `collect()`, and we could use that in the join.
+
+```{r}
+#| label: create-ref-query
+mean_commute_time <- pums_person |>
+  group_by(location, year) |>
+  summarize(
+    mean_commute_time = sum(JWMNP * PWGTP, na.rm = TRUE) /
+      sum(PWGTP)
+  )
+
+pums_person |>
+  left_join(mean_commute_time, by = c("location", "year")) |>
+  mutate(commute_diff = JWMNP - mean_commute_time)
+```
+
 We'll take a closer look at joins again in [Section @sec-cleaning-pums] in a practical example where we explore combining a dataset with a reference table.
+[Section @sec-pums-pumas] also shows a practical use case of several kinds of joins to prepare sparse data for plotting.
 If you're interested in other methods of combining data from different sources, check out [Section @sec-combining-datasets] where we show an example of querying data in different formats as a single dataset.
 
 ## How does all of this work? Verbs, functions, and arrow objects {#sec-dplyr-generics}

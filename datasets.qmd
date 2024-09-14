@@ -975,7 +975,7 @@ This approach may be slower than the previous one as arrow has to try to read in
 fs::dir_delete(file.path(tmp_dir, "person_with_metadata"))
 ```
 
-### Combining datasets
+### Combining datasets {#sec-combining-datasets}
 
 You may have datasets that consist of files in multiple formats.
 For example, perhaps you have a nightly ETL job that turns CSV to Parquet, but you want to analyze all of the data, including the newest CSV-only data that hasn't been converted to Parquet yet.
