@@ -79,7 +79,7 @@ Other functions have slightly different names.
 While in R we use the `-` operator to subtract one value from another, in Acero, there are functions `subtract()` and `subtract_checked()`.
 The latter function is more commonly used as it accounts for overflow[^overflow] and raises an error if the value returned is beyond the minimum or maximum value for that data type.
 
-[^overflow]: Overflow is when a numeric value is larger than the type can support. For example, unsigned 8 bit integers can represent numbers 0-255. So if we add 250 + 10 we would have a value that is 260, which is not able to be represented with 8 bits. The checked variants of arithmetic calculations will raise an error in this case, which is almost always what we want in these circumstances.  
+[^overflow]: Overflow is when a numeric value is larger than the type can support. For example, unsigned 8 bit integers can represent numbers 0-255. So if we add 250 + 10 we would have a value that is 260, which is not able to be represented with 8 bits. The checked variants of arithmetic calculations will raise an error in this case, which is almost always what we want in these circumstances.
 
 Let's take a closer look at an example.
 
@@ -629,8 +629,8 @@ In the PUMS dataset, the smallest geographic area is called a [PUMA (Public Use 
 These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state.
 
 As always, we start with our PUMS dataset.
-We build up a `dplyr` query to clean some data inconsistencies (varying capitalization), group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA.
-We can see that this returns a dataframe with one row per PUMA and language, with the number of speakers and the proportion of speakers compared to the overall population.
+We build up a `dplyr` query to clean some data inconsistencies, such as varying capitalization, then group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA.
+We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the proportion of speakers compared to the overall population.
 
 ```{r}
 #| label: pums-langauge
@@ -660,52 +660,45 @@ puma_by_langauge |>
   collect()
 ```
 
-And then we can take that data, join it to our arrow table of PUMAs and plot it using `ggplot2`.[^pumafill]
-We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.
+And then we can take that data, join it to our arrow table of PUMAs and plot it using `ggplot2`.
+There is one other cleaning step we need, though, and we've factored it out into a `fill_pumas()` function.
+The function is a wrapper around some dplyr joins to make it so that each PUMA has one row for each language.
+Because many languages are not spoken at all in many PUMAs, we need to do this so that the plots still show those PUMAs as 0, not `NA`.
 
-[^pumafill]: You may notice a function `fill_pumas()` in the code below.
-    This function is a wrapper around some dplyr joins to make it so that each PUMA has one row for each language.
-    Because many languages are not spoken at all in many PUMAs, we need to do this so that the plots still show those PUMAs as 0.
+```{r}
+#| label: pums-langauge-fill-in
+fill_pumas <- function(query) {
+  # unique combination of every state + puma + year
+  unique_pumas <- query |>
+    distinct(location, PUMA, year) |>
+    # add `key` as a constant so we can join with `unique_languages`
+    mutate(key = 1)
 
-    ```{r}
-    #| label: pums-langauge-fill-in
-    # fill in PUMA-language combinations
-    fill_pumas <- function(query) {
-      # unique combination of every state + puma + year
-      unique_pumas <- query |>
-        select(location, PUMA, year) |>
-        group_by(location, PUMA, year) |>
-        summarize() |>
-        mutate(key = 1)
+  # all of the languages
+  unique_languages <- query |>
+    distinct(language) |>
+    mutate(key = 1)
 
-      # all of the languages
-      unique_languages <- query |>
-        group_by(language) |>
-        summarize() |>
-        mutate(key = 1)
+  # crossed together
+  pumas_languages <- unique_pumas |>
+    full_join(unique_languages) |>
+    select(-key)
 
-      # crossed together
-      pumas_languages <- unique_pumas |>
-        full_join(unique_languages) |>
-        select(-key)
+  # return the original query with all of the
+  # unique combinations, when those values are
+  # NA, make them 0
+  query |>
+    right_join(pumas_languages) |>
+    mutate(
+      n_people = coalesce(n_people, 0),
+      prop_speaker = coalesce(prop_speaker, 0)
+    )
+}
+```
 
-      # return the original query with all of the
-      # unique combinations, when those values are
-      # NA, make them 0
-      query |>
-        right_join(pumas_languages) |>
-        mutate(
-          n_people = case_when(
-            is.na(n_people) ~ 0,
-            TRUE ~ n_people
-          ),
-          prop_speaker = case_when(
-            is.na(prop_speaker) ~ 0,
-            TRUE ~ prop_speaker
-          )
-        )
-    }
-    ```
+Note that, as we discussed in [Section @sec-joins], none of the steps in `fill_pumas()` calls `collect()` or `compute()`: they are all adding steps to the query without evaluating it.
+
+_Now_ we're ready to plot.
 
 ```{r}
 #| label: pums-langauge-all-US
@@ -774,6 +767,7 @@ plot
 ```
 :::
 
+We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.
 
 ::: {.callout-tip}
 That plotting code might look intimidating at first, but most of it is to add theming and to get the projection on the globe.

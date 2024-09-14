@@ -18,7 +18,7 @@ The data was recoded with the following general principles:
 
 -   If there were string values and there were less than or equal to 10 unique values, we converted these to factors.
 -   If there were string values and there were more than 10 unique values, we converted these to strings.
--   We used integer or floats for values that were numeric in nature, and recoded special values (*eg* variable `RETP` "Retirement income past 12 months" where a value of -1 means "N/A (Less than 15 years old)") that are missing-like as `NA`. Note: there are also a number of values that are top and bottom coded — these are also converted to numerics (*eg* so a maximum value in those columns actually represents that value or larger; variable `WKHP` or "Usual hours worked per week past 12 months" which has a value of 99 marked as "99 Or More Usual Hours").
+-   We used integer or floats for values that were numeric in nature, and recoded special values (*eg* variable `RETP` "Retirement income past 12 months" where a value of -1 means "N/A (Less than 15 years old)") that are missing-like as `NA`. Note: there are also a number of values that are top and bottom coded---these are also converted to numerics (*eg* so a maximum value in those columns actually represents that value or larger; variable `WKHP` or "Usual hours worked per week past 12 months" which has a value of 99 marked as "99 Or More Usual Hours").
 -   If there were codes that broadly corresponded to `TRUE` and `FALSE` (e.g. "yes" and "no"), these were converted into booleans
 
 The book [Analyzing US Census Data: Methods, Maps, and Models in R](https://walker-data.com/census-r/index.html) has [chapters dedicated to analyzing this kind of microdata](https://walker-data.com/census-r/introduction-to-census-microdata.html) with `tidycensus` package.
@@ -32,7 +32,7 @@ There are two datasets, one at `s3://scaling-arrow-pums/person/` which has perso
 
 Each of these datasets is subsequently partitioned by year and then by state/territory with prefixes like `year=2019/location=il` with Parquet files below that.
 
-## Data dictionary 
+## Data dictionary
 
 ```{r}
 library(arrow)
@@ -42,37 +42,37 @@ pums_vars <- read_parquet("./all_pums_variables.parquet")
 
 # type hardcode
 hardcodes <- c(
-  "ADJUST" = "both", 
-  "CONCAT_ID" = "neither", 
-  "DIVISION" = "both", 
-  "MIGPUMA" = "person", 
-  "MIGSP" = "person", 
-  "POBP" = "person", 
+  "ADJUST" = "both",
+  "CONCAT_ID" = "neither",
+  "DIVISION" = "both",
+  "MIGPUMA" = "person",
+  "MIGSP" = "person",
+  "POBP" = "person",
   "POWPUMA" = "person",
   "POWSP" = "person",
-  "PUMA" = "both", 
+  "PUMA" = "both",
   "PWGTP" = "person",
-  "PWGTP1-80" = "person", 
-  "RECORD_TYPE" = "neither", 
-  "REGION" = "both", 
-  "REPWALL" = "neither", 
-  "RT" = "both", 
+  "PWGTP1-80" = "person",
+  "RECORD_TYPE" = "neither",
+  "REGION" = "both",
+  "REPWALL" = "neither",
+  "RT" = "both",
   "ST" = "both",
-  "WGTP" = "household", 
-  "WGTP1-80" = "household", 
-  "for" = "neither", 
-  "in" = "neither", 
+  "WGTP" = "household",
+  "WGTP1-80" = "household",
+  "for" = "neither",
+  "in" = "neither",
   "ucgid" = "neither"
 )
 
-vars_cleaned <- pums_vars |> 
+vars_cleaned <- pums_vars |>
   # collapse the weight variables
   mutate(
     label = case_when(
       grepl("^WGTP.+", name) ~ "Person's Weight replicate 1-80; multiple variables",
       grepl("^PWGTP.+", name) ~ "Housing Weight replicate 1-80; multiple variables",
       # RT is sometimes Record type, sometimes Record Type
-      grepl("^RT$", name) ~ "Record type", 
+      grepl("^RT$", name) ~ "Record type",
       .default = label
     ),
     name = case_when(
@@ -88,8 +88,8 @@ vars_cleaned <- pums_vars |>
       is.na(suggested_weight) ~ hardcodes[name],
       .default = NA
     )
-  ) |> 
-  group_by(name, dataset) |> 
+  ) |>
+  group_by(name, dataset) |>
   summarize(description = last(label), dataset = unique(dataset)) |>
   ungroup()
 ```
@@ -98,9 +98,9 @@ vars_cleaned <- pums_vars |>
 ### Person data
 
 ```{r}
-vars_cleaned |> 
+vars_cleaned |>
   filter(dataset %in% c("person", "both")) |>
-  select(name, description) |> 
+  select(name, description) |>
   arrange(name) |>
   gt::gt() |>
   gt::opt_interactive(
@@ -114,9 +114,9 @@ vars_cleaned |>
 ### Household data
 
 ```{r}
-vars_cleaned |> 
+vars_cleaned |>
   filter(dataset %in% c("household", "both")) |>
-  select(name, description) |> 
+  select(name, description) |>
   arrange(name) |>
   gt::gt() |>
   gt::opt_interactive(
@@ -126,4 +126,4 @@ vars_cleaned |>
   ) |>
   gt::cols_width(name ~ px(125))
 ```
-::: 
+:::
