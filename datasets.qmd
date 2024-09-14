@@ -115,17 +115,19 @@ The previous examples used Arrow and Parquet datasets, but Arrow supports the sa
 
 The different functions for reading and writing datasets are shown in @tbl-dataset-funcs below.
 
-+-----------------------------+--------------------------------------------------------+------------------------------------+
-| Format                      | Reading                                                | Writing                            |
-+:===========================+:======================================================+:==================================+
-| Parquet                     | open_dataset()                                         | write_dataset()                    |
-+-----------------------------+--------------------------------------------------------+------------------------------------+
-| CSV or other delimited file | open_dataset(..., format = "csv"), open_csv_dataset(), | write_dataset(..., format = "csv") |
-|                             |                                                        |                                    |
-|                             | open_delim_dataset()                                   |                                    |
-+-----------------------------+--------------------------------------------------------+------------------------------------+
-| Line-delimited JSON         | open_dataset(..., format = "json")                     | (Not supported)                    |
-+-----------------------------+--------------------------------------------------------+------------------------------------+
++---------------------------+------------------------------------+------------------------------------+
+| Format                    | Reading                            | Writing                            |
++:==========================+:===================================+:===================================+
+| Parquet                   | open_dataset()                     | write_dataset()                    |
++---------------------------+------------------------------------+------------------------------------+
+| CSV                       | open_dataset(..., format = "csv"), | write_dataset(..., format = "csv") |
+|                           |                                    |                                    |
+| (or other delimited file) | open_csv_dataset(),                |                                    |
+|                           |                                    |                                    |
+|                           | open_delim_dataset()               |                                    |
++---------------------------+------------------------------------+------------------------------------+
+| Line-delimited JSON       | open_dataset(..., format = "json") | (Not supported)                    |
++---------------------------+------------------------------------+------------------------------------+
 
 : Functions for reading and writing datasets {#tbl-dataset-funcs}
 
