@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#datasets-consisting-of-individually-specified-files" id="toc-datasets-consisting-of-individually-specified-files" class="nav-link" data-scroll-target="#datasets-consisting-of-individually-specified-files"><span class="header-section-number">5.7.1</span> Datasets consisting of individually-specified files</a></li>
   <li><a href="#excluding-files-based-on-filename-or-file-validity" id="toc-excluding-files-based-on-filename-or-file-validity" class="nav-link" data-scroll-target="#excluding-files-based-on-filename-or-file-validity"><span class="header-section-number">5.7.2</span> Excluding files based on filename or file validity</a></li>
-  <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets"><span class="header-section-number">5.7.3</span> Combining datasets</a></li>
+  <li><a href="#sec-combining-datasets" id="toc-sec-combining-datasets" class="nav-link" data-scroll-target="#sec-combining-datasets"><span class="header-section-number">5.7.3</span> Combining datasets</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.8</span> Summary</a></li>
   </ul>
@@ -1168,8 +1168,8 @@ AGEP: int8</code></pre>
 </div>
 <p>This approach may be slower than the previous one as arrow has to try to read in all of the files to see if they are valid, but can be useful when there is no common prefix to exclude files by.</p>
 </section>
-<section id="combining-datasets" class="level3" data-number="5.7.3">
-<h3 data-number="5.7.3" class="anchored" data-anchor-id="combining-datasets"><span class="header-section-number">5.7.3</span> Combining datasets</h3>
+<section id="sec-combining-datasets" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="sec-combining-datasets"><span class="header-section-number">5.7.3</span> Combining datasets</h3>
 <p>You may have datasets that consist of files in multiple formats. For example, perhaps you have a nightly ETL job that turns CSV to Parquet, but you want to analyze all of the data, including the newest CSV-only data that hasn’t been converted to Parquet yet.</p>
 <p>You still need to be able to work with the old data as well as the new data, and analyse it together. In arrow it is possible to combine multiple datasets into a single dataset. First, we create a dataset from the Parquet data. In the example below, all we need to do is pass arrow the path to the Parquet dataset. The creation of the CSV dataset requires a bit more effort as we can’t rely on the use of metadata to help us, like with the Parquet data. We need to pass <code>skip = 1</code> so the header row isn’t read in as data, manually set the schema of the CSV data using the schema from the Parquet dataset, and also pass in another schema describing the partitioning variable. We can then use <code>dplyr::union_all()</code> to combine our 2 datasets into one.</p>
 <div class="cell">
@@ -1196,7 +1196,7 @@ AGEP: int8</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"12.220912"},{"1":"2021","2":"9.562817"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"9.562817"},{"1":"2018","2":"12.220912"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>

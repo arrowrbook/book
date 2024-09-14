@@ -633,7 +633,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"az","2":"max_commute","3":"184"},{"1":"wi","2":"max_commute","3":"177"},{"1":"ar","2":"max_commute","3":"186"},{"1":"wa","2":"max_commute","3":"152"},{"1":"ak","2":"max_commute","3":"194"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wy","2":"max_commute","3":"176"},{"1":"al","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"ak","2":"max_commute","3":"194"},{"1":"al","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wv","2":"max_commute","3":"193"},{"1":"az","2":"max_commute","3":"184"},{"1":"wi","2":"max_commute","3":"177"},{"1":"wy","2":"max_commute","3":"176"},{"1":"ar","2":"max_commute","3":"186"},{"1":"al","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -882,7 +882,7 @@ $creator$version
 <section id="sec-pums-pumas" class="level3" data-number="7.5.5">
 <h3 data-number="7.5.5" class="anchored" data-anchor-id="sec-pums-pumas"><span class="header-section-number">7.5.5</span> Enhancing PUMS data with GeoParquet PUMAs data</h3>
 <p>Putting this all together, let’s try making a plot<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> showing different languages spoken throughout the United States. The analysis we will build up is the percentage of speakers for languages spoken in the US. We will then plot this data, subsetting to a few interesting languages depending on what region we are plotting. In the PUMS dataset, the smallest geographic area is called a <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/pumas.html">PUMA (Public Use Microdata Areas)</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> These PUMAs are designed to have approximately 100,000 people in them, and must be within a single state.</p>
-<p>As always, we start with our PUMS dataset. We build up a <code>dplyr</code> query to clean some data inconsistencies (varying capitalization), group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA. We can see that this returns a dataframe with one row per PUMA and language, with the number of speakers and the proportion of speakers compared to the overall population.</p>
+<p>As always, we start with our PUMS dataset. We build up a <code>dplyr</code> query to clean some data inconsistencies, such as varying capitalization, then group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA. We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the proportion of speakers compared to the overall population.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pums_person <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(<span class="st">"./data/person"</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -911,12 +911,43 @@ $creator$version
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"wa","2":"10100","3":"2018","4":"english","5":"207941","6":"0.921609907"},{"1":"wa","2":"11502","3":"2018","4":"english","5":"116156","6":"0.903958847"},{"1":"wa","2":"11900","3":"2018","4":"english","5":"102095","6":"0.940959070"},{"1":"wa","2":"11401","3":"2018","4":"german","5":"671","6":"0.003850789"},{"1":"wa","2":"10901","3":"2018","4":"english","5":"88704","6":"0.701644479"},{"1":"wa","2":"11609","3":"2018","4":"english","5":"104996","6":"0.673521884"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["PUMA"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_people"],"name":[5],"type":["int"],"align":["right"]},{"label":["prop_speaker"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"az","2":"00400","3":"2018","4":"english","5":"109171","6":"0.7628787"},{"1":"az","2":"00300","3":"2018","4":"navajo","5":"55285","6":"0.3031491"},{"1":"az","2":"00104","3":"2018","4":"english","5":"93013","6":"0.7741793"},{"1":"az","2":"00600","3":"2018","4":"english","5":"204459","6":"0.8938606"},{"1":"az","2":"00500","3":"2018","4":"english","5":"207356","6":"0.8939184"},{"1":"az","2":"00126","3":"2018","4":"english","5":"105728","6":"0.8220183"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<p>And then we can take that data, join it to our arrow table of PUMAs and plot it using <code>ggplot2</code>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.</p>
+<p>And then we can take that data, join it to our arrow table of PUMAs and plot it using <code>ggplot2</code>. There is one other cleaning step we need, though, and we’ve factored it out into a <code>fill_pumas()</code> function. The function is a wrapper around some dplyr joins to make it so that each PUMA has one row for each language. Because many languages are not spoken at all in many PUMAs, we need to do this so that the plots still show those PUMAs as 0, not <code>NA</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fill_pumas <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># unique combination of every state + puma + year</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  unique_pumas <span class="ot">&lt;-</span> query <span class="sc">|&gt;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(location, PUMA, year) <span class="sc">|&gt;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add `key` as a constant so we can join with `unique_languages`</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">key =</span> <span class="dv">1</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all of the languages</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  unique_languages <span class="ot">&lt;-</span> query <span class="sc">|&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(language) <span class="sc">|&gt;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">key =</span> <span class="dv">1</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># crossed together</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  pumas_languages <span class="ot">&lt;-</span> unique_pumas <span class="sc">|&gt;</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">full_join</span>(unique_languages) <span class="sc">|&gt;</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>key)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the original query with all of the</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># unique combinations, when those values are</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NA, make them 0</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  query <span class="sc">|&gt;</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">right_join</span>(pumas_languages) <span class="sc">|&gt;</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_people =</span> <span class="fu">coalesce</span>(n_people, <span class="dv">0</span>),</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">prop_speaker =</span> <span class="fu">coalesce</span>(prop_speaker, <span class="dv">0</span>)</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that, as we discussed in <a href="data_manipulation.html#sec-joins" class="quarto-xref">Section&nbsp;<span>3.5</span></a>, none of the steps in <code>fill_pumas()</code> calls <code>collect()</code> or <code>compute()</code>: they are all adding steps to the query without evaluating it.</p>
+<p><em>Now</em> we’re ready to plot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>puma_by_langauge <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"english"</span>, <span class="st">"spanish"</span>, <span class="st">"french"</span>, <span class="st">"navajo"</span>)) <span class="sc">|&gt;</span></span>
@@ -950,6 +981,7 @@ $creator$version
 </div>
 </div>
 </div>
+<p>We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1077,46 +1109,6 @@ Tip
 <li id="fn4"><p>Without this, some of the Aleutian islands which are to the west of the 180th meridian will be plotted to the east of the rest of the United States.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>This type of plot is called a choropleth where a geographic representation is colored or shaded to show different values in different areas.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>There is also a more <span><a href="https://walker-data.com/census-r/introduction-to-census-microdata.html#what-is-a-puma">detailed description of PUMAs</a> in Kyle Walker’s <em>Analyzing US Census Data: Methods, Maps, and Models in R</em></span> <a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>You may notice a function <code>fill_pumas()</code> in the code below. This function is a wrapper around some dplyr joins to make it so that each PUMA has one row for each language. Because many languages are not spoken at all in many PUMAs, we need to do this so that the plots still show those PUMAs as 0.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill in PUMA-language combinations</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>fill_pumas <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># unique combination of every state + puma + year</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  unique_pumas <span class="ot">&lt;-</span> query <span class="sc">|&gt;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(location, PUMA, year) <span class="sc">|&gt;</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(location, PUMA, year) <span class="sc">|&gt;</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">key =</span> <span class="dv">1</span>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all of the languages</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  unique_languages <span class="ot">&lt;-</span> query <span class="sc">|&gt;</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(language) <span class="sc">|&gt;</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">key =</span> <span class="dv">1</span>)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># crossed together</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  pumas_languages <span class="ot">&lt;-</span> unique_pumas <span class="sc">|&gt;</span></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">full_join</span>(unique_languages) <span class="sc">|&gt;</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>key)</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the original query with all of the</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># unique combinations, when those values are</span></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NA, make them 0</span></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  query <span class="sc">|&gt;</span></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">right_join</span>(pumas_languages) <span class="sc">|&gt;</span></span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_people =</span> <span class="fu">case_when</span>(</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.na</span>(n_people) <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> n_people</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">prop_speaker =</span> <span class="fu">case_when</span>(</span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.na</span>(prop_speaker) <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> prop_speaker</span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section>
 
