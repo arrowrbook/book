@@ -275,7 +275,13 @@ You'll also be slowed down a little by the fact that arrow has to convert back a
 
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
+::: {.content-visible when-format="html"}
 ![How Acero bindings work](images/excalidraw/adv_normal.png)
+:::
+::: {.content-visible when-format="pdf"}
+![How Acero bindings work](images/excalidraw/adv_normal_bw.png)
+:::
+
 
 The extra steps needed are because we are working more directly with Acero, the part of the Arrow C++ library that runs the data manipulation queries, and as Acero is written in C++ we have to make sure we are giving it the correct information to work with.
 
@@ -294,8 +300,12 @@ This concept is called "backpressure", a term which originally was used to descr
 In this context, backpressure means that if the queue of data that is waiting to be written after processing is at risk of growing too large for the available memory, Acero will slow down how much data is being read in, to prevent using too much memory and crashing.
 For compatibility with this piece-wise reading and writing, UDFs need to be able to operate in smaller chunks of data, which is why they can only use scalar functions and run on one row of data at a time.
 
+::: {.content-visible when-format="html"}
 ![How UDFs work](images/excalidraw/adv_udf.png)
-
+:::
+::: {.content-visible when-format="pdf"}
+![How UDFs work](images/excalidraw/adv_udf_bw.png)
+:::
 
 Most of the time you don't need to worry about these internal details of Acero!
 However, when working with UDFs, we're working a lot closer to Acero's internals, and need to step into these deeper waters.

@@ -53,3 +53,5 @@ _hand waved for now_: get the raw PUMS CSVs and extract them to `{some path wher
 ## Editing images
 
 For all images, there is an excalidraw file, a png and an svg file.  To make changes to images, open the excalidraw file at <https://excalidraw.com/>, make changes there, and then export the results in all three formats, overwriting the existing images in the repo.
+
+To create the greyscale version of the images, use the script `greyscale_images.R` which can be found in this directory.
