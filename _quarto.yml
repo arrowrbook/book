@@ -40,6 +40,9 @@ format:
       right: |
         This book was built with <a href="https://quarto.org/">Quarto</a>.
   pdf:
+    template-partials: 
+      - latex/title.tex
+    highlight-style: monochrome
     toc: false
     toc-title: "Contents"
     keep-tex: true
@@ -59,15 +62,10 @@ format:
       opts_chunk:
         R.options:
           width: 64
-    include-in-header: 
-      text: |
-        \usepackage{fvextra}
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-        \frontmatter
+    include-in-header: latex/in_header.tex
     include-before-body: latex/before_body.tex
         
     # highlight-style: grayscale-custom.theme
-    # include-in-header: latex/preamble.tex
     # include-before-body: latex/before_body.tex
     # include-after-body: latex/after_body.tex
 

@@ -674,7 +674,14 @@ However, you still do have access to that metadata under the `metadata` and then
 
 Another feature of Parquet is that its files are divided into smaller pieces.
 
-![Parquet file components](images/excalidraw/files_formats_parquet.png) A Parquet file is made up of groups of rows, known as **row groups**. Each of these is divided up into subsections of each column: **column chunks**. These column chunks are then further divided into pages.
+::: {.content-visible when-format="html"}
+![Parquet file components](images/excalidraw/files_formats_parquet.png) 
+:::
+::: {.content-visible when-format="pdf"}
+![Parquet file components](images/excalidraw/files_formats_parquet_bw.png) 
+:::
+
+A Parquet file is made up of groups of rows, known as **row groups**. Each of these is divided up into subsections of each column: **column chunks**. These column chunks are then further divided into pages.
 Earlier, we mentioned that the schema is stored with the data, but there's a lot more metadata in a Parquet file than this.
 There's also metadata on all of the subcomponents of a Parquet file.
 The metadata contains information on things like how many rows in that particular subcomponent, and summary statistics about the data contained inside.

@@ -26,7 +26,12 @@ Datasets don't represent data loaded into memory, but instead contains informati
 -   what format the files are in
 -   what the schema of those files is---the column names and types
 
+::: {.content-visible when-format="html"}
 ![Dataset components](images/excalidraw/datasets_dataset.png){width="100%"}
+:::
+::: {.content-visible when-format="pdf"}
+![Dataset components](images/excalidraw/datasets_dataset_bw.png){width="100%"}
+:::
 
 If we take a look at the PUMS person dataset, we can see that it contains a total of 832 files, which are in Parquet format.
 
@@ -147,7 +152,7 @@ We have already been working with partitioned data: the data in the PUMS person 
 :::
 
 ::: {.content-hidden when-format="html"}
-![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums.png){height="70%"}
+![Folder and file structure of a partitioned dataset](images/excalidraw/datasets_pums_bw.png){height="70%"}
 :::
 
 Partitioning is where groups of rows of data have been saved to separate files.

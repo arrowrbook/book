@@ -155,7 +155,13 @@ Many traditional databases and common formats for storing tabular data, such as 
 This format is great for transactional workflows, where entire rows are being retrieved or updated, or extra rows are being appended to the data.
 However, it's less well suited for analytic workflows involving data manipulation, where we want to select a subset of columns, and perform operations like aggregated summaries.
 
+::: {.content-visible when-format="html"}
 ![Comparison of how row-oriented and column-oriented formats store the same tabular data](images/excalidraw/intro_columnar_fast.png)
+:::
+::: {.content-visible when-format="pdf"}
+![Comparison of how row-oriented and column-oriented formats store the same tabular data](images/excalidraw/intro_columnar_fast_bw.png)
+:::
+
 
 Analytic workflows are better handled by column-oriented formats.
 What this means is that values from the same *column* are stored in sequential areas in memory, so values from a table would be stored top-to-bottom and then left-to-right.

@@ -156,8 +156,6 @@ After all, if the data were small enough to fit into memory, you would have many
 Since arrow is designed to work with larger-than-memory datasets, and calculations on such large data may be slow to complete, you should be clear about when you want to run such a query.
 The package doesn't want to surprise you by crashing your session by running out of memory.
 
-![What you may see in RStudio if your R session runs out of memory](images/segfault.png)
-
 If the output of your query is larger-than-memory, you won't be able to return it to your R session without crashing it, and so this may require a different approach to validating your results.
 
 Let's say you want to create a new query which looks at whether individuals over the age of 18 in the data have spent time in higher education or not.
@@ -306,7 +304,12 @@ head(mean_commute_time, 5)
 
 We can then perform a left join to combine this information with the information in the original datasets.
 
+::: {.content-visible when-format="html"}
 ![Example tables for joining data](images/excalidraw/data_manip_join.png)
+:::
+::: {.content-visible when-format="pdf"}
+![Example tables for joining data](images/excalidraw/data_manip_join_bw.png)
+:::
 
 The code to accomplish this looks something like this:
 
@@ -445,7 +448,12 @@ Instead, inside the arrow methods for dplyr verbs, the arguments you provide are
 These alternatives don't immediately execute and return the result; instead, they return arrow **Expressions**, which capture the intent of your code and express it in a way that can be understood by Acero, the Arrow query engine.
 This is similar to how dbplyr turns your R code into SQL.
 
+::: {.content-visible when-format="html"}
 ![How the arrow R package works](images/excalidraw/data_manip_dplyr.png)
+:::
+::: {.content-visible when-format="pdf"}
+![How the arrow R package works](images/excalidraw/data_manip_dplyr_bw.png)
+:::
 
 We refer to these alternative versions of R functions that return Expressions as **bindings**.
 The arrow R package contains bindings for hundreds of functions, many from base R packages, as well as from tidyverse packages, notably lubridate, stringr, and tidyselect.
