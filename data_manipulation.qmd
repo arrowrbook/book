@@ -41,7 +41,7 @@ We can point at all of the files and query them together as a single dataset mad
 #| label: now_use_parquet
 pums_person <- open_dataset("./data/person")
 ```
-Although a lot of the cleaning has been done — we've recoded all of the character and factor variables, replaced sentinels[^sentinel] for missing values with actual missing values, etc. — there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.
+Although a lot of the cleaning has been done---we've recoded all of the character and factor variables, replaced sentinels[^sentinel] for missing values with actual missing values, etc.---there are still some data transformations that we will demonstrate using Arrow for throughout the rest of this chapter and book.
 
 You can create data analysis pipelines in arrow similarly to how you would using dplyr.
 For example, if you wanted to calculate the mean age of individuals from Washington across the years, you could run:[^well-actually-weights]
@@ -77,7 +77,7 @@ At this point, no calculations have been made and won't be until we run `collect
 ## A few more cleaning tasks
 
 There are still a number of cleaning tasks that we should do on the dataset.
-With the additional processing power provided by arrow, it's possible to do these even at analysis time — which is helpful for cases where we might want to preserve the values from the underlying dataset (e.g. if we want to analyze the different wording of values over time), but when we run aggregations and queries, we want to collapse those and just run our analyses on the transformed data.
+With the additional processing power provided by arrow, it's possible to do these even at analysis time---which is helpful for cases where we might want to preserve the values from the underlying dataset (e.g. if we want to analyze the different wording of values over time), but when we run aggregations and queries, we want to collapse those and just run our analyses on the transformed data.
 
 ### Relabeling values
 
@@ -293,7 +293,7 @@ head(mean_commute_time, 5)
 
 We can then perform a left join to combine this information with the information in the original datasets.
 
-![Example tables for joining data](images/excalidraw/data_manip_join.png) 
+![Example tables for joining data](images/excalidraw/data_manip_join.png)
 
 The code to accomplish this looks something like this:
 
@@ -301,7 +301,7 @@ The code to accomplish this looks something like this:
 #| label: join-ref-table
 pums_person |>
   left_join(mean_commute_time, by = c("location", "year")) |>
-  mutate(commute_diff = mean_commute_time - JWMNP) |>
+  mutate(commute_diff = JWMNP - mean_commute_time) |>
   select(
     commute_diff,
     commute_time = JWMNP,
@@ -327,7 +327,7 @@ pums_person |>
   collect()
 ```
 
-The source of the error is in the difference in data types for the `year` column — we updated it in the main dataset to be an `int16()` but in the reference table, the `year` column is still an `int32()`.
+The source of the error is in the difference in data types for the `year` column---we updated it in the main dataset to be an `int16()` but in the reference table, the `year` column is still an `int32()`.
 We can verify this by using the `schema()` function.
 
 ```{r}
@@ -342,7 +342,7 @@ In the example earlier, we called `collect()` to pull our `mean_commute_time` re
 When we perform joins to data.frame or tibble object (we'll just call these "data frames" from here on), arrow converts this object into an **Arrow Table**.
 
 An Arrow Table is equivalent to an R data frame.
-The key difference here is that the columns types are Arrow data types instead of R data types. 
+The key difference here is that the columns types are Arrow data types instead of R data types.
 When an Arrow Table is created from an R data frame, the data type of each column is automatically converted into its Arrow equivalent.
 For the most part, this automatic conversion is fine to ignore, but in some circumstances, like joining tables, we might want to manually specify the data types to convert to instead.
 
@@ -370,7 +370,7 @@ The data type of the join key in the reference table now matches the data type i
 # this shouldn't be necessary, but I saw quarto would sometimes segfault the
 # next block without it. This might be fixed in more recent versions of arrow
 # but on JTK's x86 mac, it still does segfault during quarto render only.
-# TODO: figure out what's up — it's posible the x86 mac is another SIMD issue
+# TODO: figure out what's up---it's posible the x86 mac is another SIMD issue
 pums_person <- open_dataset("./data/person")
 ```
 
@@ -427,7 +427,7 @@ The next chapter will go into more details about how and why datasets work in Ar
 
 [^well-actually-weights]: Note, that we might think we could use `summarize(mean_age = mean(AGEP))`, but because this dataset has row-level weights, we need to account for that in our analysis to get accurate results.
 
-[^sentinel]: Sentinel may be an unfamiliar term — you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as `-1` that means that the data is missing — not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.
+[^sentinel]: Sentinel may be an unfamiliar term---you could think of it as a placeholder value. It is used in the survey research and database worlds to refer to special values that have a special meaning. For example, you might have an age variable that can take any (positive) integer. But when the age is listed as `-1` that means that the data is missing---not that someone is negative years old! This, again, is another example where old customs when CSVs and other text-based formats were the only ways to transport data forced us to do some funky things to communicate some values.
 
 [^user-2022]: The 2022 UseR! conference workshop on arrow,
 ["[Larger-Than-Memory Data Workflows with Apache Arrow](https://arrow-user2022.netlify.app/)," by Danielle Navarro, Jonathan Keane, and Stephanie Hazlitt, has some good examples that show more functions being used, including [datetime functions](https://arrow-user2022.netlify.app/data-wrangling#example-4-datetime-support).]{.content-visible when-format="html"}

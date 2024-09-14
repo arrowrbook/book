@@ -882,7 +882,7 @@ For another, the survey questions have changed over time, so data from one year 
 Many columns in this dataset require transformation to create a nice consistent dataset to work with.
 
 Let's start with the `COW` variable, which represents class of worker, categorizing people based on their employment status.
-Using the metadata distributed for PUMS recoding — in the survey world, this is frequently referred to as the *codebook* — we can see that `COW` can take the values 0–9 with the corresponding meaning for the year 2005:
+Using the metadata distributed for PUMS recoding---in the survey world, this is frequently referred to as the *codebook*---we can see that `COW` can take the values 0–9 with the corresponding meaning for the year 2005:
 
 ```{r}
 #| label: codebook prep

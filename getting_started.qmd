@@ -36,7 +36,7 @@ This is a dataset that comes from a detailed survey that is sent out to a subset
 The dataset is released for public use by the Census Bureau in a raw CSV form.
 We have cleaned it up and converted it to a Parquet-based dataset for use with Arrow for demonstration purposes in this book.
 
-One thing we have to pay attention to is that this dataset is weighted, so we can't simply count the number of rows to get an accurate count of population — instead we sum or multiply by the weighting variables.
+One thing we have to pay attention to is that this dataset is weighted, so we can't simply count the number of rows to get an accurate count of population---instead we sum or multiply by the weighting variables.
 This is why the example in the Introduction did `sum(PWGTP)` rather than just `n()` to count the population.
 We will discuss this weighting in our analysis below.
 If you want to know more details about the dataset, including how you can get hold of it, you can read more about it in [Section @sec-pums-dataset].
@@ -78,7 +78,7 @@ read_parquet(path)
 Our full dataset is stored across multiple files.
 We don't have to worry about that though, as arrow can work with them as a single object, called an **Arrow Dataset**.
 To open the dataset in arrow, we use the `open_dataset()` function, and provide the path to the data.
-Arrow can work with data in multiple formats, including a range of delimited text formats like CSV, JSON, and the Parquet format — an efficient binary file format with support in many languages — which we are working with here.
+Arrow can work with data in multiple formats, including a range of delimited text formats like CSV, JSON, and the Parquet format---an efficient binary file format with support in many languages---which we are working with here.
 We'll discuss the different formats in detail in [Chapter @sec-filesformats].
 
 ```{r}
@@ -130,7 +130,7 @@ Even though we can't fit the data all into memory, we can query it using dplyr-l
 Let's take a look at some of the questions we might want to ask about the data.
 For example, how did the mode of transit and average commute time change over time?
 
-The query below is pretty complicated — but we've done that on purpose.
+The query below is pretty complicated---but we've done that on purpose.
 We will talk in [Chapter @sec-datamanipulation] about how we have cleaned and curated the PUMS dataset.
 Even with the cleaned data, we have to do a bit more processing to get this ready for analysis and plotting.
 First, the variable `JWTR` "Transportation to work" and `JWTRNS` "Means of transportation to work" are effectively the same content and question, but the variable measuring it was re-named starting in 2019.
@@ -195,7 +195,7 @@ commute_by_mode |>
 
 Now that we have our dataset containing commuters by mode of transport, we can also establish a baseline of 2005 and then calculate the percentage change for each group to make our plots relative.
 We do this by making a subset, `baseline`, that is just data from the year 2005 and then we use a standard join and calculate percent changes from 2005 for each year.
-Note, that until we call `collect()` we aren't even pulling any data into R — it's all an arrow query that we are building up.
+Note, that until we call `collect()` we aren't even pulling any data into R---it's all an arrow query that we are building up.
 
 ```{r}
 #| label: pums-data-manip-agg-plot-prep
@@ -291,7 +291,7 @@ plot <- ggplot(to_plot) +
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
@@ -304,7 +304,7 @@ print(plot, vp=grid::viewport(width = 7.5, height = 4.5, default.units= "in", an
 :::
 
 One striking thing is that we can see that after the 2020 Covid pandemic, the number of people working from home jumped to over 500% compared to 2005.
-There was already growth for working from home before then, but there was — understandably — a giant bump there.
+There was already growth for working from home before then, but there was---understandably---a giant bump there.
 We also saw public transit modes drop in 2021 and then come back up in 2022.
 
 ```{r}
@@ -377,7 +377,7 @@ plot <- to_plot |>
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
