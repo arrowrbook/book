@@ -156,8 +156,6 @@ After all, if the data were small enough to fit into memory, you would have many
 Since arrow is designed to work with larger-than-memory datasets, and calculations on such large data may be slow to complete, you should be clear about when you want to run such a query.
 The package doesn't want to surprise you by crashing your session by running out of memory.
 
-![What you may see in RStudio if your R session runs out of memory](images/segfault.png)
-
 If the output of your query is larger-than-memory, you won't be able to return it to your R session without crashing it, and so this may require a different approach to validating your results.
 
 Let's say you want to create a new query which looks at whether individuals over the age of 18 in the data have spent time in higher education or not.
