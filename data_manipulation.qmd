@@ -280,6 +280,7 @@ We could express this more concisely using `mutate()`, like this:
 
 ```{r}
 #| label: de-meaned-commute
+#| eval: false
 pums_person |>
   group_by(location, year) |>
   mutate(
