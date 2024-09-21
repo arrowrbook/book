@@ -428,26 +428,35 @@ Table&nbsp;5.1: Functions for reading and writing datasets
 <div aria-describedby="tbl-dataset-funcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 45%">
-<col style="width: 29%">
+<col style="width: 27%">
+<col style="width: 35%">
+<col style="width: 35%">
 </colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Reading</th>
+<th style="text-align: left;">Writing</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td colspan="3" rowspan="2">Format | Reading | Writing :===========================+:======================================================+:==================================+ Parquet | open_dataset() | write_dataset()</td>
+<td style="text-align: left;">Parquet</td>
+<td style="text-align: left;">open_dataset()</td>
+<td style="text-align: left;">write_dataset()</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"><p>CSV</p>
+<p>(or other delimited file)</p></td>
+<td style="text-align: left;"><p>open_dataset(…, format = “csv”),</p>
+<p>open_csv_dataset(),</p>
+<p>open_delim_dataset()</p></td>
+<td style="text-align: left;">write_dataset(…, format = “csv”)</td>
 </tr>
 <tr class="odd">
-<td>CSV or other delimited file</td>
-<td><p>open_dataset(…, format = “csv”), open_csv_dataset(),</p>
-<p>open_delim_dataset()</p></td>
-<td>write_dataset(…, format = “csv”)</td>
-</tr>
-<tr class="even">
-<td>Line-delimited JSON</td>
-<td>open_dataset(…, format = “json”)</td>
-<td>(Not supported)</td>
+<td style="text-align: left;">Line-delimited JSON</td>
+<td style="text-align: left;">open_dataset(…, format = “json”)</td>
+<td style="text-align: left;">(Not supported)</td>
 </tr>
 </tbody>
 </table>
@@ -1196,7 +1205,7 @@ AGEP: int8</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"9.562817"},{"1":"2018","2":"12.220912"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"12.220912"},{"1":"2021","2":"9.562817"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
