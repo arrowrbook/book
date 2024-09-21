@@ -9,6 +9,7 @@ library(arrow)
 library(dplyr)
 library(vctrs)
 library(ggplot2)
+library(see)
 library(sf)
 library(tidyr)
 
@@ -223,6 +224,8 @@ User-defined functions allow arrow to use functions that don't have Acero bindin
 
 There is some additional processing overhead here because some of the calculation is being done by your R session and not by Acero, but it's a helpful tool to have in these circumstances.
 
+### An example of creating and using a UDF
+
 You can create a UDF by using the function `register_scalar_function()`.
 Let's say we want to create a UDF which wraps the `stringr` function `str_to_sentence()`, which doesn't have an Acero equivalent.
 Here's an example of how it would look.
@@ -265,47 +268,263 @@ pums_person |>
   collect()
 ```
 
+### Using UDFs for regression model predictions
+
 Another example is where you've created a model based on a subset of your data and you want to use it to make predictions.
-Let's say we've created a linear model, using age and employment status to predict commute time for respondents in California in 2005.
+Let's say we've created a linear model, using education and employment status to predict hours worked per week for respondents in 2018.
 
 ```{r}
 #| label: model-commute-time
 model_data <- open_dataset("data/person/") |>
-  filter(year == 2005, location == "ca") |>
-  transmute(
-    commute_time = JWMNP,
-    age = AGEP,
-    self_employed = stringr::str_detect(as.character(COW), "Self-employed")
-  ) |>
-  collect()
+    filter(year == 2018) |>
+    filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP
+    ) |>
+    collect()
 
-my_model <- lm(commute_time ~ age + self_employed, data = model_data)
-summary(my_model)
+hours_worked_model <- survey::svyglm(
+  hours_worked ~ self_employed * edu, 
+  design = survey::svydesign(ids=~1, weights=~PWGTP, data=model_data)
+)
+summary(hours_worked_model)
 ```
 
-Let's say we want to use this model to predict commute times in California in 2021.
+We can use this model to predict what our model would have on this data. 
+We use the `predict` function to make these predictions and we also calculate the weighted mean for each group.
+This is going to be very very close to the actual weighted means since this data was used to fit this linear model.
+
+```{r}
+#| label: summarise_fit_data
+#| warning: false
+model_data$predicted <- predict(hours_worked_model, newdata = model_data)
+
+model_data_summary <- model_data |> 
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
+```
+
+And we can visualize the underlying data along with weighted mean and predictions.
+
+```{r}
+#| label: plot_fit_data
+#| warning: false
+#| echo: false
+plot <- ggplot(model_data) +
+  aes(
+    x = factor(
+      edu, 
+      levels = c(
+        "Less than High school", 
+        "High school", 
+        "Some college", 
+        "College or higher"
+      )
+    ), 
+    y = hours_worked, 
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width") + 
+  layer(
+    geom = "point", 
+    stat = "identity", 
+    position = position_nudge(x = -0.08), 
+    data = model_data_summary, 
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
+    params = list(shape = 108, size = 6)
+  ) + 
+  layer(
+    geom = "point", 
+    stat = "identity",
+    position = position_nudge(x = -0.08), 
+    data = model_data_summary, 
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
+    params = list(shape = 18, size = 4) 
+  ) + 
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Hours worked per week", 
+    subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
+    x = "education",
+    y = "hours worked per week"
+  )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_fit_data_plot
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_fit_data_plot-pdf
+#| echo: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2018 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
+
+Let's say we want to use this model to predict working hours in Alaska in 2021.
 We can create a UDF which calls `predict()` to add the predicted commute time value to the data.
 
 ```{r}
 #| label: predict-commute-time
 register_scalar_function(
-  "predict_commute_time",
-  function(context, age, self_employed) {
-    predict(my_model, newdata = data.frame(age, self_employed))
+  "predict_work_hours",
+  function(context, edu, self_employed) {
+    as.numeric(predict(
+      hours_worked_model, 
+      newdata = data.frame(edu, self_employed)
+    ))
   },
-  in_type = schema(age = int32(), self_employed = boolean()),
+  in_type = schema(edu = string(), self_employed = boolean()),
   out_type = float64(),
   auto_convert = TRUE
 )
 
 modelled_data <- open_dataset("data/person/") |>
-  filter(year == 2021, location == "ca") |>
-  transmute(
-    age = AGEP,
-    self_employed = stringr::str_detect(as.character(COW), "Self-employed"),
-    predicted_commute_time = predict_commute_time(age, self_employed),
-    actual_commute_time = JWMNP
-  ) |>
+  filter(year == 2021, location == "ak") |>
+  filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP,
+      predicted = predict_work_hours(edu, self_employed),
+    ) |>
+  collect()
+```
+
+And we can see the fit is slightly better, though we still slightly over predict particularly self-employed workers.
+
+```{r}
+#| label: plot_predictions
+#| warning: false
+#| echo: false
+modelled_data_summary <- modelled_data |>
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
+
+plot <- ggplot(modelled_data) +
+  aes(
+    x = factor(
+      edu, 
+      levels = c(
+        "Less than High school", 
+        "High school", 
+        "Some college", 
+        "College or higher"
+      )
+    ), 
+    y = hours_worked, 
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width") + 
+  layer(
+    geom = "point", 
+    stat = "identity", 
+    position = position_nudge(x = -0.08), 
+    data = modelled_data_summary, 
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
+    params = list(shape = 108, size = 6)
+  ) + 
+  layer(
+    geom = "point", 
+    stat = "identity",
+    position = position_nudge(x = -0.08), 
+    data = modelled_data_summary, 
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
+    params = list(shape = 18, size = 4) 
+  ) + 
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+    labs(
+      title = "Hours worked per week", 
+      subtitle = "by employment type in 2018, Alaska\nvertical line is weighted mean, diamond model prediciton",
+      x = "education",
+      y = "hours worked per week"
+    )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_predictions_plot
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_predictions_plot-pdf
+#| echo: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2021 for Alaska. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
+
+We are slightly off in most categories, but especially far off for high school and some college educated workers where we predict much lower working hours.
+We can also re-use this UDF for any subset, including predicting on all of the US in 2021.
+
+```{r}
+#| label: predict-commute-time-all-us
+modelled_data <- open_dataset("data/person/") |>
+  filter(year == 2021) |>
+  filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP,
+      predicted = predict_work_hours(edu, self_employed),
+    ) |>
   collect()
 
 modelled_data |> head()
@@ -314,14 +533,78 @@ modelled_data |> head()
 And how good were our predictions?
 
 ```{r}
-#| label: plot_predictions
-ggplot(modelled_data, aes(x = predicted_commute_time, y = actual_commute_time)) +
-  geom_point() + 
-  geom_abline(intercept = 0, slope = 1, color = "blue")
+#| label: plot_predictions_all_us
+#| warning: false
+#| echo: false
+modelled_data_summary <- modelled_data |>
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
 
+plot <- ggplot(modelled_data) +
+  aes(
+    x = factor(
+      edu, 
+      levels = c(
+        "Less than High school", 
+        "High school", 
+        "Some college", 
+        "College or higher"
+      )
+    ), 
+    y = hours_worked, 
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width") + 
+  layer(
+    geom = "point", 
+    stat = "identity", 
+    position = position_nudge(x = -0.08), 
+    data = modelled_data_summary, 
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
+    params = list(shape = 108, size = 6)
+  ) + 
+  layer(
+    geom = "point", 
+    stat = "identity",
+    position = position_nudge(x = -0.08), 
+    data = modelled_data_summary, 
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
+    params = list(shape = 18, size = 4) 
+  ) + 
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+    labs(
+      title = "Hours worked per week", 
+      subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
+      x = "education",
+      y = "hours worked per week"
+    )
 ```
 
-Looks like this model could use a lot more work!
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_predictions_all_us_plot
+#| echo: false
+plot
+```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_predictions_all_us_plot-pdf
+#| echo: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2021 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
 
 ### How do UDFs work under the hood?
 
