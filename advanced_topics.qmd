@@ -278,6 +278,9 @@ pums_person |>
 
 Another example where UDFs can be useful is where you've created a model based on a subset of your data and you want to use it to make predictions.
 Let's say we've created a linear model, using education and employment status to predict hours worked per week for respondents in 2018.
+When creating this model we aren't using the standard `stats::lm()` because our data is weighted. 
+the `survey` package has an equivalent regression function `survey::svyglm()` which applies the weights in the weight column during the regression. 
+This isn't strictly necesary for the demonstration here, but it does show how UDFs work not just with base R functions or functions in the tidyverse, but any R code that you come up with.
 
 ```{r}
 #| label: model-commute-time
@@ -309,7 +312,7 @@ summary(hours_worked_model)
 
 We can use this model to predict what our model would have on this data.
 We use the `predict` function to make these predictions and we also calculate the weighted mean for each group.
-This is going to be very very close to the actual weighted means since this data was used to fit this linear model.
+This is going to be very close to the actual weighted means since this data was used to fit this linear model.
 
 ```{r}
 #| label: summarise_fit_data
@@ -324,7 +327,12 @@ model_data_summary <- model_data |>
   )
 ```
 
-And we can visualize the underlying data along with weighted mean and predictions.
+And we can plot our model as well as the predictions to visualize what is going on.
+Here the underlying data is represented in teh density curve --- the taller the curve the more observations are at that point on the x-axis (hours worked per week). 
+At the bottom the line represents the weighted mean and the diamond is the prediction from our model.
+And like we said above, we can confirm that the weighted means and the model predictions are incredibly close.[^they-better-be]
+
+[^they-better-be]: They better be very close since this is the same data the linear regression was fit with!
 
 ```{r}
 #| label: plot_fit_data
@@ -344,7 +352,7 @@ plot <- ggplot(model_data) +
     y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
   layer(
     geom = "point",
     stat = "identity",
@@ -434,8 +442,6 @@ modelled_data <- open_dataset("data/person/") |>
   collect()
 ```
 
-And we can see the fit is slightly better, though we still slightly over predict particularly self-employed workers.
-
 ```{r}
 #| label: plot_predictions
 #| warning: false
@@ -461,7 +467,7 @@ plot <- ggplot(modelled_data) +
     y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
   layer(
     geom = "point",
     stat = "identity",
@@ -513,7 +519,9 @@ plot
 :::
 
 We are slightly off in most categories, but especially far off for high school and some college educated workers where we predict much lower working hours.
-We can also re-use this UDF for any subset, including predicting on all of the US in 2021.
+Not totally surprising given our original model was built with all of the US and states differ considerably on this dimension.
+
+Let's test that theory out: we can also re-use this UDF for any subset, including predicting on all of the US in 2021.
 
 ```{r}
 #| label: predict-commute-time-all-us
@@ -567,7 +575,7 @@ plot <- ggplot(modelled_data) +
     y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
   layer(
     geom = "point",
     stat = "identity",
@@ -617,6 +625,10 @@ plot
 plot
 ```
 :::
+
+And we can see the fit is slightly better, though we still slightly over predict particularly self-employed workers.
+From here we might explore fitting a multi-level model with varying slopes or intercepts for each state or add more predictors to our model.
+But no matter what we choose, we can use UDFs to do prediction like we did here.
 
 ### How do UDFs work under the hood?
 
