@@ -254,10 +254,16 @@ In our case, we want the column representing the original string, which we've ca
 
 The body of the function itself is identical to when we defined it as an R function.
 The parameters `in_type` and `out_type` control the arrow data types of the input and output columns.
-Here, we pass in a named list of data types to `in_type`, and a data type to `out_type`.
+Here, we provide a schema to `in_type` so that we can map function argument names to types, and we give a data type to `out_type`.
+
 The `auto_convert` argument controls whether arrow automatically converts the inputs to R vectors or not.
-The default value `FALSE` can be used when working with R6 objects, but as we're working in an arrow dplyr pipeline here, we'll set it to `TRUE`.
-Let's take a look at how this works with our data.
+The default value, `FALSE`, means that inputs to your R function will be Arrow objects.
+In our example, this would mean that `x` would come in as an Arrow Array of type `string()`.
+But we want an R vector for `x` so that we can pass it to the stringr function.
+We could call `as.vector()` on `x` to convert the Array into an R vector, or we can do what we've done in this example and set `auto_convert = TRUE` to handle that for us.
+Setting `auto_convert = TRUE` also handles the return value conversion back to Arrow data for us.
+
+Let's take a look at how this UDF works with our data.
 
 ```{r}
 #| label: udf-use
@@ -270,7 +276,7 @@ pums_person |>
 
 ### Using UDFs for regression model predictions
 
-Another example is where you've created a model based on a subset of your data and you want to use it to make predictions.
+Another example where UDFs can be useful is where you've created a model based on a subset of your data and you want to use it to make predictions.
 Let's say we've created a linear model, using education and employment status to predict hours worked per week for respondents in 2018.
 
 ```{r}
@@ -285,7 +291,7 @@ model_data <- open_dataset("data/person/") |>
           "College or higher",
         grepl("college", SCHL, TRUE) ~
           "Some college",
-        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
           "High school",
         TRUE ~ "Less than High school"
       ),
@@ -295,13 +301,13 @@ model_data <- open_dataset("data/person/") |>
     collect()
 
 hours_worked_model <- survey::svyglm(
-  hours_worked ~ self_employed * edu, 
-  design = survey::svydesign(ids=~1, weights=~PWGTP, data=model_data)
+  hours_worked ~ self_employed * edu,
+  design = survey::svydesign(ids = ~1, weights = ~PWGTP, data = model_data)
 )
 summary(hours_worked_model)
 ```
 
-We can use this model to predict what our model would have on this data. 
+We can use this model to predict what our model would have on this data.
 We use the `predict` function to make these predictions and we also calculate the weighted mean for each group.
 This is going to be very very close to the actual weighted means since this data was used to fit this linear model.
 
@@ -310,7 +316,7 @@ This is going to be very very close to the actual weighted means since this data
 #| warning: false
 model_data$predicted <- predict(hours_worked_model, newdata = model_data)
 
-model_data_summary <- model_data |> 
+model_data_summary <- model_data |>
   group_by(edu, self_employed) |>
   summarise(
     work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
@@ -327,34 +333,34 @@ And we can visualize the underlying data along with weighted mean and prediction
 plot <- ggplot(model_data) +
   aes(
     x = factor(
-      edu, 
+      edu,
       levels = c(
-        "Less than High school", 
-        "High school", 
-        "Some college", 
+        "Less than High school",
+        "High school",
+        "Some college",
         "College or higher"
       )
-    ), 
-    y = hours_worked, 
+    ),
+    y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") + 
+  geom_violinhalf(scale = "width") +
   layer(
-    geom = "point", 
-    stat = "identity", 
-    position = position_nudge(x = -0.08), 
-    data = model_data_summary, 
-    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
-    params = list(shape = 108, size = 6)
-  ) + 
-  layer(
-    geom = "point", 
+    geom = "point",
     stat = "identity",
-    position = position_nudge(x = -0.08), 
-    data = model_data_summary, 
-    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
-    params = list(shape = 18, size = 4) 
-  ) + 
+    position = position_nudge(x = -0.08),
+    data = model_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = model_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
   facet_grid(
     cols = vars(self_employed),
     labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
@@ -362,7 +368,7 @@ plot <- ggplot(model_data) +
   coord_flip() +
   theme_minimal() +
   labs(
-    title = "Hours worked per week", 
+    title = "Hours worked per week",
     subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
     x = "education",
     y = "hours worked per week"
@@ -372,15 +378,17 @@ plot <- ggplot(model_data) +
 ::: {.content-visible when-format="html"}
 ```{r}
 #| label: plot_fit_data_plot
+#| warning: false
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
 #| label: plot_fit_data_plot-pdf
 #| echo: false
+#| warning: false
 #| fig-height: 9
 #| fig-cap: "Hours worked per week by employment type in 2018 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
 plot
@@ -396,7 +404,7 @@ register_scalar_function(
   "predict_work_hours",
   function(context, edu, self_employed) {
     as.numeric(predict(
-      hours_worked_model, 
+      hours_worked_model,
       newdata = data.frame(edu, self_employed)
     ))
   },
@@ -415,7 +423,7 @@ modelled_data <- open_dataset("data/person/") |>
           "College or higher",
         grepl("college", SCHL, TRUE) ~
           "Some college",
-        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
           "High school",
         TRUE ~ "Less than High school"
       ),
@@ -442,34 +450,34 @@ modelled_data_summary <- modelled_data |>
 plot <- ggplot(modelled_data) +
   aes(
     x = factor(
-      edu, 
+      edu,
       levels = c(
-        "Less than High school", 
-        "High school", 
-        "Some college", 
+        "Less than High school",
+        "High school",
+        "Some college",
         "College or higher"
       )
-    ), 
-    y = hours_worked, 
+    ),
+    y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") + 
+  geom_violinhalf(scale = "width") +
   layer(
-    geom = "point", 
-    stat = "identity", 
-    position = position_nudge(x = -0.08), 
-    data = modelled_data_summary, 
-    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
-    params = list(shape = 108, size = 6)
-  ) + 
-  layer(
-    geom = "point", 
+    geom = "point",
     stat = "identity",
-    position = position_nudge(x = -0.08), 
-    data = modelled_data_summary, 
-    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
-    params = list(shape = 18, size = 4) 
-  ) + 
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
   facet_grid(
     cols = vars(self_employed),
     labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
@@ -477,7 +485,7 @@ plot <- ggplot(modelled_data) +
   coord_flip() +
   theme_minimal() +
     labs(
-      title = "Hours worked per week", 
+      title = "Hours worked per week",
       subtitle = "by employment type in 2018, Alaska\nvertical line is weighted mean, diamond model prediciton",
       x = "education",
       y = "hours worked per week"
@@ -487,14 +495,16 @@ plot <- ggplot(modelled_data) +
 ::: {.content-visible when-format="html"}
 ```{r}
 #| label: plot_predictions_plot
+#| warning: false
 #| echo: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
 #| label: plot_predictions_plot-pdf
+#| warning: false
 #| echo: false
 #| fig-height: 9
 #| fig-cap: "Hours worked per week by employment type in 2021 for Alaska. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
@@ -517,7 +527,7 @@ modelled_data <- open_dataset("data/person/") |>
           "College or higher",
         grepl("college", SCHL, TRUE) ~
           "Some college",
-        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~ 
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
           "High school",
         TRUE ~ "Less than High school"
       ),
@@ -546,34 +556,34 @@ modelled_data_summary <- modelled_data |>
 plot <- ggplot(modelled_data) +
   aes(
     x = factor(
-      edu, 
+      edu,
       levels = c(
-        "Less than High school", 
-        "High school", 
-        "Some college", 
+        "Less than High school",
+        "High school",
+        "Some college",
         "College or higher"
       )
-    ), 
-    y = hours_worked, 
+    ),
+    y = hours_worked,
     weight = PWGTP
     ) +
-  geom_violinhalf(scale = "width") + 
+  geom_violinhalf(scale = "width") +
   layer(
-    geom = "point", 
-    stat = "identity", 
-    position = position_nudge(x = -0.08), 
-    data = modelled_data_summary, 
-    mapping = aes(x = edu, y = work_hours_mean, weight = NULL), 
-    params = list(shape = 108, size = 6)
-  ) + 
-  layer(
-    geom = "point", 
+    geom = "point",
     stat = "identity",
-    position = position_nudge(x = -0.08), 
-    data = modelled_data_summary, 
-    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL), 
-    params = list(shape = 18, size = 4) 
-  ) + 
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
   facet_grid(
     cols = vars(self_employed),
     labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
@@ -581,7 +591,7 @@ plot <- ggplot(modelled_data) +
   coord_flip() +
   theme_minimal() +
     labs(
-      title = "Hours worked per week", 
+      title = "Hours worked per week",
       subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
       x = "education",
       y = "hours worked per week"
@@ -592,14 +602,16 @@ plot <- ggplot(modelled_data) +
 ```{r}
 #| label: plot_predictions_all_us_plot
 #| echo: false
+#| warning: false
 plot
 ```
-::: 
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r}
 #| label: plot_predictions_all_us_plot-pdf
 #| echo: false
+#| warning: false
 #| fig-height: 9
 #| fig-cap: "Hours worked per week by employment type in 2021 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
 plot
