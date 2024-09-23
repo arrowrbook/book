@@ -378,7 +378,7 @@ plot <- ggplot(model_data) +
   theme_minimal() +
   labs(
     title = "Hours worked per week",
-    subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
+    subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediction",
     x = "education",
     y = "hours worked per week"
   )
