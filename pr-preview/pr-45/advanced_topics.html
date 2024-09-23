@@ -755,7 +755,7 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </div>
 </div>
 </div>
-<p>And we can see the fit is slightly better, though we still slightly over predict particularly self-employed workers. From here we might explore fitting a multi-level model with varying slopes or intercepts for each state or add more predictors to our model. But no matter what we choose, we can use UDFs to do prediction like we did here.</p>
+<p>And we can see the fit is slightly better, though we still slightly over predict, particularly for self-employed workers. From here we might explore fitting a multi-level model with varying slopes or intercepts for each state or add more predictors to our model. But no matter what we choose, we can use UDFs to do prediction like we did here.</p>
 </section>
 <section id="how-do-udfs-work-under-the-hood" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="how-do-udfs-work-under-the-hood"><span class="header-section-number">7.3.3</span> How do UDFs work under the hood?</h3>
@@ -813,7 +813,7 @@ Number of Fisher Scoring iterations: 2</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ak","2":"max_commute","3":"194"},{"1":"ar","2":"max_commute","3":"186"},{"1":"az","2":"max_commute","3":"184"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wy","2":"max_commute","3":"176"},{"1":"wi","2":"max_commute","3":"177"},{"1":"wa","2":"max_commute","3":"152"},{"1":"al","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["metric"],"name":[2],"type":["chr"],"align":["left"]},{"label":["value"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"al","2":"max_commute","3":"184"},{"1":"ar","2":"max_commute","3":"186"},{"1":"ca","2":"max_commute","3":"142"},{"1":"wa","2":"max_commute","3":"152"},{"1":"wv","2":"max_commute","3":"193"},{"1":"wi","2":"max_commute","3":"177"},{"1":"wy","2":"max_commute","3":"176"},{"1":"ak","2":"max_commute","3":"194"},{"1":"az","2":"max_commute","3":"184"},{"1":"al","2":"min_commute","3":"1"},{"1":"ca","2":"min_commute","3":"1"},{"1":"wv","2":"min_commute","3":"1"},{"1":"az","2":"min_commute","3":"1"},{"1":"wa","2":"min_commute","3":"1"},{"1":"wy","2":"min_commute","3":"1"},{"1":"wi","2":"min_commute","3":"1"},{"1":"ak","2":"min_commute","3":"1"},{"1":"ar","2":"min_commute","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
