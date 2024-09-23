@@ -279,7 +279,7 @@ pums_person |>
 Another example where UDFs can be useful is where you've created a model based on a subset of your data and you want to use it to make predictions.
 Let's say we've created a linear model, using education and employment status to predict hours worked per week for respondents in 2018.
 When creating this model we aren't using the standard `stats::lm()` because our data is weighted. 
-the `survey` package has an equivalent regression function `survey::svyglm()` which applies the weights in the weight column during the regression. 
+The `survey` package has an equivalent regression function `survey::svyglm()` which applies the weights in the weight column during the regression. 
 This isn't strictly necesary for the demonstration here, but it does show how UDFs work not just with base R functions or functions in the tidyverse, but any R code that you come up with.
 
 ```{r}
