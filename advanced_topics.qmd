@@ -328,7 +328,7 @@ model_data_summary <- model_data |>
 ```
 
 And we can plot our model as well as the predictions to visualize what is going on.
-Here the underlying data is represented in teh density curve --- the taller the curve the more observations are at that point on the x-axis (hours worked per week). 
+Here the underlying data is represented in the density curve --- the taller the curve the more observations are at that point on the x-axis (hours worked per week). 
 At the bottom the line represents the weighted mean and the diamond is the prediction from our model.
 And like we said above, we can confirm that the weighted means and the model predictions are incredibly close.[^they-better-be]
 
