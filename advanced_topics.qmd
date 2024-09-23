@@ -3,13 +3,16 @@
 {{< include _knitr_hooks.qmd >}}
 
 ```{r}
+#| label: setup-advanced-data-manip
 #| include: FALSE
 library(arrow)
 library(dplyr)
-```
-```{r}
-#| label: setup-advanced-data-manip
-#| include: false
+library(vctrs)
+library(ggplot2)
+library(see)
+library(sf)
+library(tidyr)
+
 pums_person <- open_dataset("./data/person")
 ```
 
@@ -221,6 +224,8 @@ User-defined functions allow arrow to use functions that don't have Acero bindin
 
 There is some additional processing overhead here because some of the calculation is being done by your R session and not by Acero, but it's a helpful tool to have in these circumstances.
 
+### An example of creating and using a UDF
+
 You can create a UDF by using the function `register_scalar_function()`.
 Let's say we want to create a UDF which wraps the `stringr` function `str_to_sentence()`, which doesn't have an Acero equivalent.
 Here's an example of how it would look.
@@ -249,10 +254,16 @@ In our case, we want the column representing the original string, which we've ca
 
 The body of the function itself is identical to when we defined it as an R function.
 The parameters `in_type` and `out_type` control the arrow data types of the input and output columns.
-Here, we pass in a named list of data types to `in_type`, and a data type to `out_type`.
+Here, we provide a schema to `in_type` so that we can map function argument names to types, and we give a data type to `out_type`.
+
 The `auto_convert` argument controls whether arrow automatically converts the inputs to R vectors or not.
-The default value `FALSE` can be used when working with R6 objects, but as we're working in an arrow dplyr pipeline here, we'll set it to `TRUE`.
-Let's take a look at how this works with our data.
+The default value, `FALSE`, means that inputs to your R function will be Arrow objects.
+In our example, this would mean that `x` would come in as an Arrow Array of type `string()`.
+But we want an R vector for `x` so that we can pass it to the stringr function.
+We could call `as.vector()` on `x` to convert the Array into an R vector, or we can do what we've done in this example and set `auto_convert = TRUE` to handle that for us.
+Setting `auto_convert = TRUE` also handles the return value conversion back to Arrow data for us.
+
+Let's take a look at how this UDF works with our data.
 
 ```{r}
 #| label: udf-use
@@ -263,15 +274,372 @@ pums_person |>
   collect()
 ```
 
+### Using UDFs for regression model predictions
+
+Another example where UDFs can be useful is where you've created a model based on a subset of your data and you want to use it to make predictions.
+Let's say we've created a linear model, using education and employment status to predict hours worked per week for respondents in 2018.
+When creating this model we aren't using the standard `stats::lm()` because our data is weighted. 
+The `survey` package has an equivalent regression function `survey::svyglm()` which applies the weights in the weight column during the regression. 
+This isn't strictly necesary for the demonstration here, but it does show how UDFs work not just with base R functions or functions in the tidyverse, but any R code that you come up with.
+
+```{r}
+#| label: model-commute-time
+model_data <- open_dataset("data/person/") |>
+    filter(year == 2018) |>
+    filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP
+    ) |>
+    collect()
+
+hours_worked_model <- survey::svyglm(
+  hours_worked ~ self_employed * edu,
+  design = survey::svydesign(ids = ~1, weights = ~PWGTP, data = model_data)
+)
+summary(hours_worked_model)
+```
+
+We can use this model to predict what our model would have predicted on this data if it were new data coming in.
+This is a little artificial since this is the same data that we used to build the model, though it's a good check to confirm that the modeling process doesn't have anything terribly off about it.
+Also because we are predicting on the same data we fit this linear model on, this is going to be very close to the actual weighted means.
+We use the `predict` function to make these predictions and we also calculate the weighted mean for each group.
+
+```{r}
+#| label: summarise_fit_data
+#| warning: false
+model_data$predicted <- predict(hours_worked_model, newdata = model_data)
+
+model_data_summary <- model_data |>
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
+```
+
+And we can plot our model as well as the predictions to visualize what is going on.
+Here the underlying data is represented in the density curve --- the taller the curve the more observations are at that point on the x-axis (hours worked per week). 
+At the bottom the line represents the weighted mean and the diamond is the prediction from our model.
+And like we said above, we can confirm that the weighted means and the model predictions are incredibly close.[^they-better-be]
+
+[^they-better-be]: They better be very close since this is the same data the linear regression was fit with!
+
+```{r}
+#| label: plot_fit_data
+#| warning: false
+#| echo: false
+plot <- ggplot(model_data) +
+  aes(
+    x = factor(
+      edu,
+      levels = c(
+        "Less than High school",
+        "High school",
+        "Some college",
+        "College or higher"
+      )
+    ),
+    y = hours_worked,
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = model_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = model_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Hours worked per week",
+    subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediction",
+    x = "education",
+    y = "hours worked per week"
+  )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_fit_data_plot
+#| warning: false
+#| echo: false
+plot
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_fit_data_plot-pdf
+#| echo: false
+#| warning: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2018 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
+
+Let's say we want to use this model to predict working hours in Alaska in 2021.
+We can create a UDF which calls `predict()` to add the predicted commute time value to the data.
+
+```{r}
+#| label: predict-commute-time
+register_scalar_function(
+  "predict_work_hours",
+  function(context, edu, self_employed) {
+    as.numeric(predict(
+      hours_worked_model,
+      newdata = data.frame(edu, self_employed)
+    ))
+  },
+  in_type = schema(edu = string(), self_employed = boolean()),
+  out_type = float64(),
+  auto_convert = TRUE
+)
+
+modelled_data <- open_dataset("data/person/") |>
+  filter(year == 2021, location == "ak") |>
+  filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP,
+      predicted = predict_work_hours(edu, self_employed),
+    ) |>
+  collect()
+```
+
+```{r}
+#| label: plot_predictions
+#| warning: false
+#| echo: false
+modelled_data_summary <- modelled_data |>
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
+
+plot <- ggplot(modelled_data) +
+  aes(
+    x = factor(
+      edu,
+      levels = c(
+        "Less than High school",
+        "High school",
+        "Some college",
+        "College or higher"
+      )
+    ),
+    y = hours_worked,
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+    labs(
+      title = "Hours worked per week",
+      subtitle = "by employment type in 2018, Alaska\nvertical line is weighted mean, diamond model prediciton",
+      x = "education",
+      y = "hours worked per week"
+    )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_predictions_plot
+#| warning: false
+#| echo: false
+plot
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_predictions_plot-pdf
+#| warning: false
+#| echo: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2021 for Alaska. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
+
+We are slightly off in most categories, but especially far off for high school and some college educated workers where we predict much lower working hours.
+Not totally surprising given our original model was built with all of the US and states differ considerably on this dimension.
+
+Let's test that theory out: we can also re-use this UDF for any subset, including predicting on all of the US in 2021.
+
+```{r}
+#| label: predict-commute-time-all-us
+modelled_data <- open_dataset("data/person/") |>
+  filter(year == 2021) |>
+  filter(AGEP >= 16, AGEP < 65, !is.na(COW)) |>
+    transmute(
+      self_employed = str_detect(as.character(COW), "Self-employed"),
+      edu = case_when(
+        grepl("bachelor|associate|professional|doctorate|master", SCHL, TRUE) ~
+          "College or higher",
+        grepl("college", SCHL, TRUE) ~
+          "Some college",
+        grepl("High school graduate|high school diploma|GED", SCHL, TRUE) ~
+          "High school",
+        TRUE ~ "Less than High school"
+      ),
+      hours_worked = WKHP,
+      PWGTP = PWGTP,
+      predicted = predict_work_hours(edu, self_employed),
+    ) |>
+  collect()
+
+modelled_data |> head()
+```
+
+And how good were our predictions?
+
+```{r}
+#| label: plot_predictions_all_us
+#| warning: false
+#| echo: false
+modelled_data_summary <- modelled_data |>
+  group_by(edu, self_employed) |>
+  summarise(
+    work_hours_mean = weighted.mean(hours_worked, w = PWGTP, na.rm = TRUE),
+    work_hours_predicted = weighted.mean(predicted, w = PWGTP),
+  )
+
+plot <- ggplot(modelled_data) +
+  aes(
+    x = factor(
+      edu,
+      levels = c(
+        "Less than High school",
+        "High school",
+        "Some college",
+        "College or higher"
+      )
+    ),
+    y = hours_worked,
+    weight = PWGTP
+    ) +
+  geom_violinhalf(scale = "width", fill = "grey", color = "grey") +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_mean, weight = NULL),
+    params = list(shape = 108, size = 6)
+  ) +
+  layer(
+    geom = "point",
+    stat = "identity",
+    position = position_nudge(x = -0.08),
+    data = modelled_data_summary,
+    mapping = aes(x = edu, y = work_hours_predicted, weight = NULL),
+    params = list(shape = 18, size = 4)
+  ) +
+  facet_grid(
+    cols = vars(self_employed),
+    labeller = as_labeller(c("TRUE" = "self-employed", "FALSE" = "not self-employed"))
+  ) +
+  coord_flip() +
+  theme_minimal() +
+    labs(
+      title = "Hours worked per week",
+      subtitle = "by employment type in 2018, all of US\nvertical line is weighted mean, diamond model prediciton",
+      x = "education",
+      y = "hours worked per week"
+    )
+```
+
+::: {.content-visible when-format="html"}
+```{r}
+#| label: plot_predictions_all_us_plot
+#| echo: false
+#| warning: false
+plot
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| label: plot_predictions_all_us_plot-pdf
+#| echo: false
+#| warning: false
+#| fig-height: 9
+#| fig-cap: "Hours worked per week by employment type in 2021 for all of the United States. The density curve is the raw data, the line at the bottom the weighted mean and the diamond at the bottom is the weighted mean of the model predictions."
+plot
+```
+:::
+
+And we can see the fit is slightly better, though we still slightly over predict, particularly for self-employed workers.
+From here we might explore fitting a multi-level model with varying slopes or intercepts for each state or add more predictors to our model.
+But no matter what we choose, we can use UDFs to do prediction like we did here.
+
+### How do UDFs work under the hood?
+
 UDFs only work on scalar functions---functions which take one row of data as input and return one row of data as output.
 Acero does not currently support user-defined aggregation functions.
 For example, you could create a UDF which calculates the square of a number, but you can't create one which calculates the median value in a column of data.
 These functions also cannot depend on other values, so you can't write a UDF which implements `lag()` or `lead()` which calculate a value based on the previous or next row in the data.
 
 Because the UDF code is run in your R session, you won't be able to take advantage of some of the features of arrow, such as being able to run code on multiple CPU cores, or the faster speed of executing C++ code.
-You'll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation must be run one at a time instead of allowing parallelisation.
-
-### How do UDFs work under the hood?
+You'll also be slowed down a little by the fact that arrow has to convert back and forth between R and arrow, and R is single-threaded, so each calculation is run on one chunk of data at a time instead of parallelized across many chunks at once.
 
 The workflow for writing and using UDFs can feel a bit clunky, as it's pretty different to how we typically work with data in R; for example, we don't normally have to specify input and output types, or just work on 1 row of data at a time.
 
@@ -404,16 +772,6 @@ You may observe subtle differences in the user interface (the functions and argu
 And as we have shown, you can easily complement one with the other when you need, so it isn't a choice that locks you into one world or another.
 
 ## Extending Arrow and Geospatial Data {#sec-geo}
-
-```{r}
-#| include: FALSE
-library(arrow)
-library(dplyr)
-library(vctrs)
-library(ggplot2)
-library(sf)
-library(tidyr)
-```
 
 At this point, we've seen that the Arrow specification covers a wide range of data types which are commonly encountered in data storage systems, to maximize interoperability.
 That said, there are always going to be more data types out there for specialist uses.
