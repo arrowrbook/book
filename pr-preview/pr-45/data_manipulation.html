@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"39.00219"},{"1":"2005","2":"36.49880"},{"1":"2018","2":"38.57472"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2018","2":"38.57472"},{"1":"2021","2":"39.00219"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -383,7 +383,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"U.S. citizen by naturalization"},{"1":"Not a U.S. citizen"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"Not a U.S. citizen"},{"1":"U.S. citizen by naturalization"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -539,7 +539,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wa","2":"2005","3":"11.211869"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -638,7 +638,7 @@ See $metadata for additional Schema metadata</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.153547","2":"5","3":"8.153547"},{"1":"-6.846453","2":"15","3":"8.153547"},{"1":"NA","2":"NA","3":"8.153547"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"5","3":"NA"},{"1":"NA","2":"15","3":"NA"},{"1":"NA","2":"NA","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -656,324 +656,6 @@ See $metadata for additional Schema metadata</code></pre>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>pums_person <span class="sc">|&gt;</span></span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mean_commute_time, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"location"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">commute_diff =</span> JWMNP <span class="sc">-</span> mean_commute_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>FileSystemDataset (query)
-SPORDER: int32
-RT: dictionary&lt;values=string, indices=int32&gt;
-SERIALNO: string
-PUMA: string
-ST: string
-ADJUST: int32
-PWGTP: int32
-AGEP: int32
-CIT: dictionary&lt;values=string, indices=int32&gt;
-COW: dictionary&lt;values=string, indices=int32&gt;
-DDRS: bool
-DEYE: bool
-DOUT: bool
-DPHY: bool
-DREM: bool
-DWRK: bool
-ENG: dictionary&lt;values=string, indices=int32&gt;
-FER: bool
-GCL: bool
-GCM: dictionary&lt;values=string, indices=int32&gt;
-GCR: bool
-INTP: int32
-JWMNP: int32
-JWRIP: string
-JWTR: string
-LANX: bool
-MAR: dictionary&lt;values=string, indices=int32&gt;
-MIG: bool
-MIL: dictionary&lt;values=string, indices=int32&gt;
-MILY: dictionary&lt;values=string, indices=int32&gt;
-MLPA: bool
-MLPB: bool
-MLPC: bool
-MLPD: bool
-MLPE: bool
-MLPF: bool
-MLPG: bool
-MLPH: bool
-MLPI: bool
-MLPJ: bool
-MLPK: bool
-NWAB: bool
-NWAV: dictionary&lt;values=string, indices=int32&gt;
-NWLA: bool
-NWLK: bool
-NWRE: bool
-OIP: int32
-PAP: int32
-REL: string
-RETP: int32
-SCH: bool
-SCHG: string
-SCHL: string
-SEMP: int32
-SEX: dictionary&lt;values=string, indices=int32&gt;
-SSIP: int32
-SSP: int32
-WAGP: int32
-WKHP: int32
-WKL: dictionary&lt;values=string, indices=int32&gt;
-WKW: dictionary&lt;values=string, indices=int32&gt;
-YOEP: string
-UWRK: bool
-ANC: dictionary&lt;values=string, indices=int32&gt;
-ANC1P: string
-ANC2P: string
-DECADE: dictionary&lt;values=string, indices=int32&gt;
-DRIVESP: dictionary&lt;values=string, indices=int32&gt;
-DS: bool
-ESP: dictionary&lt;values=string, indices=int32&gt;
-ESR: dictionary&lt;values=string, indices=int32&gt;
-HISP: string
-INDP: string
-JWAP: string
-JWDP: string
-LANP: string
-MIGPUMA: dictionary&lt;values=string, indices=int32&gt;
-MIGSP: string
-MSP: dictionary&lt;values=string, indices=int32&gt;
-NAICSP: string
-NATIVITY: dictionary&lt;values=string, indices=int32&gt;
-OC: bool
-OCCP: string
-PAOC: dictionary&lt;values=string, indices=int32&gt;
-PERNP: int32
-PINCP: int32
-POBP: string
-POVPIP: int32
-POWPUMA: dictionary&lt;values=string, indices=int32&gt;
-POWSP: string
-QTRBIR: dictionary&lt;values=string, indices=int32&gt;
-RAC1P: dictionary&lt;values=string, indices=int32&gt;
-RAC2P: string
-RAC3P: string
-RACAIAN: bool
-RACASN: bool
-RACBLK: bool
-RACNHPI: bool
-RACNUM: int32
-RACSOR: bool
-RACWHT: bool
-RC: bool
-SFN: dictionary&lt;values=string, indices=int32&gt;
-SFR: dictionary&lt;values=string, indices=int32&gt;
-SOCP: string
-VPS: string
-WAOB: dictionary&lt;values=string, indices=int32&gt;
-FAGEP: bool
-FANCP: bool
-FCITP: bool
-FCOWP: bool
-FDDRSP: bool
-FDEYEP: bool
-FDOUTP: bool
-FDPHYP: bool
-FDREMP: bool
-FDWRKP: bool
-FENGP: bool
-FESRP: bool
-FFERP: bool
-FGCLP: bool
-FGCMP: bool
-FGCRP: bool
-FHISP: bool
-FINDP: bool
-FINTP: bool
-FJWDP: bool
-FJWMNP: bool
-FJWRIP: bool
-FJWTRP: bool
-FLANP: bool
-FLANXP: bool
-FMARP: bool
-FMIGP: bool
-FMIGSP: bool
-FMILPP: bool
-FMILSP: bool
-FMILYP: bool
-FOCCP: bool
-FOIP: bool
-FPAP: bool
-FPOBP: bool
-FPOWSP: bool
-FRACP: bool
-FRELP: bool
-FRETP: bool
-FSCHGP: bool
-FSCHLP: bool
-FSCHP: bool
-FSEMP: bool
-FSEXP: bool
-FSSIP: bool
-FSSP: bool
-FWAGP: bool
-FWKHP: bool
-FWKLP: bool
-FWKWP: bool
-FYOEP: bool
-PWGTP1: int32
-PWGTP2: int32
-PWGTP3: int32
-PWGTP4: int32
-PWGTP5: int32
-PWGTP6: int32
-PWGTP7: int32
-PWGTP8: int32
-PWGTP9: int32
-PWGTP10: int32
-PWGTP11: int32
-PWGTP12: int32
-PWGTP13: int32
-PWGTP14: int32
-PWGTP15: int32
-PWGTP16: int32
-PWGTP17: int32
-PWGTP18: int32
-PWGTP19: int32
-PWGTP20: int32
-PWGTP21: int32
-PWGTP22: int32
-PWGTP23: int32
-PWGTP24: int32
-PWGTP25: int32
-PWGTP26: int32
-PWGTP27: int32
-PWGTP28: int32
-PWGTP29: int32
-PWGTP30: int32
-PWGTP31: int32
-PWGTP32: int32
-PWGTP33: int32
-PWGTP34: int32
-PWGTP35: int32
-PWGTP36: int32
-PWGTP37: int32
-PWGTP38: int32
-PWGTP39: int32
-PWGTP40: int32
-PWGTP41: int32
-PWGTP42: int32
-PWGTP43: int32
-PWGTP44: int32
-PWGTP45: int32
-PWGTP46: int32
-PWGTP47: int32
-PWGTP48: int32
-PWGTP49: int32
-PWGTP50: int32
-PWGTP51: int32
-PWGTP52: int32
-PWGTP53: int32
-PWGTP54: int32
-PWGTP55: int32
-PWGTP56: int32
-PWGTP57: int32
-PWGTP58: int32
-PWGTP59: int32
-PWGTP60: int32
-PWGTP61: int32
-PWGTP62: int32
-PWGTP63: int32
-PWGTP64: int32
-PWGTP65: int32
-PWGTP66: int32
-PWGTP67: int32
-PWGTP68: int32
-PWGTP69: int32
-PWGTP70: int32
-PWGTP71: int32
-PWGTP72: int32
-PWGTP73: int32
-PWGTP74: int32
-PWGTP75: int32
-PWGTP76: int32
-PWGTP77: int32
-PWGTP78: int32
-PWGTP79: int32
-PWGTP80: int32
-NOP: dictionary&lt;values=string, indices=int32&gt;
-ADJINC: double
-CITWP: string
-DEAR: bool
-DRAT: dictionary&lt;values=string, indices=int32&gt;
-DRATX: bool
-HINS1: bool
-HINS2: bool
-HINS3: bool
-HINS4: bool
-HINS5: bool
-HINS6: bool
-HINS7: bool
-MARHD: bool
-MARHM: bool
-MARHT: dictionary&lt;values=string, indices=int32&gt;
-MARHW: bool
-MARHYP: string
-DIS: bool
-HICOV: bool
-PRIVCOV: bool
-PUBCOV: bool
-FCITWP: bool
-FDEARP: bool
-FDRATP: bool
-FDRATXP: bool
-FHINS1P: bool
-FHINS2P: bool
-FHINS3P: bool
-FHINS4P: bool
-FHINS5P: bool
-FHINS6P: bool
-FHINS7P: bool
-FMARHDP: bool
-FMARHMP: bool
-FMARHTP: bool
-FMARHWP: bool
-FMARHYP: bool
-WRK: bool
-FOD1P: string
-FOD2P: string
-SCIENGP: bool
-SCIENGRLP: bool
-FFODP: bool
-FHINS3C: dictionary&lt;values=string, indices=int32&gt;
-FHINS4C: dictionary&lt;values=string, indices=int32&gt;
-FHINS5C: dictionary&lt;values=string, indices=int32&gt;
-RELP: string
-FWRKP: bool
-FDISP: bool
-FPERNP: bool
-FPINCP: bool
-FPRIVCOVP: bool
-FPUBCOVP: bool
-RACNH: bool
-RACPI: bool
-SSPA: dictionary&lt;values=string, indices=int32&gt;
-MLPCD: bool
-MLPFG: bool
-FHICOVP: bool
-DIVISION: dictionary&lt;values=string, indices=int32&gt;
-REGION: dictionary&lt;values=string, indices=int32&gt;
-HIMRKS: dictionary&lt;values=string, indices=int32&gt;
-JWTRNS: string
-RELSHIPP: string
-WKWN: int32
-FHIMRKSP: bool
-FJWTRNSP: bool
-FRELSHIPP: bool
-FWKWNP: bool
-MLPIK: bool
-year: int32
-location: string
-mean_commute_time: double
-commute_diff: double (subtract_checked(JWMNP, mean_commute_time))
-
-See $.data for the source Arrow object</code></pre>
-</div>
 </div>
 <p>We’ll take a closer look at joins again in <a href="files_and_formats.html#sec-cleaning-pums" class="quarto-xref">Section&nbsp;<span>4.4</span></a> in a practical example where we explore combining a dataset with a reference table. <a href="advanced_topics.html#sec-pums-pumas" class="quarto-xref">Section&nbsp;<span>7.5.5</span></a> also shows a practical use case of several kinds of joins to prepare sparse data for plotting. If you’re interested in other methods of combining data from different sources, check out <a href="datasets.html#sec-combining-datasets" class="quarto-xref">Section&nbsp;<span>5.7.3</span></a> where we show an example of querying data in different formats as a single dataset.</p>
 </section>
