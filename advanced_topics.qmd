@@ -310,9 +310,10 @@ hours_worked_model <- survey::svyglm(
 summary(hours_worked_model)
 ```
 
-We can use this model to predict what our model would have on this data.
+We can use this model to predict what our model would have predicted on this data if it were new data coming in.
+This is a little artificial since this is the same data that we used to build the model, though it's a good check to confirm that the modeling process doesn't have anything terribly off about it.
+Also because we are predicting on the same data we fit this linear model on, this is going to be very close to the actual weighted means.
 We use the `predict` function to make these predictions and we also calculate the weighted mean for each group.
-This is going to be very close to the actual weighted means since this data was used to fit this linear model.
 
 ```{r}
 #| label: summarise_fit_data
