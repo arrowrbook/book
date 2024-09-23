@@ -626,7 +626,7 @@ plot
 ```
 :::
 
-And we can see the fit is slightly better, though we still slightly over predict particularly self-employed workers.
+And we can see the fit is slightly better, though we still slightly over predict, particularly for self-employed workers.
 From here we might explore fitting a multi-level model with varying slopes or intercepts for each state or add more predictors to our model.
 But no matter what we choose, we can use UDFs to do prediction like we did here.
 
