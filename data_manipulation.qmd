@@ -416,6 +416,7 @@ We could have instead defined the query for `mean_compute_time` and not called `
 
 ```{r}
 #| label: create-ref-query
+#| eval: false
 mean_commute_time <- pums_person |>
   group_by(location, year) |>
   summarize(
