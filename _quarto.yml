@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  resources: 
+    - CNAME
 
 book:
   # we may need to comment the title out when rendering final version to pdf
