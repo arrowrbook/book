@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>Scaling Up With R and Arrow - 7&nbsp; Cloud</title>
+<title>Scaling Up With R and Arrow - 6&nbsp; Cloud</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,15 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4JT42QR6DV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
-</script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -126,7 +118,7 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cloud.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cloud.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -142,13 +134,6 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -161,61 +146,61 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text">Acknowledgements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./foreword.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Foreword</span></span></a>
+ <span class="menu-text">Foreword</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./files_and_formats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Files and Formats</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cloud.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./advanced_topics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./processes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Sharing Data and Interoperability</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -251,23 +236,23 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#working-with-data-in-cloud-storage" id="toc-working-with-data-in-cloud-storage" class="nav-link active" data-scroll-target="#working-with-data-in-cloud-storage"><span class="header-section-number">7.1</span> Working with data in cloud storage</a></li>
-  <li><a href="#working-efficiently-with-cloud-data" id="toc-working-efficiently-with-cloud-data" class="nav-link" data-scroll-target="#working-efficiently-with-cloud-data"><span class="header-section-number">7.2</span> Working efficiently with cloud data</a>
+  <li><a href="#working-with-data-in-cloud-storage" id="toc-working-with-data-in-cloud-storage" class="nav-link active" data-scroll-target="#working-with-data-in-cloud-storage"><span class="header-section-number">6.1</span> Working with data in cloud storage</a></li>
+  <li><a href="#working-efficiently-with-cloud-data" id="toc-working-efficiently-with-cloud-data" class="nav-link" data-scroll-target="#working-efficiently-with-cloud-data"><span class="header-section-number">6.2</span> Working efficiently with cloud data</a>
   <ul class="collapse">
-  <li><a href="#minimizing-data-transfer" id="toc-minimizing-data-transfer" class="nav-link" data-scroll-target="#minimizing-data-transfer"><span class="header-section-number">7.2.1</span> Minimizing data transfer</a></li>
-  <li><a href="#network-location-and-transfer-speed" id="toc-network-location-and-transfer-speed" class="nav-link" data-scroll-target="#network-location-and-transfer-speed"><span class="header-section-number">7.2.2</span> Network location and transfer speed</a></li>
+  <li><a href="#minimizing-data-transfer" id="toc-minimizing-data-transfer" class="nav-link" data-scroll-target="#minimizing-data-transfer"><span class="header-section-number">6.2.1</span> Minimizing data transfer</a></li>
+  <li><a href="#network-location-and-transfer-speed" id="toc-network-location-and-transfer-speed" class="nav-link" data-scroll-target="#network-location-and-transfer-speed"><span class="header-section-number">6.2.2</span> Network location and transfer speed</a></li>
   </ul></li>
-  <li><a href="#working-directly-with-a-bucket-object" id="toc-working-directly-with-a-bucket-object" class="nav-link" data-scroll-target="#working-directly-with-a-bucket-object"><span class="header-section-number">7.3</span> Working directly with a bucket object</a></li>
-  <li><a href="#authentication" id="toc-authentication" class="nav-link" data-scroll-target="#authentication"><span class="header-section-number">7.4</span> Authentication</a>
+  <li><a href="#working-directly-with-a-bucket-object" id="toc-working-directly-with-a-bucket-object" class="nav-link" data-scroll-target="#working-directly-with-a-bucket-object"><span class="header-section-number">6.3</span> Working directly with a bucket object</a></li>
+  <li><a href="#authentication" id="toc-authentication" class="nav-link" data-scroll-target="#authentication"><span class="header-section-number">6.4</span> Authentication</a>
   <ul class="collapse">
-  <li><a href="#anonmyous" id="toc-anonmyous" class="nav-link" data-scroll-target="#anonmyous"><span class="header-section-number">7.4.1</span> Anonmyous</a></li>
-  <li><a href="#manually-pass-in-credentials" id="toc-manually-pass-in-credentials" class="nav-link" data-scroll-target="#manually-pass-in-credentials"><span class="header-section-number">7.4.2</span> Manually pass in credentials</a></li>
-  <li><a href="#a-credentials-file" id="toc-a-credentials-file" class="nav-link" data-scroll-target="#a-credentials-file"><span class="header-section-number">7.4.3</span> A credentials file</a></li>
-  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables"><span class="header-section-number">7.4.4</span> Environment variables</a></li>
+  <li><a href="#anonmyous" id="toc-anonmyous" class="nav-link" data-scroll-target="#anonmyous"><span class="header-section-number">6.4.1</span> Anonmyous</a></li>
+  <li><a href="#manually-pass-in-credentials" id="toc-manually-pass-in-credentials" class="nav-link" data-scroll-target="#manually-pass-in-credentials"><span class="header-section-number">6.4.2</span> Manually pass in credentials</a></li>
+  <li><a href="#a-credentials-file" id="toc-a-credentials-file" class="nav-link" data-scroll-target="#a-credentials-file"><span class="header-section-number">6.4.3</span> A credentials file</a></li>
+  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables"><span class="header-section-number">6.4.4</span> Environment variables</a></li>
   </ul></li>
-  <li><a href="#configuring-bucket-region" id="toc-configuring-bucket-region" class="nav-link" data-scroll-target="#configuring-bucket-region"><span class="header-section-number">7.5</span> Configuring bucket region</a></li>
-  <li><a href="#enabling-logging-in-s3" id="toc-enabling-logging-in-s3" class="nav-link" data-scroll-target="#enabling-logging-in-s3"><span class="header-section-number">7.6</span> Enabling Logging in S3</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.7</span> Summary</a></li>
+  <li><a href="#configuring-bucket-region" id="toc-configuring-bucket-region" class="nav-link" data-scroll-target="#configuring-bucket-region"><span class="header-section-number">6.5</span> Configuring bucket region</a></li>
+  <li><a href="#enabling-logging-in-s3" id="toc-enabling-logging-in-s3" class="nav-link" data-scroll-target="#enabling-logging-in-s3"><span class="header-section-number">6.6</span> Enabling Logging in S3</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.7</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -276,13 +261,20 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cloud" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cloud</span></span></h1>
+<h1 class="title"><span id="sec-cloud" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Cloud</span></span></h1>
+<p class="subtitle lead">Bigger Data, Easier Workflows</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nic Crane, Jonathan Keane, and Neal Richardson </p>
+          </div>
+  </div>
     
   
     
@@ -296,7 +288,9 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>In the previous chapters, we’ve discussed working with data which is stored on a local filesystem, but Arrow also can also work with data stored on a remote machine.</p>
 <p>If you want to read a single file directly into memory, you can pass a URL directly into a file-reading function, and the file will be downloaded to a temporary directory and then loaded into your R session.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(<span class="st">"https://github.com/apache/arrow/raw/main/r/inst/v0.7.1.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://github.com/apache/arrow/raw/main/r/inst/v0.7.1.parquet"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -325,17 +319,27 @@ gtag('config', 'G-4JT42QR6DV', { 'anonymize_ip': true});
 <p>While we focus on Parquet datasets, the techniques shown here can be used on CSV datasets. CSVs work fine, but they’re slower and more expensive. While you can work with compressed CVSs, this solves part of the problem, but not all of it<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>Many examples will look at working with data hosted on Amazon S3, but the same principles can also be used with data in GCS. There are some subtle differences between S3 and GCS which we’ll highlight when they come up and outline any differences you need to be aware of. In the future, the Apache Arrow project plans to add functionality to work with additional cloud storage services like Azure Blob Storage—this implementation and future ones relating to any other cloud storage services will also follow this model.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>In cloud storage terminology, S3 and GCS refer to the place where the data is stored as a <strong>bucket</strong>. Other systems may use alternative terms, like “blob”, but we will use “bucket” here as a generic term.</p>
-<section id="working-with-data-in-cloud-storage" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="working-with-data-in-cloud-storage"><span class="header-section-number">7.1</span> Working with data in cloud storage</h2>
+<section id="working-with-data-in-cloud-storage" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="working-with-data-in-cloud-storage"><span class="header-section-number">6.1</span> Working with data in cloud storage</h2>
 <p>Working with cloud storage services is similar in many ways to working with data stored in local filesystems, and you can use the same file and dataset opening functions for both tasks. To open a file or dataset saved in cloud storage, instead of passing in a path to a local file to these functions, you can instead pass in the cloud storage path as a URI.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(<span class="st">"s3://scaling-arrow-pums/person/year=2005/location=ak/part-0.parquet"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"s3://scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s3://scaling-arrow-pums/person/year=2005/"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"location=ak/part-0.parquet"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"s3://scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that when working with data stored on GCS, even when working with a publicly accessible bucket, you’ll need to provide a login name of “anonymous”. The equivalent of the above commands for GCS—these won’t run here as these buckets haven’t been set up—would be:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/location=ak/part-0.parquet"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_parquet</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gs://anonymous@scaling-arrow-pums/person/year=2005/"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"location=ak/part-0.parquet"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"gs://anonymous@scaling-arrow-pums/person/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s take a closer look at running queries in the cloud. If we create a new dataset connecting to the S3 bucket and take a look at the object, we’ll see it looks the same as a local dataset.</p>
 <div class="cell">
@@ -393,38 +397,47 @@ See $.data for the source Arrow object</code></pre>
 </div>
 </div>
 </div>
-<p>An important question to ask here is how long it took to run the query. We compared running the same query from above on the same machine—a Posit Cloud instance with 1GB of RAM—with a local copy of the data compared to the cloud version of the same data.</p>
+<p>An important question to ask here is how long it took to run the query. We compared running the same query from above on the same machine—a Posit Cloud instance with 1GB of RAM—with a local copy of the data compared to the cloud version of the same data. The results are shown in <a href="#tbl-cloud-local" class="quarto-xref">Table&nbsp;<span>6.1</span></a>.</p>
+<div id="tbl-cloud-local" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cloud-local-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.1: Time taken to run the same query on a local machine and connecting to an S3 bucket
+</figcaption>
+<div aria-describedby="tbl-cloud-local-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
 <thead>
 <tr class="header">
 <th>Location</th>
-<th>Time (s)</th>
+<th style="text-align: right;">Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Local</td>
-<td>0.2</td>
+<td style="text-align: right;">0.2</td>
 </tr>
 <tr class="even">
 <td>Cloud</td>
-<td>24.1</td>
+<td style="text-align: right;">24.1</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>There’s a huge difference between these results: it was 120 times faster to work with a local copy of the data! This was due to the need for data transfer; in the local query, Arrow could just scan the data and perform the necessary calculations, whereas in the cloud query, we needed to download the data first before we could return it to our R session.</p>
 <p>A reasonable question to ask here might be why did it took 24 seconds to run a query which only had 1 row of data in the results? The answer to this question is that we actually downloaded more than 1 row of data—in fact, we downloaded all of the data for California in 2022—with the final aggregation being performed locally. Let’s take a look at the reasons for this, and see what we can do to minimize data transfer in our queries.</p>
 </section>
-<section id="working-efficiently-with-cloud-data" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="working-efficiently-with-cloud-data"><span class="header-section-number">7.2</span> Working efficiently with cloud data</h2>
+<section id="working-efficiently-with-cloud-data" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="working-efficiently-with-cloud-data"><span class="header-section-number">6.2</span> Working efficiently with cloud data</h2>
 <p>Pulling data from cloud storage can be slow—the main bottleneck is transferring data over the internet—and it takes longer than querying data locally. Given that increased data transfer results in increased costs and slower retrieval of results, it’s important to understand how to minimize the amount of data that needs to be downloaded.</p>
-<section id="minimizing-data-transfer" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="minimizing-data-transfer"><span class="header-section-number">7.2.1</span> Minimizing data transfer</h3>
+<section id="minimizing-data-transfer" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="minimizing-data-transfer"><span class="header-section-number">6.2.1</span> Minimizing data transfer</h3>
 <p>In this section, we’ll look at how we can run queries on the cloud datasets but only download a relevant subset of the data, and discuss different strategies for minimizing data transfer when working with data in cloud storage.</p>
 <p>Tools for measuring data transfer vary between different operating systems; in the code examples below, we’ll show the output from a Linux tool called <a href="https://github.com/raboof/nethogs">nethogs</a>. If you want to test out data transfer yourself, see <a href="appendix.html#sec-netmon" class="quarto-xref">Section&nbsp;<span>A.3.1</span></a> for more information about the commands we ran to measure bandwidth.</p>
-<section id="partitioning" class="level4" data-number="7.2.1.1">
-<h4 data-number="7.2.1.1" class="anchored" data-anchor-id="partitioning"><span class="header-section-number">7.2.1.1</span> Partitioning</h4>
-<p>We introduced strategies for efficient partitioning when working with datasets in <a href="datasets.html" class="quarto-xref">Chapter&nbsp;<span>6</span></a>, but this becomes even more important when working with data in cloud storage.</p>
+<section id="partitioning" class="level4" data-number="6.2.1.1">
+<h4 data-number="6.2.1.1" class="anchored" data-anchor-id="partitioning"><span class="header-section-number">6.2.1.1</span> Partitioning</h4>
+<p>We introduced strategies for efficient partitioning when working with datasets in <a href="datasets.html" class="quarto-xref">Chapter&nbsp;<span>5</span></a>, but this becomes even more important when working with data in cloud storage.</p>
 <p>The full copy of the PUMS person dataset is just under 8GB of Parquet files. Let’s say we want to collect a subset of the PUMS person dataset, filtering to include only data from respondents in California in 2022. Let’s take a look at our local copy to see how many rows of data this is.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="st">"./data/person"</span>) <span class="sc">|&gt;</span></span>
@@ -456,11 +469,11 @@ See $.data for the source Arrow object</code></pre>
 <p>The amount of data transferred was 61.8MB, exactly the same as last time—so what’s going on here?</p>
 <p>Arrow is able to use the partition variables <code>year</code> and <code>location</code> to work out which files contain the data needed, in both examples. In the second example, arrow needs access to the values in the files to be able to filter by <code>AGEP</code> and so all values in the files have to be transferred first. In this dataset, there is one file per unique combination of <code>year</code> and <code>location</code> and so we know the data we need must be in a single file. If the data is split across multiple files, arrow can make use of the Parquet file metadata—more on that later—to work out whether that file needs downloading.</p>
 <p>This shows the need for careful thought when deciding how to partition your data that you’ll be keeping in cloud storage—you can reduce transfer costs significantly by partitioning data on columns which are more commonly used in filters. This must, however, be balanced with not creating too many partitions, otherwise transfers may be slowed down significantly by the need to access large numbers of individual files.</p>
-<p>As with the examples we discussed in <a href="datasets.html" class="quarto-xref">Chapter&nbsp;<span>6</span></a>, when deciding how to partition your data, experimentation can help in working out how to strike the right balance.</p>
+<p>As with the examples we discussed in <a href="datasets.html" class="quarto-xref">Chapter&nbsp;<span>5</span></a>, when deciding how to partition your data, experimentation can help in working out how to strike the right balance.</p>
 <p>While partitioning can help reduce the total amount of data transferred when working with any arrow-compatible formats in cloud storage, working specifically with Parquet files brings some additional advantages, which we’ll take a look at in the next section.</p>
 </section>
-<section id="parquet-statistics" class="level4" data-number="7.2.1.2">
-<h4 data-number="7.2.1.2" class="anchored" data-anchor-id="parquet-statistics"><span class="header-section-number">7.2.1.2</span> Parquet statistics</h4>
+<section id="parquet-statistics" class="level4" data-number="6.2.1.2">
+<h4 data-number="6.2.1.2" class="anchored" data-anchor-id="parquet-statistics"><span class="header-section-number">6.2.1.2</span> Parquet statistics</h4>
 <p>Another way in which arrow can limit the amount of data transferred over the network is taking advantage of statistics stored in Parquet metadata.</p>
 <p>Let’s say we wanted to take the entire dataset and retrieve a subset which only includes people aged 97 or older, across all years and locations. We can run the following query.</p>
 <div class="cell">
@@ -499,11 +512,11 @@ See $.data for the source Arrow object</code></pre>
 <p>The same principle can also be applied to missing values If your data has a lot of missing values, Parquet statistics contain metadata about how many values in each column are missing, so arrow can skip transferring files when there is no data present in a column.</p>
 </section>
 </section>
-<section id="network-location-and-transfer-speed" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="network-location-and-transfer-speed"><span class="header-section-number">7.2.2</span> Network location and transfer speed</h3>
+<section id="network-location-and-transfer-speed" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="network-location-and-transfer-speed"><span class="header-section-number">6.2.2</span> Network location and transfer speed</h3>
 <p>Another consideration when working with cloud data like this is the relative geographic locations of where the data is stored, and the location of the computer which is accessing the data.</p>
-<section id="selecting-a-bucket-region" class="level4" data-number="7.2.2.1">
-<h4 data-number="7.2.2.1" class="anchored" data-anchor-id="selecting-a-bucket-region"><span class="header-section-number">7.2.2.1</span> Selecting a bucket region</h4>
+<section id="selecting-a-bucket-region" class="level4" data-number="6.2.2.1">
+<h4 data-number="6.2.2.1" class="anchored" data-anchor-id="selecting-a-bucket-region"><span class="header-section-number">6.2.2.1</span> Selecting a bucket region</h4>
 <p>If you’re setting up a new cloud storage bucket, you’ll see faster performance when querying data if you choose a region which is geographically close to the machines from which individual users or apps will be accessing the data from, and even faster performance when within the same network.</p>
 <p>To demonstrate this, we took a look at the speed of running a query which returned the data for California in 2022.</p>
 <div class="cell">
@@ -520,41 +533,50 @@ See $.data for the source Arrow object</code></pre>
 <li>an identical bucket located in the <code>eu-west-2</code> region, in London</li>
 </ol>
 <p>We then tried the queried the original S3 bucket again, but from a Posit Cloud instance deployed on Amazon EC2 in the <code>us-east-1</code> region.</p>
-<p>The average times across 3 runs are shown in the table below.</p>
+<p>The average times across 3 runs are shown in <a href="#tbl-cloud-location" class="quarto-xref">Table&nbsp;<span>6.2</span></a>.</p>
+<div id="tbl-cloud-location" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cloud-location-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.2: Time taken to run the same query with varying bucket location and access location
+</figcaption>
+<div aria-describedby="tbl-cloud-location-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
 <thead>
 <tr class="header">
 <th>Bucket Location</th>
 <th>Access Location</th>
-<th>Time (seconds)</th>
+<th style="text-align: right;">Time (seconds)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Virginia, US (us-east-1)</td>
 <td>Manchester, UK</td>
-<td>56</td>
+<td style="text-align: right;">56</td>
 </tr>
 <tr class="even">
 <td>London, UK (eu-west-2)</td>
 <td>Manchester, UK</td>
-<td>50</td>
+<td style="text-align: right;">50</td>
 </tr>
 <tr class="odd">
 <td>Virginia, US (us-east-1)</td>
 <td>Virginia, US (us-east-1)</td>
-<td>24</td>
+<td style="text-align: right;">24</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>Using a bucket in the same geographical region resulted in a slight decrease in time to run the query and collect the data, when transferring the results to work with locally. However, geographic location alone wasn’t the sole factor determining transfer times.</p>
 <p>The time to complete the query was significantly shorter on Posit Cloud deployed on EC2 than when transferring to a machine outside of the AWS network. The speed up is because of the interconnection between AWS data centers as well as the fact that the data is now being transferred within AWS’s internal network with optimized infrastructure, rather than over the internet.</p>
 <p>It’s also worth keeping in mind the impact on cost—not just in terms of speed, but money too. At time of writing, it was free to transfer data from an S3 bucket to another AWS service like EC2 within the same AWS region, but there were charges associated with transferring data between regions, or out to the internet, which was the most expensive of all.</p>
 </section>
 </section>
 </section>
-<section id="working-directly-with-a-bucket-object" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="working-directly-with-a-bucket-object"><span class="header-section-number">7.3</span> Working directly with a bucket object</h2>
+<section id="working-directly-with-a-bucket-object" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="working-directly-with-a-bucket-object"><span class="header-section-number">6.3</span> Working directly with a bucket object</h2>
 <p>The previous examples in this chapter all involved working with datasets by passing in a URI. This is the simplest path to working with data in cloud storage, though you might need a finer degree of control to go beyond the default configuration. In such cases, you can work directly with a bucket object.</p>
 <p>You can create an object representing the connection to the bucket itself, which can then be manipulated further, allowing the possibility of passing in additional parameters, such as those relating to authentication.</p>
 <div class="cell">
@@ -592,8 +614,8 @@ See $.data for the source Arrow object</code></pre>
 </div>
 <p>The examples we’ve looked at so far have all been on a bucket that hasn’t required us to provide any login details, but what about if we want to connect to a bucket which requires us to provide credentials? We’ll take a look at that in the next section.</p>
 </section>
-<section id="authentication" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="authentication"><span class="header-section-number">7.4</span> Authentication</h2>
+<section id="authentication" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="authentication"><span class="header-section-number">6.4</span> Authentication</h2>
 <p>There are multiple options for how provide credential when connecting to S3 or GCS, and these methods of authentication vary between providers.</p>
 <p>In this section, we’re going to talk about:</p>
 <ul>
@@ -613,11 +635,11 @@ See $.data for the source Arrow object</code></pre>
 <p>There are other possible methods, which you can find more information about in the <a href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/credentials.html">AWS docs</a> or the <a href="https://cloud.google.com/docs/authentication">GCS docs</a>. We’ve included some examples of the most common methods below. At the time of writing these are how the methods work, but this might change. As always, look to the relevant docs for the most up-to-date methods and best practices.</p>
 <p>Generally, we recommend using a credentials file when working locally, but environment variables when working with applications deployed online.</p>
 <p>In the next section, we’ll walk through the different options.</p>
-<section id="anonmyous" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="anonmyous"><span class="header-section-number">7.4.1</span> Anonmyous</h3>
+<section id="anonmyous" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="anonmyous"><span class="header-section-number">6.4.1</span> Anonmyous</h3>
 <p>If you’re connecting to a publicly accessible bucket, you can log in anonymously, but how you do this differs between S3 and AWS.</p>
-<section id="s3" class="level4" data-number="7.4.1.1">
-<h4 data-number="7.4.1.1" class="anchored" data-anchor-id="s3"><span class="header-section-number">7.4.1.1</span> S3</h4>
+<section id="s3" class="level4" data-number="6.4.1.1">
+<h4 data-number="6.4.1.1" class="anchored" data-anchor-id="s3"><span class="header-section-number">6.4.1.1</span> S3</h4>
 <p>If you’re connecting to a public S3 bucket, you don’t need to pass in any credentials.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">s3_bucket</span>(<span class="st">"scaling-arrow-pums"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -627,73 +649,76 @@ See $.data for the source Arrow object</code></pre>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">s3_bucket</span>(<span class="st">"scaling-arrow-pums"</span>, <span class="at">anonymous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gcs" class="level4" data-number="7.4.1.2">
-<h4 data-number="7.4.1.2" class="anchored" data-anchor-id="gcs"><span class="header-section-number">7.4.1.2</span> GCS</h4>
+<section id="gcs" class="level4" data-number="6.4.1.2">
+<h4 data-number="6.4.1.2" class="anchored" data-anchor-id="gcs"><span class="header-section-number">6.4.1.2</span> GCS</h4>
 <p>In GCS, different host names are used depending on whether the user is logged in or not. This means that if you want to connect to a GCS instance without providing authentication credentials, you must manually set <code>anonymous</code> to <code>TRUE</code> to make sure that the correct host name is used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">gs_bucket</span>(<span class="st">"scaling-arrow-pums/person/"</span>, <span class="at">anonymous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">gs_bucket</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scaling-arrow-pums/person/"</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">anonymous =</span> <span class="cn">TRUE</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="manually-pass-in-credentials" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="manually-pass-in-credentials"><span class="header-section-number">7.4.2</span> Manually pass in credentials</h3>
+<section id="manually-pass-in-credentials" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="manually-pass-in-credentials"><span class="header-section-number">6.4.2</span> Manually pass in credentials</h3>
 <p>The simplest way to connect to a private bucket is to pass in credentials manually. These methods are fine for working with code interactively, but run the risk of accidentally being checked into version control and exposing these details to others. This isn’t arrow-specific advice, but rather, is general best practice. Putting secrets in your code means they’re in your command history, as well as possibly checked into source control and exposed.</p>
-<section id="s3-1" class="level4" data-number="7.4.2.1">
-<h4 data-number="7.4.2.1" class="anchored" data-anchor-id="s3-1"><span class="header-section-number">7.4.2.1</span> S3</h4>
+<section id="s3-1" class="level4" data-number="6.4.2.1">
+<h4 data-number="6.4.2.1" class="anchored" data-anchor-id="s3-1"><span class="header-section-number">6.4.2.1</span> S3</h4>
 <p>In AWS S3, this is done using your login, <code>access_key</code> and password, <code>secret_key</code> into <code>s3_bucket()</code> when creating a new connection.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>secret_data <span class="ot">&lt;-</span> <span class="fu">s3_bucket</span>(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"my_secret_bucket_name"</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"secret_bucket_name"</span>,</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">access_key =</span> <span class="st">"nic"</span>,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">secret_key =</span> <span class="st">"1234567890"</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">secret_key =</span> <span class="st">"12345"</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Similarly, you can pass all of these details in as a single URI string.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>secret_data <span class="ot">&lt;-</span> <span class="fu">s3_bucket</span>(<span class="st">"s3://nic:1234567890@my_secret_bucket_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>secret_data <span class="ot">&lt;-</span> <span class="fu">s3_bucket</span>(<span class="st">"s3://nic:12345@secret_bucket_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gcs-1" class="level4" data-number="7.4.2.2">
-<h4 data-number="7.4.2.2" class="anchored" data-anchor-id="gcs-1"><span class="header-section-number">7.4.2.2</span> GCS</h4>
+<section id="gcs-1" class="level4" data-number="6.4.2.2">
+<h4 data-number="6.4.2.2" class="anchored" data-anchor-id="gcs-1"><span class="header-section-number">6.4.2.2</span> GCS</h4>
 <p>In GCS, you’ll need to get an access token and its expiration date, which you can then pass into the call to <code>gs_bucket()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>secret_data <span class="ot">&lt;-</span> <span class="fu">gs_bucket</span>(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"my_secret_bucket_name"</span>,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">access_token =</span> <span class="st">"ab12.ABCS6ZRVmB7fkLtd1XTmq6mo0S1wqZZi3-Lh_s-6Uw7p8vtgSwg"</span>,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"secret_bucket_name"</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">access_token =</span> <span class="st">"ab12.ABCS6ZRVmB7fkLtd1XTmq6mo0s-6Uw7p8vtgSwg"</span>,</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">expiration =</span> <span class="fu">as.POSIXct</span>(<span class="st">"2024-08-09 12:00:00"</span>)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="a-credentials-file" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="a-credentials-file"><span class="header-section-number">7.4.3</span> A credentials file</h3>
+<section id="a-credentials-file" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="a-credentials-file"><span class="header-section-number">6.4.3</span> A credentials file</h3>
 <p>Credentials files can be a convenient way of configuring your authentication and other configuration without having to manually set multiple environment variables.</p>
-<section id="s3-2" class="level4" data-number="7.4.3.1">
-<h4 data-number="7.4.3.1" class="anchored" data-anchor-id="s3-2"><span class="header-section-number">7.4.3.1</span> S3</h4>
+<section id="s3-2" class="level4" data-number="6.4.3.1">
+<h4 data-number="6.4.3.1" class="anchored" data-anchor-id="s3-2"><span class="header-section-number">6.4.3.1</span> S3</h4>
 <p>AWS credentials files can be a convenient way of configuring your authentication and other configuration without having to manually set multiple environment variables. AWS credentials files are typically stored for Linux and macOS users at <code>~/.aws/credentials</code> or <code>C:\Users\&lt;username&gt;\.aws\credentials</code> for Windows users, though you can store them in another location and set the <code>AWS_SHARED_CREDENTIALS_FILE</code> environment variable to point to their location to ensure they are automatically detected.</p>
 <p>When the AWS SDK is initialized, it will look for this credentials file automatically, so you don’t need to make any changes in your code in order to be able to use them.</p>
 </section>
-<section id="gcs-2" class="level4" data-number="7.4.3.2">
-<h4 data-number="7.4.3.2" class="anchored" data-anchor-id="gcs-2"><span class="header-section-number">7.4.3.2</span> GCS</h4>
+<section id="gcs-2" class="level4" data-number="6.4.3.2">
+<h4 data-number="6.4.3.2" class="anchored" data-anchor-id="gcs-2"><span class="header-section-number">6.4.3.2</span> GCS</h4>
 <p>If you need to provide credentials, and have the Google Cloud CLI installed, you can set up a local credentials file by setting up Application Default Credential (ADC) by running the following code from the command line:</p>
 <pre><code>gcloud auth application-default login</code></pre>
 </section>
 </section>
-<section id="environment-variables" class="level3" data-number="7.4.4">
-<h3 data-number="7.4.4" class="anchored" data-anchor-id="environment-variables"><span class="header-section-number">7.4.4</span> Environment variables</h3>
+<section id="environment-variables" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="environment-variables"><span class="header-section-number">6.4.4</span> Environment variables</h3>
 <p>A more secure method of authentication when working with cloud storage in applications deployed on continuous integration (CI) systems like Github Actions is the use of environment variables. Using this method means that the credentials don’t appear in your code or console logs anywhere, and thus can be a useful of ensuring your credentials remain secure if you want to share your code with others. By setting the environment variables outside of your script, you can share your code without sharing your credentials.</p>
-<section id="s3-3" class="level4" data-number="7.4.4.1">
-<h4 data-number="7.4.4.1" class="anchored" data-anchor-id="s3-3"><span class="header-section-number">7.4.4.1</span> S3</h4>
+<section id="s3-3" class="level4" data-number="6.4.4.1">
+<h4 data-number="6.4.4.1" class="anchored" data-anchor-id="s3-3"><span class="header-section-number">6.4.4.1</span> S3</h4>
 <p>You can set the environment variables <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> to your access key and secret key, and the AWS SDK will automatically check if these variables have been set, and if they are, use the values in them to authenticate.</p>
 </section>
-<section id="gcs-3" class="level4" data-number="7.4.4.2">
-<h4 data-number="7.4.4.2" class="anchored" data-anchor-id="gcs-3"><span class="header-section-number">7.4.4.2</span> GCS</h4>
+<section id="gcs-3" class="level4" data-number="6.4.4.2">
+<h4 data-number="6.4.4.2" class="anchored" data-anchor-id="gcs-3"><span class="header-section-number">6.4.4.2</span> GCS</h4>
 <p>It’s a little different with GCS: if deploying an application to a CI/CD system such as GitHub Actions, the <code>GOOGLE_APPLICATION_CREDENTIALS</code> environment variable should be pointed to the location of the JSON credentials file. As it wouldn’t be secure to store this file in your repository, you’ll need to take an alternative approach such as encoding your service account key and storing this value as another environment variable, decoding it within the CI, and then setting the <code>GOOGLE_APPLICATION_CREDENTIALS</code> variable to this location. The details of how to do this are beyond the scope of this book, but check out the <a href="https://cloud.google.com/docs/authentication/provide-credentials-adc#local-key">Google Cloud documentation</a> for more information.</p>
 </section>
 </section>
 </section>
-<section id="configuring-bucket-region" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="configuring-bucket-region"><span class="header-section-number">7.5</span> Configuring bucket region</h2>
+<section id="configuring-bucket-region" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="configuring-bucket-region"><span class="header-section-number">6.5</span> Configuring bucket region</h2>
 <p>If you don’t specify the region that the data is stored in, then Arrow will work it out based on your configuration and a few different heuristics.</p>
 <p>Providing this manually will speed up the initial bucket connection, though won’t have an effect on subsequent analyses.</p>
 <div class="cell">
@@ -701,8 +726,8 @@ See $.data for the source Arrow object</code></pre>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">gs_bucket</span>(<span class="st">"scaling-arrow-pums"</span>, <span class="at">region =</span> <span class="st">"US-EAST1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="enabling-logging-in-s3" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="enabling-logging-in-s3"><span class="header-section-number">7.6</span> Enabling Logging in S3</h2>
+<section id="enabling-logging-in-s3" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="enabling-logging-in-s3"><span class="header-section-number">6.6</span> Enabling Logging in S3</h2>
 <p>When working specifically data stored in AWS S3, arrow provides an interface to official libraries supplied by AWS, which are capable of detailed logging. By default, the AWS logging level is set to <code>FATAL</code>, meaning only critical errors that cause the code to fail will be shown.</p>
 <p>However, if things aren’t working as expected, you may want to select a different logging level to get a better idea of exactly what’s going on. You can do this by setting the <code>ARROW_S3_LOG_LEVEL</code> environment variable.</p>
 <div class="cell">
@@ -712,8 +737,8 @@ See $.data for the source Arrow object</code></pre>
 <p>The possible log levels, from least verbose to most verbose are: <code>"OFF"</code>, <code>"FATAL"</code> (the default), <code>"ERROR"</code>, <code>"WARN"</code>, <code>"INFO"</code>, <code>"DEBUG"</code>, and <code>"TRACE"</code>.</p>
 <p>While the default logging level is usually sufficient, if you encounter issues like a slow connection or credentials not working, increasing the logging level can help you diagnose the problem.</p>
 </section>
-<section id="summary" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.7</span> Summary</h2>
+<section id="summary" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.7</span> Summary</h2>
 <p>In this chapter, we looked at working with data in cloud storage using arrow, including reading files from S3 and GCS, strategies for working efficiently with cloud data, including partitioning data effectively so that arrow can entirely skip scanning files which aren’t relevant to the current query. We also saw how working with Parquet files enables arrow to use metadata in file headers to decide whether to download an individual file or not when executing a query. Additionally, we highlighted the importance of considering where the data is being accessed from, and configuring regions to optimize performance and reduce data transfer times. Finally, we covered working with bucket objects, and authentication.</p>
 <p>Generally, if you’re regularly analyzing data stored on S3 with arrow and looking to minimize data transfer costs, it’s worth experimenting with dataset configuration to find the most efficient setup for your particular analysis needs.</p>
 <p>This chapter provided an overview of the key practical steps and considerations for integrating cloud storage into your data workflows using Arrow. For more advanced functionality and detailed options, refer to the documentation for the <a href="https://arrow.apache.org/docs/r/reference/FileSystem.html"><code>FileSystem</code></a> classes.</p>
@@ -723,7 +748,7 @@ See $.data for the source Arrow object</code></pre>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The lack of metadata with this format reduces the number of optimizations that Arrow can take advantage of. You can read more about working with compressed CSVs in <a href="files_and_formats.html#sec-writing-csvs" class="quarto-xref">Section&nbsp;<span>5.2.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The lack of metadata with this format reduces the number of optimizations that Arrow can take advantage of. You can read more about working with compressed CSVs in <a href="files_and_formats.html#sec-writing-csvs" class="quarto-xref">Section&nbsp;<span>4.2.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>At the time of writing, the Arrow C++ library has introduced support for Azure Blob Storage. Users of PyArrow can query datasets on Azure from Python, and once bindings are added to the arrow R package, it will be available from R.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
@@ -1141,29 +1166,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./datasets.html" class="pagination-link" aria-label="Datasets">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Datasets</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./advanced_topics.html" class="pagination-link" aria-label="Advanced Topics">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Topics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane, and Neal Richardson.</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
-</div>
-  </div>
-</footer>
 
 
 
