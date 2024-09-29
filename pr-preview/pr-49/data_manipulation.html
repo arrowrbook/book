@@ -134,9 +134,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Scaling Up With R and Arrow</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/arrowrbook/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -253,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-dplyr-generics" id="toc-sec-dplyr-generics" class="nav-link" data-scroll-target="#sec-dplyr-generics"><span class="header-section-number">3.6</span> How does all of this work? Verbs, functions, and arrow objects</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.7</span> Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/arrowrbook/book/blob/main/data_manipulation.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/arrowrbook/book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -305,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2021","2":"39.00219"},{"1":"2018","2":"38.57472"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"39.00219"},{"1":"2018","2":"38.57472"},{"1":"2005","2":"36.49880"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -343,7 +340,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"Yes, born in the US"},{"1":"Yes, naturalized"},{"1":"Not a citizen"},{"1":"Yes, born abroad of American parent(s)"},{"1":"Yes, born in Puerto Rico, etc."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"Yes, born in the US"},{"1":"Not a citizen"},{"1":"Yes, naturalized"},{"1":"Yes, born in Puerto Rico, etc."},{"1":"Yes, born abroad of American parent(s)"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -386,7 +383,7 @@ See $.data for the source Arrow object</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"Not a U.S. citizen"},{"1":"U.S. citizen by naturalization"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["CIT"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Born in the United States"},{"1":"U.S. citizen by naturalization"},{"1":"Not a U.S. citizen"},{"1":"Born abroad of U.S. citizen parent or parents"},{"1":"Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -542,7 +539,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"ar","2":"2005","3":"9.067204"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wi","2":"2005","3":"10.211859"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"wa","2":"2005","3":"11.211869"},{"1":"wi","2":"2005","3":"10.211859"},{"1":"az","2":"2018","3":"10.626682"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -785,7 +782,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/arrowrbook\.com\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1130,4 +1127,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/arrowrbook/book/blob/main/data_manipulation.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/arrowrbook/book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
