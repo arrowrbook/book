@@ -22,6 +22,10 @@ book:
     - references.qmd
   appendices:
   - appendix.qmd
+  site-url: https://arrowrbook.com/
+  repo-url: https://github.com/arrowrbook/book/
+  repo-branch: main
+  repo-actions: [source, issue]
 
 bibliography: references.bib
 
