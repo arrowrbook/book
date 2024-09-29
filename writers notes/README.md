@@ -14,9 +14,9 @@ Doing this allows us to have quick iteration cycles knowing that we can compile 
 To render and publish with the full dataset (all of this is done locally):
 
 * remove the `_freeze/` directory
-* run `quarto publish gh-pages`
+* run `quarto publish`
 
-This will automatically render the book and then add the files to the `gh-pages` branch where the book is hosted from.
+This will automatically render the book and then add the files to the `gh-pages` branch where the book is hosted from. We use porfiles to prevent quarto from also rendering and sending the PDF. The website profile is the default.
 
 #### PR previews
 

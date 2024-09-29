@@ -1,0 +1,16 @@
+format:
+  html:
+    theme: cosmo
+    df-print: paged
+    fig-width: 8
+    fig-height: 6
+    subtitle: "Bigger Data, Easier Workflows"
+    author: "Nic Crane, Jonathan Keane, and Neal Richardson"
+    reader-mode: true
+    google-analytics: "G-4JT42QR6DV"
+    page-footer:
+      left: |
+        Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane,
+        and Neal Richardson.
+      right: |
+        This book was built with <a href="https://quarto.org/">Quarto</a>.
