@@ -1,0 +1,26 @@
+format:
+  pdf:
+    template-partials: 
+      - latex/title.tex
+    highlight-style: monochrome
+    toc: false
+    toc-title: "Contents"
+    keep-tex: true
+    cite-method: natbib
+    biblio-style: apalike
+    documentclass: krantz
+    classoption: [krantz2]
+    fig-width: 6
+    # fig-height: 9
+    format-resources:
+      - latex/krantz.cls
+    hyperrefoptions: "bookmarks=false"
+    links-as-notes: true
+    colorlinks: false
+    # For breaking lines in output
+    knitr:
+      opts_chunk:
+        R.options:
+          width: 64
+    include-in-header: latex/in_header.tex
+    include-before-body: latex/before_body.tex

@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  resources: 
+    - CNAME
 
 book:
   # we may need to comment the title out when rendering final version to pdf
@@ -23,51 +25,9 @@ book:
 
 bibliography: references.bib
 
-format:
-  html:
-    theme: cosmo
-    df-print: paged
-    fig-width: 8
-    fig-height: 6
-    subtitle: "Bigger Data, Easier Workflows"
-    author: "Nic Crane, Jonathan Keane, and Neal Richardson"
-    reader-mode: true
-    google-analytics: "G-4JT42QR6DV"
-    page-footer:
-      left: |
-        Scaling Up With R and Arrow was written by Nic Crane, Jonathan Keane,
-        and Neal Richardson.
-      right: |
-        This book was built with <a href="https://quarto.org/">Quarto</a>.
-  pdf:
-    template-partials: 
-      - latex/title.tex
-    highlight-style: monochrome
-    toc: false
-    toc-title: "Contents"
-    keep-tex: true
-    cite-method: natbib
-    biblio-style: apalike
-    documentclass: krantz
-    classoption: [krantz2]
-    fig-width: 6
-    # fig-height: 9
-    format-resources:
-      - latex/krantz.cls
-    hyperrefoptions: "bookmarks=false"
-    links-as-notes: true
-    colorlinks: false
-    # For breaking lines in output
-    knitr:
-      opts_chunk:
-        R.options:
-          width: 64
-    include-in-header: latex/in_header.tex
-    include-before-body: latex/before_body.tex
-        
-    # highlight-style: grayscale-custom.theme
-    # include-before-body: latex/before_body.tex
-    # include-after-body: latex/after_body.tex
+profile:
+  group: 
+    - [website, pdf]
 
 editor: source
 
