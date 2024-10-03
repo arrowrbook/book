@@ -998,7 +998,7 @@ These PUMAs are designed to have approximately 100,000 people in them, and must 
 
 As always, we start with our PUMS dataset.
 We build up a `dplyr` query to clean some data inconsistencies, such as varying capitalization, then group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA.
-We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the Proportion of non-English speakers compared to the overall population.
+We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the proportion of non-English speakers compared to the overall population.
 
 ```{r}
 #| label: pums-langauge
