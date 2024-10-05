@@ -1263,7 +1263,7 @@ plot
 #| label: pums-langauge-chicagoland-plot-pdf
 #| echo: false
 #| fig-height: 5
-#| fig-cap: "Proportion of non-English speakers by language in the Chicago by PUMA for Chinese, Polish, and Spanish"
+#| fig-cap: "Proportion of primarily non-English speakers by language in the Chicago by PUMA for Chinese, Polish, and Spanish"
 plot +
   scale_x_continuous(
     breaks = seq(-86, -89, by = -0.5)
