@@ -998,7 +998,7 @@ These PUMAs are designed to have approximately 100,000 people in them, and must 
 
 As always, we start with our PUMS dataset.
 We build up a `dplyr` query to clean some data inconsistencies, such as varying capitalization, then group by language and PUMA by state and year, and calculate how many speakers of each language there are in each PUMA.
-We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the proportion of primarily non-English speakers compared to the overall population.
+We can see that this returns a data frame with one row per PUMA and language, with the number of speakers and the proportion of speakers whose primary language is not English compared to the overall population.
 
 ```{r}
 #| label: pums-langauge
@@ -1131,7 +1131,7 @@ plot
 #| label: pums-langauge-all-US-plot-pdf
 #| echo: false
 #| fig-height: 7
-#| fig-cap: "Proportion of primarily non-English speakers by language across the US by PUMA for German, French, Navajo, and Spanish"
+#| fig-cap: "Proportion of speakers whose primary language is not English by language across the US by PUMA for German, French, Navajo, and Spanish"
 plot
 ```
 :::
@@ -1263,7 +1263,7 @@ plot
 #| label: pums-langauge-chicagoland-plot-pdf
 #| echo: false
 #| fig-height: 5
-#| fig-cap: "Proportion of primarily non-English speakers by language in the Chicago by PUMA for Chinese, Polish, and Spanish"
+#| fig-cap: "Proportion of speakers whose primary language is not English by language in the Chicago by PUMA for Chinese, Polish, and Spanish"
 plot +
   scale_x_continuous(
     breaks = seq(-86, -89, by = -0.5)
@@ -1345,7 +1345,7 @@ plot + facet_wrap(vars(language), ncol = 4)
 #| label: pums-langauge-northeast-plot-pdf
 #| echo: false
 #| fig-height: 9
-#| fig-cap: "Proportion of primarily non-English speakers by language in the Northeast by PUMA for Chinese, French, Portuguese, and Spanish"
+#| fig-cap: "Proportion of speakers whose primary language is not English by language in the Northeast by PUMA for Chinese, French, Portuguese, and Spanish"
 plot + facet_wrap(vars(language), ncol = 2)
 ```
 :::
