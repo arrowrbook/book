@@ -1345,7 +1345,7 @@ plot + facet_wrap(vars(language), ncol = 4)
 #| label: pums-langauge-northeast-plot-pdf
 #| echo: false
 #| fig-height: 9
-#| fig-cap: "Proportion of non-English speakers by language in the Northeast by PUMA for Chinese, French, Portuguese, and Spanish"
+#| fig-cap: "Proportion of primarily non-English speakers by language in the Northeast by PUMA for Chinese, French, Portuguese, and Spanish"
 plot + facet_wrap(vars(language), ncol = 2)
 ```
 :::
