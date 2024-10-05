@@ -1131,7 +1131,7 @@ plot
 #| label: pums-langauge-all-US-plot-pdf
 #| echo: false
 #| fig-height: 7
-#| fig-cap: "Proportion of non-English speakers by language across the US by PUMA for German, French, Navajo, and Spanish"
+#| fig-cap: "Proportion of primarily non-English speakers by language across the US by PUMA for German, French, Navajo, and Spanish"
 plot
 ```
 :::
