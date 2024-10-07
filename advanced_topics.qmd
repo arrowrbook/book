@@ -1136,7 +1136,7 @@ plot
 ```
 :::
 
-We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana; German is spoken in the midwest, especially the upper midwest, and intermountain west.
+We can clearly see some patterns of migration: French is spoken in parts of northern Maine and Louisiana; German is spoken in the midwest, especially in the upper midwest and intermountain west.
 
 ::: {.callout-tip}
 That plotting code might look intimidating at first, but most of it is to add theming and to get the projection on the globe.
