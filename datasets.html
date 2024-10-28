@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>Scaling Up With R and Arrow - 5&nbsp; Datasets</title>
+<title>5&nbsp; Datasets – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datasets.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -211,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -353,16 +353,16 @@ Use `schema()` to see entire schema</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pums_person<span class="sc">$</span>files[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "./data/person/year=2005/location=ak/part-0.parquet"
- [2] "./data/person/year=2005/location=al/part-0.parquet"
- [3] "./data/person/year=2005/location=ar/part-0.parquet"
- [4] "./data/person/year=2005/location=az/part-0.parquet"
- [5] "./data/person/year=2005/location=ca/part-0.parquet"
- [6] "./data/person/year=2005/location=co/part-0.parquet"
- [7] "./data/person/year=2005/location=ct/part-0.parquet"
- [8] "./data/person/year=2005/location=dc/part-0.parquet"
- [9] "./data/person/year=2005/location=de/part-0.parquet"
-[10] "./data/person/year=2005/location=fl/part-0.parquet"</code></pre>
+<pre><code> [1] "/home/nic/scalinguplive/data_stash/person/year=2005/location=ak/part-0.parquet"
+ [2] "/home/nic/scalinguplive/data_stash/person/year=2005/location=al/part-0.parquet"
+ [3] "/home/nic/scalinguplive/data_stash/person/year=2005/location=ar/part-0.parquet"
+ [4] "/home/nic/scalinguplive/data_stash/person/year=2005/location=az/part-0.parquet"
+ [5] "/home/nic/scalinguplive/data_stash/person/year=2005/location=ca/part-0.parquet"
+ [6] "/home/nic/scalinguplive/data_stash/person/year=2005/location=co/part-0.parquet"
+ [7] "/home/nic/scalinguplive/data_stash/person/year=2005/location=ct/part-0.parquet"
+ [8] "/home/nic/scalinguplive/data_stash/person/year=2005/location=dc/part-0.parquet"
+ [9] "/home/nic/scalinguplive/data_stash/person/year=2005/location=de/part-0.parquet"
+[10] "/home/nic/scalinguplive/data_stash/person/year=2005/location=fl/part-0.parquet"</code></pre>
 </div>
 </div>
 <p>You may notice that the directories in which the files are stored related to variables in the dataset: <code>year</code> and <code>location</code>. This way of structuring data is known as partitioning, and we’ll be looking at this in more detail in a later section.</p>
@@ -420,13 +420,13 @@ Use `schema()` to see entire schema</code></pre>
 <h2 data-number="5.3" class="anchored" data-anchor-id="functions-for-reading-and-writing-datasets"><span class="header-section-number">5.3</span> Functions for reading and writing datasets</h2>
 <p>We’ve already looked at some examples using the <code>open_dataset()</code> function. The previous examples used Arrow and Parquet datasets, but Arrow supports the same formats for datasets that it does for working with individual files: CSV and similar text-delimited formats, Parquet, Arrow IPC format, and line-delimited JSON.</p>
 <p>The different functions for reading and writing datasets are shown in <a href="#tbl-dataset-funcs" class="quarto-xref">Table&nbsp;<span>5.1</span></a> below.</p>
-<div id="tbl-dataset-funcs" class="quarto-float anchored">
+<div id="tbl-dataset-funcs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dataset-funcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.1: Functions for reading and writing datasets
 </figcaption>
 <div aria-describedby="tbl-dataset-funcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 27%">
 <col style="width: 35%">
@@ -755,13 +755,13 @@ Table&nbsp;5.1: Functions for reading and writing datasets
 <span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#tbl-file-size" class="quarto-xref">Table&nbsp;<span>5.2</span></a> shows how many files in each dataset, as well as the minimum, maximum, and median file size.</p>
-<div id="tbl-file-size" class="quarto-float anchored">
+<div id="tbl-file-size" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-file-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.2: Summary statistics around file sizes of partitioned datasets
 </figcaption>
 <div aria-describedby="tbl-file-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
 <col style="width: 9%">
@@ -836,13 +836,13 @@ Table&nbsp;5.2: Summary statistics around file sizes of partitioned datasets
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#tbl-partition-query" class="quarto-xref">Table&nbsp;<span>5.3</span></a> shows the results of running that query on Nic’s laptop, with the datasets we created earlier.</p>
-<div id="tbl-partition-query" class="quarto-float anchored">
+<div id="tbl-partition-query" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.3: Time taken to run a query unrelated to dataset partitions, with different partitioning structures
 </figcaption>
 <div aria-describedby="tbl-partition-query-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Dataset</th>
@@ -897,13 +897,13 @@ Table&nbsp;5.3: Time taken to run a query unrelated to dataset partitions, with 
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We ran it again on Nic’s laptop, and the results are shown in <a href="#tbl-partition-query-2" class="quarto-xref">Table&nbsp;<span>5.4</span></a>.</p>
-<div id="tbl-partition-query-2" class="quarto-float anchored">
+<div id="tbl-partition-query-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.4: Time taken to run a query relating to dataset partitions, with different partitioning structures
 </figcaption>
 <div aria-describedby="tbl-partition-query-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Dataset</th>
@@ -962,13 +962,13 @@ Table&nbsp;5.4: Time taken to run a query relating to dataset partitions, with d
 <span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once again, we removed the call to <code>mutate()</code> for the dataset which already had the <code>age_group</code> partition variable.</p>
-<div id="tbl-partition-query-3" class="quarto-float anchored">
+<div id="tbl-partition-query-3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-partition-query-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.5: Time taken to run a query which filters on dataset partitions, with different partitioning structures
 </figcaption>
 <div aria-describedby="tbl-partition-query-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Dataset</th>
@@ -1203,7 +1203,7 @@ AGEP: int8</code></pre>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">open_dataset</span>(<span class="fu">file.path</span>(tmp_dir, <span class="st">"person_with_metadata"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `open_dataset()`:
-! Invalid: Error creating dataset. Could not read schema from './data/transient_data/person_with_metadata/year=2019/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
+! Invalid: Error creating dataset. Could not read schema from '/home/nic/scalinguplive/data_stash/transient_data/person_with_metadata/year=2019/data_info.txt'. Is this a 'parquet' file?: Could not open Parquet input source '/home/nic/scalinguplive/data_stash/transient_data/person_with_metadata/year=2019/data_info.txt': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.
 ℹ Did you mean to specify a 'format' other than the default (parquet)?</code></pre>
 </div>
 </div>
@@ -1251,7 +1251,7 @@ AGEP: int8</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"12.110129"},{"1":"2021","2":"9.777661"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021","2":"9.777661"},{"1":"2018","2":"12.110129"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1309,18 +1309,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1352,7 +1341,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1360,7 +1371,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

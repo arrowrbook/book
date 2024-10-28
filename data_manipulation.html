@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nic Crane, Jonathan Keane, and Neal Richardson">
 
-<title>Scaling Up With R and Arrow - 3&nbsp; Data Manipulation</title>
+<title>3&nbsp; Data Manipulation – Scaling Up With R and Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_manipulation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Manipulation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -211,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2008","2":"37.16492"},{"1":"2011","2":"37.57105"},{"1":"2010","2":"37.35030"},{"1":"2014","2":"38.08983"},{"1":"2016","2":"38.44202"},{"1":"2018","2":"38.57472"},{"1":"2006","2":"36.68398"},{"1":"2015","2":"38.22057"},{"1":"2022","2":"39.31714"},{"1":"2005","2":"36.49880"},{"1":"2012","2":"37.79095"},{"1":"2013","2":"37.91680"},{"1":"2021","2":"39.00219"},{"1":"2007","2":"36.94034"},{"1":"2009","2":"37.05157"},{"1":"2019","2":"38.78444"},{"1":"2017","2":"38.47804"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2005","2":"36.49880"},{"1":"2009","2":"37.05157"},{"1":"2014","2":"38.08983"},{"1":"2019","2":"38.78444"},{"1":"2021","2":"39.00219"},{"1":"2022","2":"39.31714"},{"1":"2006","2":"36.68398"},{"1":"2012","2":"37.79095"},{"1":"2018","2":"38.57472"},{"1":"2010","2":"37.35030"},{"1":"2013","2":"37.91680"},{"1":"2016","2":"38.44202"},{"1":"2007","2":"36.94034"},{"1":"2017","2":"38.47804"},{"1":"2008","2":"37.16492"},{"1":"2011","2":"37.57105"},{"1":"2015","2":"38.22057"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -475,7 +475,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["JWMNP"],"name":[1],"type":["int"],"align":["right"]},{"label":["commute_hours"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"5","2":"0.08"},{"1":"15","2":"0.25"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"50","2":"0.83"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["JWMNP"],"name":[1],"type":["int"],"align":["right"]},{"label":["commute_hours"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"20","2":"0.33"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"30","2":"0.50"},{"1":"NA","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -539,7 +539,7 @@ Call `print()` for query details</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ak","2":"2005","3":"8.182648"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"ga","2":"2005","3":"12.243698"},{"1":"la","2":"2005","3":"10.301698"},{"1":"ma","2":"2005","3":"12.795738"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"al","2":"2005","3":"9.964303"},{"1":"ak","2":"2005","3":"8.182648"},{"1":"az","2":"2005","3":"10.679236"},{"1":"ca","2":"2005","3":"11.384758"},{"1":"hi","2":"2005","3":"11.549025"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -638,7 +638,7 @@ See $metadata for additional Schema metadata</code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.182648","2":"5","3":"8.182648"},{"1":"-6.817352","2":"15","3":"8.182648"},{"1":"NA","2":"NA","3":"8.182648"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["commute_diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["commute_time"],"name":[2],"type":["int"],"align":["right"]},{"label":["mean_commute_time"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"5","3":"NA"},{"1":"NA","2":"15","3":"NA"},{"1":"NA","2":"NA","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -725,18 +725,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -768,7 +757,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -776,7 +787,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
