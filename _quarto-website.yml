@@ -7,9 +7,6 @@ format:
     subtitle: "Bigger Data, Easier Workflows"
     author: "Nic Crane, Jonathan Keane, and Neal Richardson"
     reader-mode: true
-    google-analytics: "G-4JT42QR6DV"
-    site-url: https://arrowrbook.com/
-    repo-url: https://github.com/arrowrbook/book/
     repo-branch: main
     repo-actions: [source, issue]
     page-footer:
